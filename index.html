@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sasayama Judicial Office</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Hero -->
+  <section class="lp-hero">
+    <h1>Support for Your First Step in Foreign Business</h1>
+    <p>Visa application, company incorporation, and legal services in English.</p>
+    <div class="lp-hero-image">
+      <img src="assets/images/hero.jpg" alt="Hero" />
+    </div>
+  </section>
+
+  <!-- Logo under hero -->
+  <section class="lp-logo-under-hero">
+    <img src="assets/images/logo.png" alt="Logo" />
+  </section>
+
+  <section class="lp-section">
+    <!-- Key Facts -->
+    <div class="lp-box">
+      <h2 class="lp-box-heading">Key Facts</h2>
+      <ul class="lp-list">
+        <li><strong>Business Name:</strong> Sasayama Judicial Office</li>
+        <li><strong>Languages:</strong> English / Japanese</li>
+        <li><strong>Phone:</strong> 012-3456-7890</li>
+        <li><strong>Established:</strong> 2018</li>
+      </ul>
+    </div>
+
+    <!-- Services -->
+    <div class="lp-box-alt">
+      <h2 class="lp-box-heading">Our Services</h2>
+      <ul class="lp-list">
+        <li>Visa Application Support</li>
+        <li>Company Incorporation Procedures</li>
+        <li>Contract Drafting & Translation</li>
+      </ul>
+      <div class="lp-services-image">
+        <img src="assets/images/services.jpg" alt="Services" />
+      </div>
+    </div>
+
+    <!-- Profile -->
+    <div class="lp-box">
+      <h2 class="lp-box-heading">Judicial Scrivener</h2>
+      <div class="lp-profile">
+        <img src="assets/images/profile.jpg" alt="Representative" />
+        <div>
+          <p><strong>Name:</strong> Taro Sasayama</p>
+          <p><strong>Qualification:</strong> Judicial Scrivener</p>
+          <p><strong>Registration No.:</strong> 123456789</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="lp-box-alt">
+      <h2 class="lp-box-heading">Frequently Asked Questions</h2>
+      <dl class="lp-faq-list">
+        <dt class="faq-question">Can foreigners use this service?</dt>
+        <dd class="faq-answer">Yes, we support foreign clients.</dd>
+        <dt class="faq-question">What documents are required?</dt>
+        <dd class="faq-answer">Residence card, passport, photo, etc.</dd>
+      </dl>
+    </div>
+
+    <!-- Access -->
+    <div class="lp-box">
+      <h2 class="lp-box-heading">Access</h2>
+      <div class="lp-access-wrapper">
+        <div class="lp-map">
+          <iframe src="https://maps.google.com" allowfullscreen></iframe>
+        </div>
+        <div class="lp-access-info">
+          <p><strong>Address</strong> 4-24-5 Meieki, Nakamura-ku, Nagoya</p>
+          <p><strong>Phone</strong> 012-3456-7890</p>
+          <p><strong>Business Hours</strong> Weekdays 11:00–20:00</p>
+          <p><strong>Nearest Station</strong> Nagoya Station</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="lp-cta lp-final-cta">
+    <h2>Get in touch today</h2>
+    <p class="lp-cta-lead">Contact us via phone or email</p>
+    <div class="lp-cta-buttons">
+      <a class="cta-button" href="tel:01234567890">Call Us</a>
+      <a class="cta-button primary" href="mailto:info@example.com">Send Email</a>
+    </div>
+  </section>
+
+  <script>
+    // Simple FAQ toggle
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.faq-question')) {
+        e.target.classList.toggle('open');
+        const ans = e.target.nextElementSibling;
+        if (ans && ans.classList.contains('faq-answer')) {
+          ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
