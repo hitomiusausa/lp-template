@@ -2,23 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sasayama Judicial Office</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Sasayama Judicial Office | Visa, Incorporation & Legal Support in English</title>
+  <meta name="description" content="Support for foreign residents and businesses: visa application, company incorporation, and legal services in English. Located near Nagoya Station." />
+
+  <!-- Canonical: LPをサブドメインで正規化 -->
+  <link rel="canonical" href="https://lp.taremimiusagis.com/" />
+
+  <!-- OGP / Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sasayama Judicial Office | Visa, Incorporation & Legal Support" />
+  <meta property="og:description" content="Visa application, company incorporation, and legal services in English." />
+  <meta property="og:url" content="https://lp.taremimiusagis.com/" />
+  <meta property="og:image" content="https://lp.taremimiusagis.com/assets/images/hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- CSS（キャッシュバスター付き） -->
+  <link rel="stylesheet" href="style.css?v=2" />
+
+  <!-- Favicon（任意） -->
+  <link rel="icon" href="/assets/images/logo.png" />
 </head>
 <body>
   <!-- Hero -->
   <section class="lp-hero">
     <h1>Support for Your First Step in Foreign Business</h1>
     <p>Visa application, company incorporation, and legal services in English.</p>
-    <div class="lp-hero-image">
-      <img src="assets/images/hero.jpg" alt="Hero" />
+    <div class="lp-hero-image" data-fallback="Hero image">
+      <img src="assets/images/hero.jpg" alt="Office hero image" loading="eager" />
     </div>
   </section>
 
   <!-- Logo under hero -->
   <section class="lp-logo-under-hero">
-    <img src="assets/images/logo.png" alt="Logo" />
+    <img src="assets/images/logo.png" alt="Sasayama Judicial Office logo" loading="lazy" />
   </section>
 
   <section class="lp-section">
@@ -42,7 +60,7 @@
         <li>Contract Drafting & Translation</li>
       </ul>
       <div class="lp-services-image">
-        <img src="assets/images/services.jpg" alt="Services" />
+        <img src="assets/images/services.jpg" alt="Service illustration" loading="lazy" />
       </div>
     </div>
 
@@ -50,7 +68,7 @@
     <div class="lp-box">
       <h2 class="lp-box-heading">Judicial Scrivener</h2>
       <div class="lp-profile">
-        <img src="assets/images/profile.jpg" alt="Representative" />
+        <img src="assets/images/profile.jpg" alt="Representative portrait" loading="lazy" />
         <div>
           <p><strong>Name:</strong> Taro Sasayama</p>
           <p><strong>Qualification:</strong> Judicial Scrivener</p>
@@ -74,18 +92,12 @@
     <div class="lp-box">
       <h2 class="lp-box-heading">Access</h2>
       <div class="lp-access-wrapper">
-      <div class="lp-map">
-  <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3262.860580805132!2d136.8826091152443!3d35.17091538031637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600370d1d49f0d4f%3A0x2aaf6f6a88f6c6a2!2sNagoya%20Station!5e0!3m2!1sen!2sjp!4v1668934672345!5m2!1sen!2sjp" 
-    width="100%" 
-    height="300" 
-    style="border:0;" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-</div>
-
+        <div class="lp-map">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3262.860580805132!2d136.8826091152443!3d35.17091538031637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600370d1d49f0d4f%3A0x2aaf6f6a88f6c6a2!2sNagoya%20Station!5e0!3m2!1sen!2sjp!4v1668934672345!5m2!1sen!2sjp" 
+            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
         <div class="lp-access-info">
           <p><strong>Address</strong> 4-24-5 Meieki, Nakamura-ku, Nagoya</p>
           <p><strong>Phone</strong> 012-3456-7890</p>
@@ -106,8 +118,28 @@
     </div>
   </section>
 
+  <!-- FAQ schema (SEO rich results) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Can foreigners use this service?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes, we support foreign clients."}
+      },
+      {
+        "@type":"Question",
+        "name":"What documents are required?",
+        "acceptedAnswer":{"@type":"Answer","text":"Residence card, passport, photo, etc."}
+      }
+    ]
+  }
+  </script>
+
+  <!-- Simple FAQ toggle -->
   <script>
-    // Simple FAQ toggle
     document.addEventListener('click', (e) => {
       if (e.target.matches('.faq-question')) {
         e.target.classList.toggle('open');
