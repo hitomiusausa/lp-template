@@ -1,0 +1,49 @@
+{
+  "site": {
+    "title": "Generic Judicial Office | Visa & Incorporation",
+    "description": "Support for visa application, company incorporation, and legal services in English.",
+    "canonical": "https://example.netlify.app/",
+    "ogImage": "/assets/images/hero.jpg",
+    "themeColor": "#114488"
+  },
+  "contact": {
+    "phoneDisplay": "012-0000-0000",
+    "phoneHref": "01200000000",
+    "email": "info@example.com"
+  },
+  "business": {
+    "name": "Generic Judicial Office",
+    "languages": ["English", "Japanese"],
+    "established": "2018",
+    "license": {
+      "title": "Judicial Scrivener",
+      "number": "000000000",
+      "name": "Hanako Generic"
+    }
+  },
+  "hero": {
+    "headline": "Support for Your First Step in Foreign Business",
+    "sub": "Visa application, company incorporation, and legal services in English.",
+    "image": "/assets/images/hero.jpg"
+  },
+  "services": [
+    "Visa Application Support",
+    "Company Incorporation Procedures",
+    "Contract Drafting & Translation"
+  ],
+  "faq": [
+    {"q": "Can foreigners use this service?", "a": "Yes, we support foreign clients."},
+    {"q": "What documents are required?", "a": "Residence card, passport, photo, etc."}
+  ],
+  "access": {
+    "address": "1-1-1 Sample, Chiyoda-ku, Tokyo",
+    "phone": "012-0000-0000",
+    "hours": "Weekdays 10:00–18:00",
+    "nearest": "Tokyo Station",
+    "mapEmbed": "https://www.google.com/maps/embed?pb="
+  },
+  "branding": {
+    "logo": "/assets/images/logo.png",
+    "accentColor": "#2a7ae2"
+  }
+}
