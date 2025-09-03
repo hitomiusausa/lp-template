@@ -1,78 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-  <title>Sasayama Judicial Office | Visa, Incorporation & Legal Support in English</title>
-  <meta name="description" content="Support for foreign residents and businesses: visa application, company incorporation, and legal services in English. Located near Nagoya Station." />
-
-  <!-- Canonical: LPをサブドメインで正規化 -->
-  <link rel="canonical" href="https://lp.taremimiusagis.com/" />
-
-  <!-- OGP / Social -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Sasayama Judicial Office | Visa, Incorporation & Legal Support" />
-  <meta property="og:description" content="Visa application, company incorporation, and legal services in English." />
-  <meta property="og:url" content="https://lp.taremimiusagis.com/" />
-  <meta property="og:image" content="https://lp.taremimiusagis.com/assets/images/hero.jpg" />
-  <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- CSS（キャッシュバスター付き） -->
-  <link rel="stylesheet" href="style.css?v=2" />
-
-  <!-- Favicon（任意） -->
-  <link rel="icon" href="/assets/images/logo.png" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title id="meta-title">LP</title>
+<meta name="description" id="meta-desc" content="">
+<link rel="canonical" id="meta-canonical" href="#">
+<meta property="og:type" content="website">
+<meta property="og:title" id="og-title" content="">
+<meta property="og:description" id="og-desc" content="">
+<meta property="og:url" id="og-url" content="">
+<meta property="og:image" id="og-image" content="">
+<meta name="theme-color" id="meta-theme" content="#ffffff">
+<link rel="icon" href="/assets/favicon.ico">
+<link rel="stylesheet" href="style.css?v=3">
+<style>
+  :root { --accent:#2a7ae2; --brand:#114488; }
+  .hidden{display:none}
+</style>
 </head>
 <body>
   <!-- Hero -->
   <section class="lp-hero">
-    <h1>Support for Your First Step in Foreign Business</h1>
-    <p>Visa application, company incorporation, and legal services in English.</p>
-    <div class="lp-hero-image" data-fallback="Hero image">
-      <img src="assets/images/hero.jpg" alt="Office hero image" loading="eager" />
-    </div>
-  </section>
-
-  <!-- Logo under hero -->
-  <section class="lp-logo-under-hero">
-    <img src="assets/images/logo.png" alt="Sasayama Judicial Office logo" loading="lazy" />
+    <img id="logo" alt="Logo" class="lp-logo-under-hero hidden" />
+    <h1 id="hero-headline"></h1>
+    <p id="hero-sub"></p>
+    <div class="lp-hero-image"><img id="hero-image" alt="Hero"></div>
   </section>
 
   <section class="lp-section">
     <!-- Key Facts -->
     <div class="lp-box">
       <h2 class="lp-box-heading">Key Facts</h2>
-      <ul class="lp-list">
-        <li><strong>Business Name:</strong> Sasayama Judicial Office</li>
-        <li><strong>Languages:</strong> English / Japanese</li>
-        <li><strong>Phone:</strong> 012-3456-7890</li>
-        <li><strong>Established:</strong> 2018</li>
-      </ul>
+      <ul class="lp-list" id="facts"></ul>
     </div>
 
     <!-- Services -->
     <div class="lp-box-alt">
       <h2 class="lp-box-heading">Our Services</h2>
-      <ul class="lp-list">
-        <li>Visa Application Support</li>
-        <li>Company Incorporation Procedures</li>
-        <li>Contract Drafting & Translation</li>
-      </ul>
-      <div class="lp-services-image">
-        <img src="assets/images/services.jpg" alt="Service illustration" loading="lazy" />
-      </div>
+      <ul class="lp-list" id="services"></ul>
+      <div class="lp-services-image"><img id="services-image" alt="Services"></div>
     </div>
 
     <!-- Profile -->
     <div class="lp-box">
       <h2 class="lp-box-heading">Judicial Scrivener</h2>
       <div class="lp-profile">
-        <img src="assets/images/profile.jpg" alt="Representative portrait" loading="lazy" />
+        <img id="profile-image" alt="Representative portrait">
         <div>
-          <p><strong>Name:</strong> Taro Sasayama</p>
-          <p><strong>Qualification:</strong> Judicial Scrivener</p>
-          <p><strong>Registration No.:</strong> 123456789</p>
+          <p><strong>Name:</strong> <span id="rep-name"></span></p>
+          <p><strong>Qualification:</strong> <span id="rep-lic"></span></p>
+          <p><strong>Registration No.:</strong> <span id="rep-num"></span></p>
         </div>
       </div>
     </div>
@@ -80,29 +58,19 @@
     <!-- FAQ -->
     <div class="lp-box-alt">
       <h2 class="lp-box-heading">Frequently Asked Questions</h2>
-      <dl class="lp-faq-list">
-        <dt class="faq-question">Can foreigners use this service?</dt>
-        <dd class="faq-answer">Yes, we support foreign clients.</dd>
-        <dt class="faq-question">What documents are required?</dt>
-        <dd class="faq-answer">Residence card, passport, photo, etc.</dd>
-      </dl>
+      <dl class="lp-faq-list" id="faq"></dl>
     </div>
 
     <!-- Access -->
     <div class="lp-box">
       <h2 class="lp-box-heading">Access</h2>
       <div class="lp-access-wrapper">
-        <div class="lp-map">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3262.860580805132!2d136.8826091152443!3d35.17091538031637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600370d1d49f0d4f%3A0x2aaf6f6a88f6c6a2!2sNagoya%20Station!5e0!3m2!1sen!2sjp!4v1668934672345!5m2!1sen!2sjp" 
-            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-        </div>
+        <div class="lp-map"><iframe id="map" width="100%" height="300" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
         <div class="lp-access-info">
-          <p><strong>Address</strong> 4-24-5 Meieki, Nakamura-ku, Nagoya</p>
-          <p><strong>Phone</strong> 012-3456-7890</p>
-          <p><strong>Business Hours</strong> Weekdays 11:00–20:00</p>
-          <p><strong>Nearest Station</strong> Nagoya Station</p>
+          <p><strong>Address</strong> <span id="addr"></span></p>
+          <p><strong>Phone</strong> <span id="tel"></span></p>
+          <p><strong>Business Hours</strong> <span id="hours"></span></p>
+          <p><strong>Nearest Station</strong> <span id="nearest"></span></p>
         </div>
       </div>
     </div>
@@ -113,42 +81,105 @@
     <h2>Get in touch today</h2>
     <p class="lp-cta-lead">Contact us via phone or email</p>
     <div class="lp-cta-buttons">
-      <a class="cta-button" href="tel:01234567890">Call Us</a>
-      <a class="cta-button primary" href="mailto:info@example.com">Send Email</a>
+      <a class="cta-button" id="cta-call" href="#">Call Us</a>
+      <a class="cta-button primary" id="cta-mail" href="#">Send Email</a>
     </div>
   </section>
 
-  <!-- FAQ schema (SEO rich results) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Can foreigners use this service?",
-        "acceptedAnswer":{"@type":"Answer","text":"Yes, we support foreign clients."}
-      },
-      {
-        "@type":"Question",
-        "name":"What documents are required?",
-        "acceptedAnswer":{"@type":"Answer","text":"Residence card, passport, photo, etc."}
-      }
-    ]
-  }
-  </script>
-
-  <!-- Simple FAQ toggle -->
+  <!-- JSON Loader -->
   <script>
-    document.addEventListener('click', (e) => {
-      if (e.target.matches('.faq-question')) {
-        e.target.classList.toggle('open');
-        const ans = e.target.nextElementSibling;
-        if (ans && ans.classList.contains('faq-answer')) {
+    (async () => {
+      const q = new URLSearchParams(location.search);
+      const dataPath = q.get('data') ? 'data/' + q.get('data') : 'config.json';
+      const conf = await fetch(dataPath, {cache:'no-cache'}).then(r => r.json());
+
+      // theme
+      if (conf.branding?.accentColor) document.documentElement.style.setProperty('--accent', conf.branding.accentColor);
+      if (conf.site?.themeColor) document.getElementById('meta-theme').setAttribute('content', conf.site.themeColor);
+
+      // meta / og
+      const T = conf.site?.title || 'LP';
+      const D = conf.site?.description || '';
+      const C = conf.site?.canonical || location.href;
+      document.title = T;
+      document.getElementById('meta-title').textContent = T;
+      document.getElementById('meta-desc').setAttribute('content', D);
+      document.getElementById('meta-canonical').setAttribute('href', C);
+      document.getElementById('og-title').setAttribute('content', T);
+      document.getElementById('og-desc').setAttribute('content', D);
+      document.getElementById('og-url').setAttribute('content', C);
+      document.getElementById('og-image').setAttribute('content', conf.site?.ogImage || '/assets/images/hero.jpg');
+
+      // hero
+      document.getElementById('hero-headline').textContent = conf.hero?.headline || '';
+      document.getElementById('hero-sub').textContent = conf.hero?.sub || '';
+      document.getElementById('hero-image').src = conf.hero?.image || '/assets/images/hero.jpg';
+
+      // logo
+      if (conf.branding?.logo) {
+        const lg = document.getElementById('logo');
+        lg.src = conf.branding.logo; lg.classList.remove('hidden');
+      }
+
+      // facts
+      const facts = [
+        ['Business Name', conf.business?.name],
+        ['Languages', (conf.business?.languages || []).join(' / ')],
+        ['Phone', conf.contact?.phoneDisplay],
+        ['Established', conf.business?.established],
+      ].filter(x => x[1]);
+      document.getElementById('facts').innerHTML = facts.map(x => `<li><strong>${x[0]}:</strong> ${x[1]}</li>`).join('');
+
+      // profile
+      document.getElementById('profile-image').src = conf.branding?.profileImage || '/assets/images/profile.jpg';
+      document.getElementById('rep-name').textContent = conf.business?.license?.name || '';
+      document.getElementById('rep-lic').textContent = conf.business?.license?.title || '';
+      document.getElementById('rep-num').textContent = conf.business?.license?.number || '';
+
+      // services
+      document.getElementById('services').innerHTML = (conf.services || []).map(s => `<li>${s}</li>`).join('');
+      document.getElementById('services-image').src = conf.branding?.servicesImage || '/assets/images/services.jpg';
+
+      // faq
+      document.getElementById('faq').innerHTML = (conf.faq || []).map(f => `
+        <dt class="faq-question">${f.q}</dt>
+        <dd class="faq-answer" style="display:none">${f.a}</dd>`).join('');
+
+      // access
+      document.getElementById('addr').textContent   = conf.access?.address || '';
+      document.getElementById('tel').textContent    = conf.access?.phone || '';
+      document.getElementById('hours').textContent  = conf.access?.hours || '';
+      document.getElementById('nearest').textContent= conf.access?.nearest || '';
+      document.getElementById('map').src            = conf.access?.mapEmbed || '';
+
+      // CTA
+      document.getElementById('cta-call').href = 'tel:' + (conf.contact?.phoneHref || '');
+      document.getElementById('cta-mail').href = 'mailto:' + (conf.contact?.email || '');
+
+      // FAQ toggle
+      document.addEventListener('click', (e) => {
+        if (e.target.matches('.faq-question')) {
+          const ans = e.target.nextElementSibling;
           ans.style.display = ans.style.display === 'block' ? 'none' : 'block';
         }
+      });
+
+      // JSON-LD (FAQ)
+      if (conf.faq?.length) {
+        const ld = {
+          "@context":"https://schema.org",
+          "@type":"FAQPage",
+          "mainEntity": conf.faq.map(f => ({
+            "@type":"Question",
+            "name": f.q,
+            "acceptedAnswer": {"@type":"Answer","text": f.a}
+          }))
+        };
+        const s = document.createElement('script');
+        s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld);
+        document.body.appendChild(s);
       }
-    });
+    })();
   </script>
 </body>
 </html>
