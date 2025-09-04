@@ -1,5 +1,5 @@
 // JSONファイルのパスを指定（例：同じディレクトリにある client-data.json）
-fetch('client-data.json')
+fetch('config.json')
   .then(response => response.json())
   .then(data => {
     // シンプルなテキスト・画像の反映
