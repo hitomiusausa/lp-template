@@ -1,0 +1,39 @@
+{
+  "main_message": "うさうさな毎日を！",
+  "key_facts": {
+    "name": "USA office",
+    "location": "愛知県日進市",
+    "language": "日本語／英語",
+    "founded": "1999年",
+    "services": "VISA更新・申請・翻訳",
+    "tel_display": "080-xxx-xxx",
+    "tel_link": "tel:080xxxxxx",
+    "reservation_url": "https://www.yahoo.co.jp/"
+  },
+  "owner": {
+    "name": "人参作り1級",
+    "image": "うさ　うさぎ",
+    "license": "123456",
+    "reg_number": "9876554"
+  },
+  "faq": [
+    {
+      "q": "アライグマはいますか",
+      "a": "はい、3匹います"
+    },
+    {
+      "q": "冷房は効いていますか",
+      "a": "はい、十分に効いています"
+    }
+  ],
+  "access": {
+    "address": "811-0333 愛知県日進市魚3-22-33",
+    "station": "まじま駅",
+    "hours": "平日 10:00〜19:00\n休日 11:00〜17:00"
+  },
+  "cta": {
+    "mid1": "まずはご連絡ください",
+    "mid2": "全力でお話を聞きます",
+    "final": "ご連絡をお待ちしています"
+  }
+}
