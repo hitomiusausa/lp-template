@@ -1,70 +1,72 @@
-// lp_script.js
+// lp_script.js（フラットJSON対応・ID整合済み）
 fetch("config.json")
-  .then(response => response.json())
+  .then(r => r.json())
   .then(data => {
     const setText = (id, text) => {
       const el = document.getElementById(id);
-      if (el && text) el.textContent = text;
+      if (!el) return;
+      if (text !== undefined && text !== null && String(text).trim() !== "") {
+        el.textContent = text;
+      }
     };
-
     const setImage = (id, src) => {
       const el = document.getElementById(id);
-      if (el && src) el.src = src;
+      if (el && src && String(src).trim() !== "") el.src = src;
     };
-
     const setLink = (id, href) => {
       const el = document.getElementById(id);
-      if (el && href) el.href = href;
+      if (el && href && String(href).trim() !== "") el.href = href;
     };
-
-    const setMap = (id, src) => {
+    const setSrc = (id, src) => {
       const el = document.getElementById(id);
-      if (el && src) el.src = src;
+      if (el && src && String(src).trim() !== "") el.src = src;
     };
 
-    // Hero Section
-    setImage("hero_image", data.hero_image);
-    setText("key_name", data.key_facts?.name);
-    setText("hero_message", data.hero_message);
+    // --- Hero ---
+    setImage("hero_image", data.hero_image);               // 例: "/assets/images/hero.jpg"
     setImage("hero_logo", data.hero_logo);
+    setText("key_name", data.key_name);                    // H1
+    // hero_message が無ければ hero_title → それも無ければ "" に
+    setText("hero_message", data.hero_message || "");
+    setText("hero_title", data.hero_title || "");          // 追加表示用（HTML側も追加済）
 
-    // Message Section
+    // --- Message ---
     setText("main_message", data.main_message);
- 　　setText("key_name", data.key_name);
-    setText("cta_mid1", data.cta?.mid1);
+    setText("cta_mid1", data.cta_mid1);
 
-    // Key Facts
-    setText("key_location", data.key_facts?.location);
-    setText("key_language", data.key_facts?.language);
-    setText("key_founded", data.key_facts?.founded);
-    setText("key_services", data.key_facts?.services);
-    setText("key_tel_display", data.key_facts?.tel_display);
-    setLink("key_tel_link", data.key_facts?.tel_link);
-    setLink("key_reservation_url", data.key_facts?.reservation_url);
+    // --- Key Facts（フラットJSON） ---
+    setText("key_name_fact", data.key_name);               // 事業所名（辞書側）
+    setText("key_location", data.key_location);
+    setText("key_language", data.key_language);
+    setText("key_founded", data.key_founded);
+    setText("key_services", data.key_services);
+    setText("key_tel_display", data.key_tel_display);
+    setLink("key_tel_link", data.key_tel_link);
+    setLink("key_reservation_url", data.key_reservation_url);
 
-    // Owner Section
-    setImage("owner_image", data.owner?.image);
-    setText("owner_name", data.owner?.name);
-    setText("owner_license", data.owner?.license);
-    setText("owner_reg_number", data.owner?.reg_number);
-    setText("owner_cert_number", data.owner?.cert_number);
+    // --- Owner（フラットJSON） ---
+    setImage("owner_image", data.owner_image);
+    setText("owner_name", data.owner_name);
+    setText("owner_license", data.owner_license);
+    setText("owner_reg_number", data.owner_reg_number);
+    setText("owner_cert_number", data.owner_cert_number);
 
-    // FAQ
-    setText("faq_q1", data.faq?.[0]?.q);
-    setText("faq_a1", data.faq?.[0]?.a);
-    setText("faq_q2", data.faq?.[1]?.q);
-    setText("faq_a2", data.faq?.[1]?.a);
-    setText("faq_q3", data.faq?.[2]?.q);
-    setText("faq_a3", data.faq?.[2]?.a);
+    // --- FAQ（フラットJSON） ---
+    setText("faq_q1", data.faq_q1);
+    setText("faq_a1", data.faq_a1);
+    setText("faq_q2", data.faq_q2);
+    setText("faq_a2", data.faq_a2);
+    setText("faq_q3", data.faq_q3);
+    setText("faq_a3", data.faq_a3);
 
-    // Access
-    setMap("access_map", data.access?.map_embed);
-    setText("access_address", data.access?.address);
-    setText("access_hours", data.access?.hours);
-    setText("access_station", data.access?.station);
-    setText("key_tel_display_access", data.key_facts?.tel_display);
+    // --- Access（フラットJSON） ---
+    setSrc("access_map", data.access_map);                 // 例: Google Map の embed URL
+    setText("access_address", data.access_address);
+    setText("access_hours", data.access_hours);
+    setText("access_station", data.access_station);
 
-    // Final CTA
-    setText("cta_final", data.cta?.final);
+    // --- CTA ---
+    setText("cta_mid2", data.cta_mid2);
+    setText("cta_final", data.cta_final);
   })
-  .catch(err => console.error("JSON読み込みエラー", err));
+  .catch(err => console.error("JSON読み込みエラー:", err));
