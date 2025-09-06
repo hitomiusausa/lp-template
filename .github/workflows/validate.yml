@@ -1,0 +1,21 @@
+name: Validate LP
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Validate JSON
+        run: jq -e . config.json > /dev/null
+
+      - name: Check image files
+        run: |
+          test -f ./assets/images/hero.jpg
+          test -f ./assets/images/logo.png
+          test -f ./assets/images/profile.jpg
+          test -f ./assets/images/services.jpg
