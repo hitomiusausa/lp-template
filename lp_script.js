@@ -9,10 +9,16 @@ fetch("config.json")
         el.textContent = text;
       }
     };
-    const setImage = (id, src) => {
-      const el = document.getElementById(id);
-      if (el && src && String(src).trim() !== "") el.src = src;
-    };
+const setImage = (id, src, fallback = "logo.png") => {
+  const el = document.getElementById(id);
+  if (!el || !src) return;
+  el.src = src;
+  el.addEventListener("error", () => {
+    console.warn(`[image-missing] ${src} → fallback: ${fallback}`);
+    el.src = fallback;
+  }, { once: true });
+};
+
     const setLink = (id, href) => {
       const el = document.getElementById(id);
       if (el && href && String(href).trim() !== "") el.href = href;
