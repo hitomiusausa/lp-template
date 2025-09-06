@@ -1,53 +1,32 @@
 {
-  "site": {
-    "title": "Green Bridge Legal Office | Visa & Incorporation (Nagoya)",
-    "description": "English-friendly support for visa, company setup, and legal paperwork near Nagoya Station.",
-    "canonical": "https://lp.client-demo.example/",
-    "ogImage": "/assets/images/hero.jpg",
-    "themeColor": "#0f3b5f"
-  },
-  "contact": {
-    "phoneDisplay": "052-123-4567",
-    "phoneHref": "0521234567",
-    "email": "contact@greenbridge-legal.example"
-  },
-  "business": {
-    "name": "Green Bridge Legal Office",
-    "languages": ["English", "Japanese"],
-    "established": "2020",
-    "license": {
-      "title": "Judicial Scrivener",
-      "number": "A-987654321",
-      "name": "Taro Green"
-    }
-  },
-  "hero": {
-    "headline": "Your Legal Bridge in Japan",
-    "sub": "Visa, incorporation, and contracts—handled in clear English.",
-    "image": "/assets/images/hero.jpg"
-  },
-  "services": [
-    "Work/Spouse/Business Visa Application",
-    "Company Incorporation (KK/GK) Paperwork",
-    "Contract Drafting, Review & Translation",
-    "Address Registration & Seal Certification"
-  ],
-  "faq": [
-    {"q": "Do you provide service in English?", "a": "Yes, consultations and documents can be handled in English."},
-    {"q": "How long does a visa application take?", "a": "Typically 1–3 months depending on the case."},
-    {"q": "What should I prepare for incorporation?", "a": "Proposed company name, business purpose, address, and ID documents."}
-  ],
-  "access": {
-    "address": "4-24-5 Meieki, Nakamura-ku, Nagoya",
-    "phone": "052-123-4567",
-    "hours": "Weekdays 11:00–20:00",
-    "nearest": "Nagoya Station",
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3262.860580805132!2d136.8826091152443!3d35.17091538031637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600370d1d49f0d4f%3A0x2aaf6f6a88f6c6a2!2sNagoya%20Station!5e0!3m2!1sen!2sjp!4v1668934672345!5m2!1sen!2sjp"
-  },
-  "branding": {
-    "logo": "/assets/images/logo.png",
-    "accentColor": "#2f9e44",
-    "profileImage": "/assets/images/profile.jpg",
-    "servicesImage": "/assets/images/services.jpg"
-  }
+  "hero_title": "",
+  "main_message": "Visa, incorporation, and contracts—handled in clear English.",
+  "hero_image": "/assets/images/hero.jpg",
+  "hero_logo": "",
+  "key_name": "Green Bridge Legal Office",
+  "key_location": "",
+  "key_language": "English / Japanese",
+  "key_founded": "",
+  "key_services": "",
+  "key_tel_display": "",
+  "key_tel_link": "",
+  "key_reservation_url": "",
+  "owner_image": "",
+  "owner_name": "Taro Green",
+  "owner_license": "",
+  "owner_reg_number": "",
+  "owner_cert_number": "",
+  "access_map": "",
+  "access_address": "4-24-5 Meieki, Nakamura-ku, Nagoya",
+  "access_hours": "Weekdays 11:00–20:00",
+  "access_station": "",
+  "cta_mid1": "",
+  "cta_mid2": "",
+  "cta_final": "",
+  "faq_q1": "Do you provide service in English?",
+  "faq_a1": "Yes, consultations and documents can be handled in English.",
+  "faq_q2": "How long does a visa application take?",
+  "faq_a2": "Typically 1–3 months depending on the case.",
+  "faq_q3": "What should I prepare for incorporation?",
+  "faq_a3": "Proposed company name, business purpose, address, and ID documents."
 }
