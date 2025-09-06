@@ -10,12 +10,28 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Validate JSON
+      # JSONの構文が壊れてたら即Fail
+      - name: Validate JSON syntax
         run: jq -e . config.json > /dev/null
 
+      # JSONスキーマ検証（必須キー/型ミスをブロック）
+      - name: Validate with JSON Schema (AJV)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npx --yes ajv-cli@5 validate -s schema.json -d config.json
+
+      # 必要な画像ファイルの存在チェック
       - name: Check image files
         run: |
           test -f ./assets/images/hero.jpg
           test -f ./assets/images/logo.png
           test -f ./assets/images/profile.jpg
           test -f ./assets/images/services.jpg
+
+      # _headers に no-store が入ってるかの簡易チェック（任意）
+      - name: Check _headers
+        run: |
+          test -f ./_headers
+          grep -q "/config.json" ./_headers
+          grep -q "Cache-Control: no-store" ./_headers
