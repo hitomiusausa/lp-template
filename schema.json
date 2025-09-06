@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LP Config",
+  "type": "object",
+  "properties": {
+    "hero_image": { "type": "string", "minLength": 1 },
+    "hero_logo": { "type": "string", "minLength": 1 },
+    "owner_image": { "type": "string", "minLength": 1 },
+    "services_image": { "type": "string", "minLength": 1 },
+
+    "hero_title": { "type": "string" },
+    "hero_message": { "type": "string" },
+    "main_message": { "type": "string", "minLength": 1 },
+
+    "key_name": { "type": "string", "minLength": 1 },
+    "key_location": { "type": "string", "minLength": 1 },
+    "key_language": { "type": "string", "minLength": 1 },
+    "key_founded": { "type": "string" },
+    "key_services": { "type": "string" },
+    "key_tel_display": { "type": "string", "minLength": 1 },
+    "key_tel_link": { "type": "string", "pattern": "^(tel:|\\+|[0-9]).*" },
+    "key_reservation_url": { "type": "string", "pattern": "^https?://" },
+
+    "owner_name": { "type": "string" },
+    "owner_license": { "type": "string" },
+    "owner_reg_number": { "type": "string" },
+    "owner_cert_number": { "type": "string" },
+
+    "faq_q1": { "type": "string" },
+    "faq_a1": { "type": "string" },
+    "faq_q2": { "type": "string" },
+    "faq_a2": { "type": "string" },
+    "faq_q3": { "type": "string" },
+    "faq_a3": { "type": "string" },
+
+    "access_map": { "type": "string" },
+    "access_address": { "type": "string", "minLength": 1 },
+    "access_hours": { "type": "string" },
+    "access_station": { "type": "string" },
+
+    "cta_mid1": { "type": "string" },
+    "cta_mid2": { "type": "string" },
+    "cta_final": { "type": "string", "minLength": 1 }
+  },
+  "required": [
+    "hero_image",
+    "hero_logo",
+    "main_message",
+    "key_name",
+    "key_location",
+    "key_language",
+    "key_tel_display",
+    "cta_final",
+    "access_address"
+  ],
+  "additionalProperties": true
+}
