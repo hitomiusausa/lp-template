@@ -30,7 +30,7 @@ fetch("config.json")
 
     // Message Section
     setText("main_message", data.main_message);
- 　　setText("main_message", data.main_message);
+ 　　setText("key_name", data.key_name);
     setText("cta_mid1", data.cta?.mid1);
 
     // Key Facts
