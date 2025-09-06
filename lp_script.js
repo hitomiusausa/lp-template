@@ -1,65 +1,69 @@
-// JSONファイルのパスを指定（例：同じディレクトリにある client-data.json）
-fetch('config.json')
+// lp_script.js
+fetch("config.json")
   .then(response => response.json())
   .then(data => {
-    // シンプルなテキスト・画像の反映
-    const set = (id, value) => {
+    const setText = (id, text) => {
       const el = document.getElementById(id);
-      if (el && value) el.textContent = value;
+      if (el && text) el.textContent = text;
     };
-    const setImg = (id, src) => {
+
+    const setImage = (id, src) => {
       const el = document.getElementById(id);
       if (el && src) el.src = src;
     };
+
     const setLink = (id, href) => {
       const el = document.getElementById(id);
       if (el && href) el.href = href;
     };
 
-    set('main_message', data.main_message);
-    set('hero_message', data.hero_message);
-    setImg('hero_image', data.hero_image);
-    setImg('hero_logo', data.hero_logo);
+    const setMap = (id, src) => {
+      const el = document.getElementById(id);
+      if (el && src) el.src = src;
+    };
+
+    // Hero Section
+    setImage("hero_image", data.hero_image);
+    setText("key_name", data.key_facts?.name);
+    setText("hero_message", data.hero_message);
+    setImage("hero_logo", data.hero_logo);
+
+    // Message Section
+    setText("main_message", data.main_message);
+    setText("cta_mid1", data.cta?.mid1);
 
     // Key Facts
-    const kf = data.key_facts || {};
-    set('key_name', kf.name);
-    set('key_name_fact', kf.name);
-    set('key_location', kf.location);
-    set('key_language', kf.language);
-    set('key_founded', kf.founded);
-    set('key_services', kf.services);
-    set('key_tel_display', kf.tel_display);
-    set('key_tel_display_access', kf.tel_display);
-    setLink('key_tel_link', kf.tel_link);
-    setLink('key_reservation_url', kf.reservation_url);
+    setText("key_location", data.key_facts?.location);
+    setText("key_language", data.key_facts?.language);
+    setText("key_founded", data.key_facts?.founded);
+    setText("key_services", data.key_facts?.services);
+    setText("key_tel_display", data.key_facts?.tel_display);
+    setLink("key_tel_link", data.key_facts?.tel_link);
+    setLink("key_reservation_url", data.key_facts?.reservation_url);
 
-    // Owner
-    const owner = data.owner || {};
-    set('owner_name', owner.name);
-    setImg('owner_image', owner.image);
-    set('owner_license', owner.license);
-    set('owner_reg_number', owner.reg_number);
-    set('owner_cert_number', owner.cert_number);
+    // Owner Section
+    setImage("owner_image", data.owner?.image);
+    setText("owner_name", data.owner?.name);
+    setText("owner_license", data.owner?.license);
+    setText("owner_reg_number", data.owner?.reg_number);
+    setText("owner_cert_number", data.owner?.cert_number);
 
     // FAQ
-    const faq = data.faq || [];
-    if (faq[0]) { set('faq_q1', faq[0].q); set('faq_a1', faq[0].a); }
-    if (faq[1]) { set('faq_q2', faq[1].q); set('faq_a2', faq[1].a); }
-    if (faq[2]) { set('faq_q3', faq[2].q); set('faq_a3', faq[2].a); }
+    setText("faq_q1", data.faq?.[0]?.q);
+    setText("faq_a1", data.faq?.[0]?.a);
+    setText("faq_q2", data.faq?.[1]?.q);
+    setText("faq_a2", data.faq?.[1]?.a);
+    setText("faq_q3", data.faq?.[2]?.q);
+    setText("faq_a3", data.faq?.[2]?.a);
 
-    // アクセス
-    const access = data.access || {};
-    const map = document.getElementById('access_map');
-    if (map && access.map_embed) map.src = access.map_embed;
-    set('access_address', access.address);
-    set('access_hours', access.hours);
-    set('access_station', access.station);
+    // Access
+    setMap("access_map", data.access?.map_embed);
+    setText("access_address", data.access?.address);
+    setText("access_hours", data.access?.hours);
+    setText("access_station", data.access?.station);
+    setText("key_tel_display_access", data.key_facts?.tel_display);
 
-    // CTA
-    const cta = data.cta || {};
-    set('cta_mid1', cta.mid1);
-    set('cta_mid2', cta.mid2);
-    set('cta_final', cta.final);
+    // Final CTA
+    setText("cta_final", data.cta?.final);
   })
-  .catch(err => console.error('JSON読み込みエラー:', err));
+  .catch(err => console.error("JSON読み込みエラー", err));
