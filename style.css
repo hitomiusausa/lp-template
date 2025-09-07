@@ -7,6 +7,9 @@
   --bg:#f8fafc;
   --brand-hover:#1c64e0;   /* ホバー時 */
   --brand-active:#1858c7;  /* クリック時 */
+  --radius-cta: 16px;                 /* 角の丸み（ちょい丸） */
+  --hover-shadow: 0 10px 24px rgba(0,0,0,.14);
+  --hover-ring: 0 0 0 3px rgba(31,111,235,.12); /* うっすらリング */
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
@@ -163,4 +166,49 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .btn-label{ font-weight:700; font-size:clamp(15px,2.7vw,18px); }
 .btn-sub{ font-weight:600; font-size:clamp(13px,2.4vw,16px); opacity:.9; margin-top:2px; }
 .btn-phone{ flex-direction:column; align-items:center; gap:4px; line-height:1.25; }
+
+/* 角の丸みを少しアップ（電話/予約 共通） */
+.cta-actions .btn{
+  border-radius: var(--radius-cta);
+}
+
+/* ホバーをちょい強め＆フォーカスと統一 */
+.cta-actions .btn{
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease;
+}
+.cta-actions .btn:hover,
+.cta-actions .btn:focus-visible{
+  transform: translateY(-2px);                               /* ふわっと */
+  box-shadow: var(--hover-shadow), var(--hover-ring);         /* 影＋リング */
+}
+
+/* 電話（primary）：色変化を明確に */
+.btn-primary:hover,
+.btn-primary:focus-visible{
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
+  filter: none;
+}
+
+/* 予約（outline）：枠・文字色もブランド寄りに */
+.btn-outline:hover,
+.btn-outline:focus-visible{
+  background: #f0f6ff;                 /* うっすら青背景 */
+  border-color: var(--brand-hover);
+  color: var(--brand);
+}
+
+/* クリック中は沈ませる（共通） */
+.cta-actions .btn:active{
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0,0,0,.10);
+}
+
+/* 動き控えめ派の環境にも優しく */
+@media (prefers-reduced-motion: reduce){
+  .cta-actions .btn{ transition: background-color .18s ease, border-color .18s ease, filter .18s ease; }
+  .cta-actions .btn:hover,
+  .cta-actions .btn:focus-visible{ transform:none; }
+}
+
 
