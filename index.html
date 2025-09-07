@@ -165,4 +165,54 @@
 
   <script src="lp_script.js" defer></script>
 </body>
+
+<!-- ===== Footer ===== -->
+<footer class="lp-footer" role="contentinfo">
+  <div class="lp-footer-inner lp-section">
+    <!-- Brand / NAP -->
+    <div class="footer-col">
+      <div class="footer-brand">
+        <img id="footer_logo" src="/assets/images/logo.png" alt="ロゴ" width="72" height="72" loading="lazy">
+        <div>
+          <p class="footer-name" id="footer_name"></p>
+          <p class="footer-license">
+            <span id="footer_license"></span>
+            <span id="footer_reg"></span>
+            <span id="footer_cert"></span>
+          </p>
+        </div>
+      </div>
+      <p class="footer-nap">
+        <span id="footer_address"></span><br>
+        <a id="footer_tel_link" href="#"><span id="footer_tel"></span></a><br>
+        <span id="footer_hours"></span>
+      </p>
+    </div>
+
+    <!-- Quick Links（内部導線） -->
+    <nav class="footer-col" aria-label="Footer">
+      <h3 class="footer-head">Quick Links</h3>
+      <ul class="footer-links">
+        <li><a href="#visa_section">サービス対象（ビザ）</a></li>
+        <li><a href="#pricing_section">料金・相談プラン</a></li>
+        <li><a href="#faq">よくある質問</a></li>
+        <li><a href="#cta_final_block">予約・お問い合わせ</a></li>
+      </ul>
+    </nav>
+
+    <!-- Legal / Misc -->
+    <div class="footer-col">
+      <h3 class="footer-head">Legal</h3>
+      <ul class="footer-links">
+        <li><a id="footer_privacy" href="#" target="_blank" rel="noopener">プライバシーポリシー</a></li>
+        <li><a id="footer_terms" href="#" target="_blank" rel="noopener">利用規約</a></li>
+      </ul>
+      <p class="footer-copy">© <span id="footer_year"></span> <span id="footer_name_copy"></span></p>
+    </div>
+  </div>
+
+  <!-- 構造化データ（生成をJSで差し込む） -->
+  <script type="application/ld+json" id="org_jsonld"></script>
+</footer>
+
 </html>
