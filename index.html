@@ -170,24 +170,21 @@
 <!-- ===== Footer ===== -->
 <footer class="lp-footer" role="contentinfo">
   <div class="lp-footer-inner lp-section">
-    <!-- Brand / NAP -->
-    <div class="footer-col">
+    <!-- 左カラム：ロゴ＋NAP＋営業時間 -->
+    <div class="footer-col footer-col-left">
       <div class="footer-brand">
         <img id="footer_logo" src="/assets/images/logo.png" alt="ロゴ" width="72" height="72" loading="lazy">
-        <div>
+        <div class="footer-brand-text">
           <p class="footer-name" id="footer_name"></p>
-          <p class="footer-license">
-            <span id="footer_license"></span>
-            <span id="footer_reg"></span>
-            <span id="footer_cert"></span>
+          <p class="footer-address" id="footer_address"></p>
+          <p class="footer-contact"><a id="footer_tel_link" href="#"><span id="footer_tel"></span></a></p>
+          <p class="footer-hours">
+            <span id="footer_hours_weekday"></span>
+            <span id="footer_hours_sep" aria-hidden="true" style="display:none;"> / </span>
+            <span id="footer_hours_holiday"></span>
           </p>
         </div>
       </div>
-      <p class="footer-nap">
-        <span id="footer_address"></span><br>
-        <a id="footer_tel_link" href="#"><span id="footer_tel"></span></a><br>
-        <span id="footer_hours"></span>
-      </p>
     </div>
 
     <!-- Quick Links（内部導線） -->
