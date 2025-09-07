@@ -5,6 +5,10 @@
   --brand:#1f6feb;
   --ink:#222;
   --bg:#f8fafc;
+  --brand-hover:#1c64e0;   /* ホバー時 */
+  --brand-active:#1858c7;  /* クリック時 */
+}
+
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
@@ -124,6 +128,23 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }   /* 下線ナシ */
 .cta-actions .btn:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.12); }
 .btn-primary:hover{ filter:brightness(0.96); }
 .btn-outline:hover{ background:#f3f4f6; }
+
+/* 電話ボタンも色でホバー表現 */
+.btn-primary:hover,
+.btn-primary:focus-visible{
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
+  filter: none;                 /* 以前のbrightnessを打ち消し */
+}
+
+/* クリック中の色も合わせて統一感 */
+.btn-primary:active{
+  background: var(--brand-active);
+  border-color: var(--brand-active);
+  transform: translateY(0);     /* 浮きすぎ防止（好みで調整） */
+  box-shadow: 0 4px 12px rgba(0,0,0,.10);
+}
+
 
 .btn-label, .btn-sub{ display:block; line-height:1.25; }
 .btn-label{ font-weight:700; font-size:clamp(15px,2.7vw,18px); }
