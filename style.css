@@ -43,18 +43,14 @@ h1,h2{ margin: 0 0 16px; }
 /* =========================
    Hero（今風フル幅バージョン）
    ========================= */
-/* =========================
-   Hero（今風フル幅バージョン：コンテナ解除型）
-   ========================= */
 
-/* ヒーローだけコンテナ制限を外す */
+/* ヒーローはコンテナ制限を解除してフル幅 */
 .lp-section.lp-hero{
   padding: 0;
   max-width: none;
   margin: 0;
 }
 
-/* 画面端まで広げる */
 .lp-hero .lp-hero-image{
   position: relative;
   width: 100%;
@@ -62,7 +58,7 @@ h1,h2{ margin: 0 0 16px; }
   overflow: hidden;
 }
 
-/* 画像は親いっぱいにフィット */
+/* 画像は親いっぱいにフィット（100vwは使わない） */
 .lp-hero .lp-hero-image img{
   width: 100%;
   height: 100%;
@@ -71,66 +67,48 @@ h1,h2{ margin: 0 0 16px; }
   border-radius: 0;
 }
 
-/* （任意）グラデーション＆テキスト重ね */
+/* 任意のオーバーレイ */
 .lp-hero .lp-hero-image::before{
   content:'';
-  position:absolute; inset:0;
+  position:absolute;
+  inset:0;
   background: linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.1));
   z-index:1;
 }
+
 .lp-hero .lp-hero-overlay{
-  position:absolute; inset:0; z-index:2;
-  display:grid; place-content:center; text-align:center; color:#fff;
-  text-shadow:0 2px 12px rgba(0,0,0,.35); padding:16px;
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:grid;
+  place-content:center;
+  text-align:center;
+  color:#fff;
+  text-shadow:0 2px 12px rgba(0,0,0,.35);
+  padding:16px;
 }
 
-
-/* ヒーロー画像に直接効かせるスタイル */
-.lp-hero-image img {
-  width: 100vw;
-  min-width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 0;
-}
-
-/* 中央メッセージ */
-.lp-hero-overlay {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  text-align: center;
-  z-index: 2;
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
-  padding: 16px;
-}
-
-/* キャッチコピー */
-.lp-hero-overlay h1 {
-  margin: 0.2em 0;
+/* キャッチコピー / サブコピー */
+.lp-hero .lp-hero-overlay h1{
+  margin: .2em 0;
   font-size: clamp(28px, 6vw, 48px);
 }
-
-/* サブコピー */
-.lp-hero-overlay p {
+.lp-hero .lp-hero-overlay p{
   margin: 0;
   font-size: clamp(16px, 3vw, 20px);
 }
 
 /* ロゴ */
-.lp-hero-logo {
-  display: grid;
-  place-content: center;
-  margin-top: 16px;
+.lp-hero-logo{
+  display:grid;
+  place-content:center;
+  margin-top:16px;
 }
-
-.lp-hero-logo img {
+.lp-hero-logo img{
   width: clamp(120px, 18vw, 220px);
   height: auto;
 }
+
 
 /* =========================
    Key Facts
