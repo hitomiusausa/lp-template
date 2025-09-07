@@ -43,14 +43,47 @@ h1,h2{ margin: 0 0 16px; }
 /* =========================
    Hero（今風フル幅バージョン）
    ========================= */
-.lp-hero-image {
+/* =========================
+   Hero（今風フル幅バージョン：コンテナ解除型）
+   ========================= */
+
+/* ヒーローだけコンテナ制限を外す */
+.lp-section.lp-hero{
+  padding: 0;
+  max-width: none;
+  margin: 0;
+}
+
+/* 画面端まで広げる */
+.lp-hero .lp-hero-image{
   position: relative;
   width: 100%;
-  max-width: 100vw;!important;
   height: clamp(320px, 60vh, 720px);
-  margin: 0 auto;
   overflow: hidden;
 }
+
+/* 画像は親いっぱいにフィット */
+.lp-hero .lp-hero-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+/* （任意）グラデーション＆テキスト重ね */
+.lp-hero .lp-hero-image::before{
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.1));
+  z-index:1;
+}
+.lp-hero .lp-hero-overlay{
+  position:absolute; inset:0; z-index:2;
+  display:grid; place-content:center; text-align:center; color:#fff;
+  text-shadow:0 2px 12px rgba(0,0,0,.35); padding:16px;
+}
+
 
 /* ヒーロー画像に直接効かせるスタイル */
 .lp-hero-image img {
@@ -60,16 +93,6 @@ h1,h2{ margin: 0 0 16px; }
   object-fit: cover;
   display: block;
   border-radius: 0;
-}
-
-
-/* グラデーションオーバーレイ（黒→透明） */
-.lp-hero-image::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
-  z-index: 1;
 }
 
 /* 中央メッセージ */
