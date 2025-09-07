@@ -105,7 +105,8 @@
   fetch(file, { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
-
+      validateConfig(data);
+      applySEOMeta(data);
       function validateConfig(d){
   const required = ['key_name','hero_image'];
   const missing = required.filter(k => !d[k] || String(d[k]).trim()==='');
