@@ -56,7 +56,9 @@ h1,h2{ margin: 0 0 16px; }
   width: 100%;
   height: clamp(320px, 60vh, 720px);
   overflow: hidden;
-}
+  aspect-ratio: 1920 / 1000;/* 余白チラつき軽減 */
+} 
+
 
 /* 画像は親いっぱいにフィット（100vwは使わない） */
 .lp-hero .lp-hero-image img{
@@ -65,7 +67,9 @@ h1,h2{ margin: 0 0 16px; }
   object-fit: cover;
   display: block;
   border-radius: 0;
+  object-position: center 40%;  /* 被写体がやや上 */
 }
+
 
 /* 任意のオーバーレイ */
 .lp-hero .lp-hero-image::before{
