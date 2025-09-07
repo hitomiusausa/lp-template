@@ -55,9 +55,12 @@ img{max-width:100%;height:auto;display:block}
 
 /* --- FAQ accordion --- */
 .faq { margin: 0; padding: 0; }
-.faq dt { margin: 12px 0 0; }
+.faq dt { margin: 12px 0 0; }                 /* 質問どうしの間隔 */
 .faq dd { margin: 8px 0 16px; padding: 0 12px; }
-.faq-a[hidden] { display: none; }
+
+.faq-a[hidden] { display: none; }             /* 完全に閉じてる時 */
+.faq-a { overflow: hidden; max-height: 0; transition: max-height .25s ease; }
+.faq-a.open { max-height: 600px; }            /* しゅるん展開（必要なら数値UP） */
 
 .faq-q {
   width: 100%;
@@ -65,15 +68,12 @@ img{max-width:100%;height:auto;display:block}
   padding: 12px 16px;
   border: 1px solid #e5e7eb; border-radius: 10px;
   background: #fff; cursor: pointer; text-align: left;
-  font: inherit;
+  font: inherit; 
+  font-weight: 700;                            /* ← 常に太字（継承ブレ対策） */
 }
 .faq-q:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.faq-icon { font-weight: 700; width: 1.25em; text-align: center; }
+.faq-icon { width: 1.25em; text-align: center; font-weight: 700; }
 
-/* しゅるん */
-.faq-a{ overflow:hidden; max-height:0; transition:max-height .25s ease; }
-.faq-a.open{ max-height:600px; } /* 充分大きめに */
-.faq-a[hidden]{ display:none; }  /* hiddenのときは完全非表示 */
 
 /* 常に質問文を太字化（状態に依らず強制） */
 .faq dt .faq-q { font-weight: 700 !important; }
