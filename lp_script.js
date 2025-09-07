@@ -515,6 +515,26 @@ function showConfigAlert(msg){
         if (el) el.textContent = JSON.stringify(org);
       })();
 
+(() => {
+  if (new URLSearchParams(location.search).get('debug') !== '1') return;
+  console.info('[debug] LP debug mode ON');
+
+  const img = document.getElementById('hero_image');
+  const hasPicture = !!img?.closest('picture');
+
+  console.table({
+    key_name: data.key_name,
+    tel_link: data.key_tel_link,
+    reservation_url: data.key_reservation_url,
+    visa_items: (data.visa_types || '').split('\n').filter(Boolean).length,
+    pricing_rows: (data.pricing_items || '').split('\n').filter(Boolean).length,
+    has_picture: hasPicture
+  });
+
+  console.info('hero_image.src:', img?.currentSrc || img?.src);
+  console.info('body classes:', document.body.className);
+})();
+
     })
     .catch(err => console.error('JSON読み込みエラー:', err));
 })();
