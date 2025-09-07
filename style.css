@@ -295,11 +295,17 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .lp-footer{ background:#0f172a; color:#e5e7eb; }
 .lp-footer a{ color:#93c5fd; text-decoration:none; }
 .lp-footer a:hover{ text-decoration:underline; }
-
 .lp-footer-inner{ display:grid; gap:24px; }
 @media (min-width:768px){
   .lp-footer-inner{ grid-template-columns: 1.2fr 1fr 1fr; }
 }
+/* 左カラムの見栄え */
+.footer-brand{ display:flex; gap:12px; align-items:flex-start; }
+.footer-brand-text p{ margin:.2em 0; }
+.footer-name{ font-weight:700; }
+.footer-address, .footer-hours{ color:#cbd5e1; font-size:.95em; }
+.footer-contact a{ color:#e5e7eb; }
+.footer-contact a:hover{ text-decoration:underline; }
 
 .footer-brand{ display:flex; gap:12px; align-items:center; }
 .footer-name{ font-weight:700; margin:0; }
