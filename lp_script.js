@@ -106,6 +106,28 @@
     .then(r => r.json())
     .then(data => {
 
+      function validateConfig(d){
+  const required = ['key_name','hero_image'];
+  const missing = required.filter(k => !d[k] || String(d[k]).trim()==='');
+  if (missing.length){
+    console.warn('[config] 必須キー不足:', missing);
+    showConfigAlert('設定の一部が未入力です: ' + missing.join(', '));
+  }
+}
+function showConfigAlert(msg){
+  let bar = document.getElementById('config_alert');
+  if (!bar){
+    bar = document.createElement('div');
+    bar.id = 'config_alert';
+    Object.assign(bar.style, {
+      position:'fixed', left:0, right:0, top:0, zIndex:9999,
+      background:'#fee2e2', color:'#991b1b', padding:'8px 12px',
+      fontSize:'14px', textAlign:'center', boxShadow:'0 2px 6px rgba(0,0,0,.08)'
+    });
+    document.body.appendChild(bar);
+  }
+  bar.textContent = '⚠ ' + msg;
+}
       // まず SEO を反映（data が確実にあるタイミング）
       applySEOMeta(data);
 
