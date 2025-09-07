@@ -55,6 +55,50 @@ setHTML('faq_a2', (data.faq_a2 || '').replace(/\n/g,'<br>'));
 setText('faq_q3', data.faq_q3);
 setHTML('faq_a3', (data.faq_a3 || '').replace(/\n/g,'<br>'));
 
+initFAQAccordion();
+
+function initFAQAccordion() {
+  const root = document.getElementById('faq');
+  if (!root) return;
+
+  // まず、QかAが空の項目は消す（空ボタン防止）
+  root.querySelectorAll('.faq-q').forEach(btn => {
+    const ddId = btn.getAttribute('aria-controls');
+    const dd = document.getElementById(ddId);
+    const qSpan = btn.querySelector('span[id^="faq_q"]');
+    const hasQ = qSpan && qSpan.textContent.trim() !== '';
+    const hasA = dd && dd.textContent.trim() !== '';
+    if (!hasQ || !hasA) {
+      const dt = btn.closest('dt');
+      if (dt && dd) { dt.remove(); dd.remove(); }
+    }
+  });
+
+  // クリックはイベント委任で確実に拾う
+  root.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-q');
+    if (!btn || !root.contains(btn)) return;
+
+    const ddId = btn.getAttribute('aria-controls');
+    const dd = document.getElementById(ddId);
+    if (!dd) return;
+
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!isOpen));
+
+    if (isOpen) {
+      // 閉じる
+      dd.setAttribute('hidden', '');
+      const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '+';
+    } else {
+      // 開く
+      dd.removeAttribute('hidden');
+      const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '−';
+    }
+  });
+}
+
+
 
 // Access（営業時間は改行保持）
 setSrc ('access_map', data.access_map);
