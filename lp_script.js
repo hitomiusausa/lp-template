@@ -144,7 +144,6 @@ function showConfigAlert(msg){
         // <picture> がある場合は HTML 側（<source>含む）の指定を優先
       })();
 
-      setImage('hero_logo', data.hero_logo);
       setText ('key_name', data.key_name);
       setText ('hero_message', data.hero_message || '');
 
