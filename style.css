@@ -176,4 +176,51 @@ h2{ margin: 0 0 16px; }
   opacity: .9;
 }
 
+/* === CTA polish v2 === */
+
+/* 1) ボタン内テキストの下線を消す（電話＆予約とも） */
+.cta-actions .btn,
+.cta-actions .btn:visited,
+.cta-actions .btn * {
+  text-decoration: none;
+}
+
+/* 2) ホバー演出（電話＝primary も予約＝outline も共通で効かせる） */
+.cta-actions .btn {
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.cta-actions .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+.btn-primary:hover { filter: brightness(0.96); }    /* 色は少し明るく */
+.btn-outline:hover { background: #f3f4f6; }          /* うっすらグレーに */
+
+/* 3) 枠サイズを両ボタンで同一固定（横幅＆高さ） */
+:root{
+  /* 好みで調整OK（PC↔SPで気持ちよく伸縮） */
+  --cta-btn-w: clamp(280px, 44vw, 520px);
+  --cta-btn-min-h: clamp(68px, 9.5vw, 96px);
+}
+.cta-actions{ justify-content: center; gap: 16px 20px; }
+.cta-actions .btn{
+  width: var(--cta-btn-w);
+  min-height: var(--cta-btn-min-h);
+  justify-content: center;          /* 中央寄せ（再確認） */
+  text-align: center;
+  padding: 14px 28px;               /* 横長感の調整 */
+}
+
+/* 2行ボタンの並び（電話）—既に指定済みならそのままでOK */
+.btn-phone{
+  flex-direction: column; align-items: center; gap: 4px; line-height: 1.25;
+}
+.btn-phone .btn-label{ font-weight: 700; }
+.btn-phone .btn-sub  { display:block; font-weight:600; opacity:.9; }
+
+/* スマホは全幅にして押しやすく */
+@media (max-width: 480px){
+  .cta-actions .btn{ width: 100%; }
+}
+
 
