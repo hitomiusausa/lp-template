@@ -21,9 +21,76 @@ setText ('key_name', data.key_name);
 setText ('hero_message', data.hero_message || '');
 
 
-// Message & CTA
-setText('main_message', data.main_message);
-setText('cta_mid1', data.cta_mid1);
+// ===== CTA: 3ブロックをまとめてセット =====
+setupCTA({
+  blockId: 'cta_mid1_block',
+  messageId: 'cta_mid1',
+  message: data.cta_mid1,
+  telDisplay: data.key_tel_display,
+  telHref: data.key_tel_link,
+  reserveUrl: data.key_reservation_url,
+  telElId: 'cta1_tel',
+  telDispElId: 'cta1_tel_display',
+  resElId: 'cta1_res'
+});
+setupCTA({
+  blockId: 'cta_mid2_block',
+  messageId: 'cta_mid2',
+  message: data.cta_mid2,
+  telDisplay: data.key_tel_display,
+  telHref: data.key_tel_link,
+  reserveUrl: data.key_reservation_url,
+  telElId: 'cta2_tel',
+  telDispElId: 'cta2_tel_display',
+  resElId: 'cta2_res'
+});
+setupCTA({
+  blockId: 'cta_final_block',
+  messageId: 'cta_final',
+  message: data.cta_final,
+  telDisplay: data.key_tel_display,
+  telHref: data.key_tel_link,
+  reserveUrl: data.key_reservation_url,
+  telElId: 'ctaf_tel',
+  telDispElId: 'ctaf_tel_display',
+  resElId: 'ctaf_res'
+});
+
+// 汎用：CTAをセット（メッセージが無ければブロックごと非表示）
+function setupCTA(opts){
+  const blk = document.getElementById(opts.blockId);
+  if (!blk) return;
+
+  // メッセージ
+  if (opts.message && String(opts.message).trim()!==''){
+    setText(opts.messageId, opts.message);
+  } else {
+    blk.style.display = 'none';
+    return;
+  }
+
+  // 電話ボタン
+  const telA = document.getElementById(opts.telElId);
+  const telDisp = document.getElementById(opts.telDispElId);
+  if (opts.telHref && /^tel:/i.test(opts.telHref)){
+    telA.href = opts.telHref;
+    telA.style.display = 'inline-flex';
+    if (telDisp) telDisp.textContent = opts.telDisplay || '';
+    telA.setAttribute('aria-label', `電話する ${opts.telDisplay || ''}`);
+  } else {
+    telA.style.display = 'none';
+  }
+
+  // 予約ボタン
+  const resA = document.getElementById(opts.resElId);
+  if (opts.reserveUrl && /^https?:/i.test(opts.reserveUrl)){
+    resA.href = opts.reserveUrl;
+    resA.style.display = 'inline-flex';
+  } else {
+    resA.style.display = 'none';
+  }
+}
+
 
 
 // Facts（key_nameはヒーローとFactsの両方に反映）
