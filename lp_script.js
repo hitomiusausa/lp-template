@@ -74,31 +74,30 @@ const telA = document.getElementById(opts.telElId);
 const telDisp = document.getElementById(opts.telDispElId);
 
 if (telA) {
-  // tel: のざっくりバリデーション（先頭tel:、以降は数字/スペース/()-/＋を許容）
+  // ゆるめのtelバリデーション（tel: の後は数字/スペース/()-/+OK）
   const isTel = !!(opts.telHref && /^tel:\+?[\d\s\-()]+$/i.test(opts.telHref));
 
   if (isTel) {
     telA.href = opts.telHref;
     telA.style.display = 'inline-flex';
 
-    // 1行目のラベル
-    const telLabelEl = telA.querySelector('.btn-label');
-    if (telLabelEl) telLabelEl.textContent = '電話で問い合わせる';
+    // 上段の文言を統一
+    const labelEl = telA.querySelector('.btn-label');
+    if (labelEl) labelEl.textContent = '電話で問い合わせる';
 
-    // 2行目の表示用番号（空なら非表示）
-    const label = (opts.telDisplay || '').trim();
+    // 下段に表示用の番号（未設定なら非表示）
+    const num = (opts.telDisplay || '').trim();
     if (telDisp) {
-      telDisp.textContent = label;
-      telDisp.style.display = label ? 'block' : 'none';
+      telDisp.textContent = num;
+      telDisp.style.display = num ? 'block' : 'none';
     }
 
-    // アクセシビリティ用ラベルも統一
-    telA.setAttribute('aria-label', `電話で問い合わせる ${label || ''}`.trim());
+    // アクセシビリティ表現も合わせる
+    telA.setAttribute('aria-label', `電話で問い合わせる ${num || ''}`.trim());
   } else {
     telA.style.display = 'none';
   }
 }
-
 
   // 予約ボタン
   const resA = document.getElementById(opts.resElId);
@@ -109,7 +108,6 @@ if (telA) {
     resA.style.display = 'none';
   }
 }
-
 
 
 // Facts（key_nameはヒーローとFactsの両方に反映）
