@@ -1,9 +1,6 @@
 :root { --brand:#1f6feb; --ink:#222; --bg:#f8fafc; }
 html,body{scroll-behavior:smooth}
-body{font-family:system-ui,-apple-system,Segöe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.7;background:#fff;margin:0}
-img{max-width:100%;height:auto;display:block}
-
-
+body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 .lp-section{padding:clamp(16px,4vw,40px);max-width:1000px;margin:0 auto}
 .lead{font-size:clamp(16px,2.6vw,18px)}
 
