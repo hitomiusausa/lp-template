@@ -45,10 +45,15 @@ setText('owner_reg_number', data.owner_reg_number);
 setText('owner_cert_number', data.owner_cert_number);
 
 
-// FAQ
-setText('faq_q1', data.faq_q1); setText('faq_a1', data.faq_a1);
-setText('faq_q2', data.faq_q2); setText('faq_a2', data.faq_a2);
-setText('faq_q3', data.faq_q3); setText('faq_a3', data.faq_a3);
+// Q&A
+setText('faq_q1', data.faq_q1);
+setHTML('faq_a1', (data.faq_a1 || '').replace(/\n/g,'<br>'));
+
+setText('faq_q2', data.faq_q2);
+setHTML('faq_a2', (data.faq_a2 || '').replace(/\n/g,'<br>'));
+
+setText('faq_q3', data.faq_q3);
+setHTML('faq_a3', (data.faq_a3 || '').replace(/\n/g,'<br>'));
 
 
 // Access（営業時間は改行保持）
