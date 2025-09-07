@@ -7,13 +7,12 @@
   --bg:#f8fafc;
   --brand-hover:#1c64e0;   /* ホバー時 */
   --brand-active:#1858c7;  /* クリック時 */
-}
-
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
   --cta-btn-min-h: clamp(68px, 9.5vw, 96px);
 }
+
 
 html,body{ scroll-behavior:smooth; }
 body{
