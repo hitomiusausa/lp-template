@@ -69,17 +69,36 @@ function setupCTA(opts){
     return;
   }
 
-  // 電話ボタン
-  const telA = document.getElementById(opts.telElId);
-  const telDisp = document.getElementById(opts.telDispElId);
-  if (opts.telHref && /^tel:/i.test(opts.telHref)){
+// 電話ボタン
+const telA = document.getElementById(opts.telElId);
+const telDisp = document.getElementById(opts.telDispElId);
+
+if (telA) {
+  // tel: のざっくりバリデーション（先頭tel:、以降は数字/スペース/()-/＋を許容）
+  const isTel = !!(opts.telHref && /^tel:\+?[\d\s\-()]+$/i.test(opts.telHref));
+
+  if (isTel) {
     telA.href = opts.telHref;
     telA.style.display = 'inline-flex';
-    if (telDisp) telDisp.textContent = opts.telDisplay || '';
-    telA.setAttribute('aria-label', `電話する ${opts.telDisplay || ''}`);
+
+    // 1行目のラベル
+    const telLabelEl = telA.querySelector('.btn-label');
+    if (telLabelEl) telLabelEl.textContent = '電話で問い合わせる';
+
+    // 2行目の表示用番号（空なら非表示）
+    const label = (opts.telDisplay || '').trim();
+    if (telDisp) {
+      telDisp.textContent = label;
+      telDisp.style.display = label ? 'block' : 'none';
+    }
+
+    // アクセシビリティ用ラベルも統一
+    telA.setAttribute('aria-label', `電話で問い合わせる ${label || ''}`.trim());
   } else {
     telA.style.display = 'none';
   }
+}
+
 
   // 予約ボタン
   const resA = document.getElementById(opts.resElId);
