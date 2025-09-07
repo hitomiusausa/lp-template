@@ -45,7 +45,7 @@ setText('owner_reg_number', data.owner_reg_number);
 setText('owner_cert_number', data.owner_cert_number);
 
 
-// Q&A
+// Q&A（回答は改行を<br>化）
 setText('faq_q1', data.faq_q1);
 setHTML('faq_a1', (data.faq_a1 || '').replace(/\n/g,'<br>'));
 
@@ -61,7 +61,7 @@ function initFAQAccordion() {
   const root = document.getElementById('faq');
   if (!root) return;
 
-  // 空項目は削除（空ボタン出さない）
+  // 空項目は削除（空ボタン防止）
   root.querySelectorAll('.faq-q').forEach(btn => {
     const ddId = btn.getAttribute('aria-controls');
     const dd = document.getElementById(ddId);
@@ -74,7 +74,7 @@ function initFAQAccordion() {
     }
   });
 
-  // 開閉（イベント委任）
+  // クリック（イベント委任）
   root.addEventListener('click', (e) => {
     const btn = e.target.closest('.faq-q');
     if (!btn || !root.contains(btn)) return;
@@ -88,8 +88,8 @@ function initFAQAccordion() {
     if (isOpen) {
       closePanel(dd, btn);
     } else {
-      // ▼ 1個だけ開きたい場合はここを有効化
-      // root.querySelectorAll('.faq-a:not([hidden])').forEach(open => {
+      // ★同時に1つだけ開きたい場合はこのブロックのコメント外してね
+      // root.querySelectorAll('.faq-a.open').forEach(open => {
       //   if (open.id !== ddId) closePanel(open, root.querySelector(`.faq-q[aria-controls="${open.id}"]`));
       // });
       openPanel(dd, btn);
@@ -97,26 +97,26 @@ function initFAQAccordion() {
   });
 }
 
+// しゅるん開く（CSSのopenクラスでmax-heightを上げる）
 function openPanel(dd, btn) {
   btn.setAttribute('aria-expanded', 'true');
   const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '−';
-  dd.removeAttribute('hidden');     // 表示にしてから
-  dd.classList.add('open');         // CSSでmax-heightを滑らかに上げる
+  dd.removeAttribute('hidden');  // 測れるようにまず表示
+  dd.classList.add('open');      // アニメ開始（max-height↑）
 }
 
+// しゅるん閉じる（open外して→アニメ終了後にhidden）
 function closePanel(dd, btn) {
   btn.setAttribute('aria-expanded', 'false');
   const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '+';
-  dd.classList.remove('open');      // max-heightを0に戻す（アニメ）
-  // アニメ後に hidden を戻してアクセシビリティ的にも閉じた状態に
+  dd.classList.remove('open');   // max-height→0（アニメ）
   const onEnd = (ev) => {
     if (ev.propertyName !== 'max-height') return;
-    dd.setAttribute('hidden','');
+    dd.setAttribute('hidden','');        // 完全に閉じたら非表示
     dd.removeEventListener('transitionend', onEnd);
   };
   dd.addEventListener('transitionend', onEnd);
 }
-
 
 // Access（営業時間は改行保持）
 setSrc ('access_map', data.access_map);
