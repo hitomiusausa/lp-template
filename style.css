@@ -1,226 +1,138 @@
-:root { --brand:#1f6feb; --ink:#222; --bg:#f8fafc; }
-html,body{scroll-behavior:smooth}
-body{font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-.lp-section{padding:clamp(16px,4vw,40px);max-width:1000px;margin:0 auto}
-.lead{font-size:clamp(16px,2.6vw,18px)}
-
-
-/* Hero */
-.lp-hero-image{position:relative}
-.lp-hero-image img{width:100%;max-height:clamp(240px,40vh,520px);object-fit:cover;border-radius:16px}
-.lp-hero-overlay{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35);padding:16px}
-.lp-hero-overlay h1{margin:.2em 0;font-size:clamp(24px,6vw,44px)}
-.lp-hero-overlay p{margin:0;font-size:clamp(14px,3vw,18px)}
-.lp-hero-logo{display:grid;place-content:center;margin-top:12px}
-
-
-/* Facts */
-.facts{list-style:none;padding:0;margin:0}
-.facts li{padding:8px 0;border-bottom:1px solid #eee}
-
-
-/* Profile */
-.lp-profile{display:grid;gap:20px}
-.profile-image img{border-radius:16px}
-@media (min-width:768px){
-.lp-profile{grid-template-columns:1fr 1.2fr}
-}
-
-
-/* Access */
-.lp-access-wrapper{display:grid;gap:20px}
-@media (min-width:768px){
-.lp-access-wrapper{grid-template-columns:1.3fr 1fr}
-}
-
-
-/* FAQの質問を常に太字にする（継承ゆれ対策） */
-.faq dt { font-weight: 700; }          
-.faq .faq-q { 
-  font-family: inherit; 
-  font-size: inherit; 
-  line-height: inherit;
-  font-weight: 700;                     /* ← これが決め手！ */
-}
-
-/* アイコンの太さはお好みで。細くしたいなら 400 に */
-.faq .faq-q .faq-icon { font-weight: 700; }
-
-/* --- FAQ accordion --- */
-.faq { margin: 0; padding: 0; }
-.faq dt { margin: 12px 0 0; }                 /* 質問どうしの間隔 */
-.faq dd { margin: 8px 0 16px; padding: 0 12px; }
-
-.faq-a[hidden] { display: none; }             /* 完全に閉じてる時 */
-.faq-a { overflow: hidden; max-height: 0; transition: max-height .25s ease; }
-.faq-a.open { max-height: 600px; }            /* しゅるん展開（必要なら数値UP） */
-
-.faq-q {
-  width: 100%;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 12px 16px;
-  border: 1px solid #e5e7eb; border-radius: 10px;
-  background: #fff; cursor: pointer; text-align: left;
-  font: inherit; 
-  font-weight: 700;                            /* ← 常に太字（継承ブレ対策） */
-}
-.faq-q:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-.faq-icon { width: 1.25em; text-align: center; font-weight: 700; }
-
-
-/* 常に質問文を太字化（状態に依らず強制） */
-.faq dt .faq-q { font-weight: 700 !important; }
-
-/* 念のため、質問テキストの <span id="faq_qN"> 側にも強制 */
-.faq dt .faq-q span[id^="faq_q"] { font-weight: 700 !important; }
-
-/* アイコンは好きな太さで（太字にする場合） */
-.faq .faq-q .faq-icon { font-weight: 700; }
-.faq dt { margin: 12px 0; }     /* 質問ボタン自体に上下マージン */
-.faq dd { margin: 8px 0 16px; } /* 開いてるときの余白も確保 */
-
-/* --- CTA block --- */
-.lp-cta{background:var(--bg);padding:clamp(12px,3vw,20px);text-align:center;border-radius:12px;margin:16px auto}
-.cta-message{ font-size:clamp(16px,2.8vw,22px); font-weight:600; margin:0 0 12px }
-.cta-actions{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;          /* ボタン群を中央に */
-}
-.btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;          /* ボタン内テキスト中央 */
-  text-align: center;               /* 複数行でも中央寄せに */
-  padding: 14px 24px;               /* 横長にするため少し広め */
-  border-radius: 12px;
-  gap: .6em;
-}
-/* 横長感を出す最小幅（画面に応じて伸縮） */
-.cta-actions .btn{
-  min-width: clamp(220px, 34vw, 360px);
-}
-.btn-primary{ background:var(--brand); color:#fff; border-color:var(--brand) }
-.btn-outline{ background:#fff; color:var(--ink) }
-.btn:hover{ filter:brightness(0.98) }
-.btn-sub{ font-weight:600; opacity:.85; font-size:.95em }
-@media (max-width:480px){
-  .btn{ width:100%; justify-content:center }
- .cta-actions{ width: 100%; }
-}
-
-/* --- Logo & Profile sizing --- */
-.lp-hero-logo img{
-  width: clamp(120px, 18vw, 200px);
-  height: auto;
-}
-.profile-image img{
-  width: clamp(140px, 28vw, 260px);
-  height: auto;
-  object-fit: cover;         /* 必要なら丸にしたい時は border-radius:50% に */
-  border-radius: 16px;
-}
-
-/* --- Vertical Rhythm（セクション間の余白） --- */
-.lp-section{
-  padding: clamp(28px, 4.5vw, 56px) clamp(16px, 3.5vw, 24px);
-}
-.lp-section + .lp-section{
-  margin-top: clamp(20px, 4vw, 48px);
-}
-.lp-cta.lp-section{
-  margin-block: clamp(20px, 3.5vw, 40px);
-}
-h2{ margin: 0 0 16px; }
-
-/* --- CTA polish（横長＆中央＆2行） --- */
-.cta-actions{
-  display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center;
-}
-.cta-actions .btn{
-  min-width: clamp(240px, 40vw, 420px);   /* 横長に */
-  padding: 14px 28px;
-  justify-content: center;                /* ボタン内の文字も中央 */
-  text-align: center;
-}
-.btn-label, .btn-sub{
-  display:block; line-height:1.25;       /* 2行化 */
-}
-.btn-label{ font-weight:700; }
-.btn-sub{ font-size:.95em; opacity:.9; margin-top:2px; }
-
-@media (max-width: 480px){
-  .cta-actions .btn{ width:100%; }       /* スマホは全幅で押しやすく */
-}
-
-/* 電話ボタンを2行・中央配置に */
-.btn-phone{
-  /* 親の .btn は inline-flex。縦積みに切替 */
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;              /* 1行目と2行目の間隔 */
-  line-height: 1.25;
-}
-
-.btn-phone .btn-label{
-  font-weight: 700;
-  font-size: clamp(15px, 2.7vw, 18px);
-}
-
-.btn-phone .btn-sub{
-  display: block;
-  font-weight: 600;
-  font-size: clamp(13px, 2.4vw, 16px);
-  opacity: .9;
-}
-
-/* === CTA polish v2 === */
-
-/* 1) ボタン内テキストの下線を消す（電話＆予約とも） */
-.cta-actions .btn,
-.cta-actions .btn:visited,
-.cta-actions .btn * {
-  text-decoration: none;
-}
-
-/* 2) ホバー演出（電話＝primary も予約＝outline も共通で効かせる） */
-.cta-actions .btn {
-  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-}
-.cta-actions .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12);
-}
-.btn-primary:hover { filter: brightness(0.96); }    /* 色は少し明るく */
-.btn-outline:hover { background: #f3f4f6; }          /* うっすらグレーに */
-
-/* 3) 枠サイズを両ボタンで同一固定（横幅＆高さ） */
+/* =========================
+   Vars / Base
+   ========================= */
 :root{
-  /* 好みで調整OK（PC↔SPで気持ちよく伸縮） */
+  --brand:#1f6feb;
+  --ink:#222;
+  --bg:#f8fafc;
+
+  /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
   --cta-btn-min-h: clamp(68px, 9.5vw, 96px);
 }
-.cta-actions{ justify-content: center; gap: 16px 20px; }
+
+html,body{ scroll-behavior:smooth; }
+body{
+  margin:0;
+  color:var(--ink);
+  background:#fff;
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+img{ max-width:100%; height:auto; display:block; }
+
+/* =========================
+   Section Rhythm
+   ========================= */
+.lp-section{
+  padding: clamp(28px, 4.5vw, 56px) clamp(16px, 3.5vw, 24px);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.lp-section + .lp-section{ margin-top: clamp(20px, 4vw, 48px); }
+h1,h2{ margin: 0 0 16px; }
+
+/* =========================
+   Hero
+   ========================= */
+.lp-hero-image{ position:relative; }
+.lp-hero-image img{
+  width:100%; max-height:clamp(240px,40vh,520px);
+  object-fit:cover; border-radius:16px;
+}
+.lp-hero-overlay{
+  position:absolute; inset:0; display:grid; place-content:center;
+  text-align:center; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.35); padding:16px;
+}
+.lp-hero-overlay h1{ margin:.2em 0; font-size:clamp(24px,6vw,44px); }
+.lp-hero-overlay p{ margin:0; font-size:clamp(14px,3vw,18px); }
+.lp-hero-logo{ display:grid; place-content:center; margin-top:12px; }
+.lp-hero-logo img{ width:clamp(120px,18vw,200px); height:auto; }
+
+/* =========================
+   Key Facts
+   ========================= */
+.facts{ list-style:none; padding:0; margin:0; }
+.facts li{ padding:8px 0; border-bottom:1px solid #eee; }
+
+/* =========================
+   Profile
+   ========================= */
+.lp-profile{ display:grid; gap:20px; }
+.profile-image img{
+  width:clamp(140px,28vw,260px);
+  height:auto; object-fit:cover; border-radius:16px;
+}
+@media (min-width:768px){ .lp-profile{ grid-template-columns:1fr 1.2fr; }}
+
+/* =========================
+   Access
+   ========================= */
+.lp-access-wrapper{ display:grid; gap:20px; }
+@media (min-width:768px){ .lp-access-wrapper{ grid-template-columns:1.3fr 1fr; }}
+
+/* =========================
+   FAQ (Accordion)
+   ========================= */
+.faq{ margin:0; padding:0; }
+.faq dt{ margin:12px 0 0; }
+.faq dd{ margin:8px 0 16px; padding:0 12px; }
+.faq dd[hidden] + dt{ margin-top:16px; }            /* 閉じてても間隔を維持 */
+
+.faq-q{
+  width:100%;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:12px 16px; border:1px solid #e5e7eb; border-radius:10px;
+  background:#fff; cursor:pointer; text-align:left;
+  font:inherit; font-weight:700;                     /* 常に太字 */
+}
+.faq-q:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+.faq-icon{ width:1.25em; text-align:center; font-weight:700; }
+
+.faq-a[hidden]{ display:none; }                      /* 完全非表示 */
+.faq-a{ overflow:hidden; max-height:0; transition:max-height .25s ease; }
+.faq-a.open{ max-height:600px; }                     /* しゅるん */
+
+/* =========================
+   CTA Blocks
+   ========================= */
+.lp-cta{
+  background:var(--bg);
+  padding:clamp(12px,3vw,20px);
+  text-align:center;
+  border-radius:12px;
+  margin:16px auto;
+}
+.cta-message{ font-size:clamp(16px,2.8vw,22px); font-weight:600; margin:0 0 12px; }
+
+.cta-actions{
+  display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center;
+}
+
+/* 共通ボタン */
 .cta-actions .btn{
-  width: var(--cta-btn-w);
-  min-height: var(--cta-btn-min-h);
-  justify-content: center;          /* 中央寄せ（再確認） */
-  text-align: center;
-  padding: 14px 28px;               /* 横長感の調整 */
+  width:var(--cta-btn-w); min-height:var(--cta-btn-min-h);
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.6em; padding:14px 28px; border-radius:12px;
+  border:1px solid #e5e7eb; text-align:center; text-decoration:none;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
+a.btn, a.btn:visited, .btn *{ text-decoration:none; }   /* 下線ナシ */
 
-/* 2行ボタンの並び（電話）—既に指定済みならそのままでOK */
-.btn-phone{
-  flex-direction: column; align-items: center; gap: 4px; line-height: 1.25;
+.btn-primary{ background:var(--brand); color:#fff; border-color:var(--brand); }
+.btn-outline{ background:#fff; color:var(--ink); }
+
+.cta-actions .btn:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.12); }
+.btn-primary:hover{ filter:brightness(0.96); }
+.btn-outline:hover{ background:#f3f4f6; }
+
+.btn-label, .btn-sub{ display:block; line-height:1.25; }
+.btn-label{ font-weight:700; font-size:clamp(15px,2.7vw,18px); }
+.btn-sub{ font-weight:600; font-size:clamp(13px,2.4vw,16px); opacity:.9; margin-top:2px; }
+
+/* 電話ボタンは縦積み2行 */
+.btn-phone{ flex-direction:column; align-items:center; gap:4px; line-height:1.25; }
+
+/* スマホは全幅で押しやすく */
+@media (max-width:480px){
+  .cta-actions .btn{ width:100%; }
 }
-.btn-phone .btn-label{ font-weight: 700; }
-.btn-phone .btn-sub  { display:block; font-weight:600; opacity:.9; }
-
-/* スマホは全幅にして押しやすく */
-@media (max-width: 480px){
-  .cta-actions .btn{ width: 100%; }
-}
-
-
