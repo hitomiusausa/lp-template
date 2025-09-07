@@ -50,11 +50,6 @@
 
   "service_area": "全国（オンライン対応）",
   "remote_available": "海外在住の方もオンライン面談OK",
-
-  "contact_line": "https://line.me/ti/p/xxxxx",
-  "contact_whatsapp": "https://wa.me/81xxxxxxxxxx",
-  "contact_wechat": "weixin://dl/chat?xxxxx"
-
     
   },
   "required": [
