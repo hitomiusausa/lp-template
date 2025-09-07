@@ -271,4 +271,23 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   .cta-actions .btn:focus-visible{ transform:none; }
 }
 
+/* リストを2〜3列で気持ちよく */
+.list-grid{
+  list-style:none; padding:0; margin:0;
+  display:grid; gap:10px 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.list-grid li{
+  padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px; background:#fff;
+}
+
+/* 料金テーブル */
+.table-wrap{ overflow:auto; }
+.price-table{
+  width:100%; border-collapse: collapse; background:#fff; border:1px solid #e5e7eb; border-radius:10px; overflow:hidden;
+}
+.price-table th, .price-table td{ padding:12px 14px; border-bottom:1px solid #eee; vertical-align:top; }
+.price-table thead th{ background:#f8fafc; text-align:left; font-weight:700; }
+.price-table tbody tr:last-child td{ border-bottom:none; }
+.muted{ color:#6b7280; font-size:.95em; margin-top:8px; }
 
