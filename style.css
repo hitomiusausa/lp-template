@@ -62,7 +62,9 @@ img{max-width:100%;height:auto;display:block}
 .faq-q:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .faq-icon { font-weight: 700; width: 1.25em; text-align: center; }
 
-/* アコーディオンのスムース開閉 */
-.faq-a{overflow:hidden; max-height:0; transition:max-height .25s ease}
-.faq-a.open{max-height:600px;} /* 充分大きければOK */
+/* しゅるん */
+.faq-a{ overflow:hidden; max-height:0; transition:max-height .25s ease; }
+.faq-a.open{ max-height:600px; } /* 充分大きめに */
+.faq-a[hidden]{ display:none; }  /* hiddenのときは完全非表示 */
+
 
