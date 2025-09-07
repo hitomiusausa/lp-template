@@ -51,6 +51,9 @@
   "service_area": "全国（オンライン対応）",
   "remote_available": "海外在住の方もオンライン面談OK",
     
+  "privacy_url": "https://example.com/privacy",
+  "terms_url": "https://example.com/terms"
+    
   },
   "required": [
     "hero_image",
