@@ -48,13 +48,9 @@ h1,h2{ margin: 0 0 16px; }
   width: 100%;
   min-width: 100%;
   max-width: 100vw;
+  height: clamp(320px, 60vh, 720px);
   margin: 0 auto;
   overflow: hidden;
-}
-
-.lp-hero-image img {
-  width: 100vw;
-  height: clamp(320px, 60vh, 720px);
   object-fit: cover;
   display: block;
   border-radius: 0; /* 角丸なしで今風フルブリードに */
