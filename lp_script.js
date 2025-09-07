@@ -349,6 +349,90 @@ const normalizePrice = (s) => {
       setText('cta_mid2', data.cta_mid2);
       setText('cta_final', data.cta_final);
 
+// ===== Footer fill（左欄 v2：ロゴ＋事務所名＋住所＋TEL＋営業時間）=====
+setImage('footer_logo', data.hero_logo || '/assets/images/logo.png');
+setText ('footer_name',       data.key_name || '');
+setText ('footer_name_copy',  data.key_name || '');
+setText ('footer_license',    data.owner_license    ? `資格: ${data.owner_license}`         : '');
+setText ('footer_reg',        data.owner_reg_number ? `登録番号: ${data.owner_reg_number}`  : '');
+setText ('footer_cert',       data.owner_cert_number? `認証番号: ${data.owner_cert_number}` : '');
+setText ('footer_address',    data.access_address || '');
+setText ('footer_tel',        data.key_tel_display || '');
+setLink ('footer_tel_link',   data.key_tel_link || '#');
+
+// 住所・電話：空なら行ごと非表示
+(() => {
+  const hideIfEmptyP = (id) => {
+    const el = document.getElementById(id);
+    if (el && el.textContent.trim()==='') {
+      const p = el.closest('p'); if (p) p.style.display = 'none';
+    }
+  };
+  hideIfEmptyP('footer_address');
+
+  const telA  = document.getElementById('footer_tel_link');
+  const telTx = document.getElementById('footer_tel');
+  const showTel = telA && /^tel:\+?[\d\s\-()]+$/i.test(telA.getAttribute('href')||'')
+                    && telTx && telTx.textContent.trim() !== '';
+  if (!showTel && telA) telA.closest('.footer-contact')?.style.setProperty('display','none');
+})();
+
+// 営業時間：平日/休日を自動判別して分割表示（どちらも無ければ行を隠す）
+(() => {
+  const lines = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
+  let weekday = '', holiday = '';
+  lines.forEach(line => {
+    if (/平日|Weekdays/i.test(line)) weekday = line;
+    else if (/休日|土日|祝|Weekend|Sat|Sun|Holiday/i.test(line)) holiday = line;
+  });
+  if (!weekday && lines[0]) weekday = lines[0];
+
+  const wEl = document.getElementById('footer_hours_weekday');
+  const hEl = document.getElementById('footer_hours_holiday');
+  const sep = document.getElementById('footer_hours_sep');
+
+  if (wEl) wEl.textContent = weekday || '';
+  if (hEl) {
+    hEl.textContent = holiday || '';
+    if (!holiday) { hEl.style.display = 'none'; if (sep) sep.style.display = 'none'; }
+    else { if (sep) sep.style.display = 'inline'; }
+  }
+  if (!weekday && !holiday) {
+    const p = (wEl || hEl)?.closest('p');
+    if (p) p.style.display = 'none';
+  }
+})();
+
+// 年号
+setText('footer_year', String(new Date().getFullYear()));
+
+// ないリンク（プラポリ/規約）は非表示
+[['footer_privacy','privacy_url'], ['footer_terms','terms_url']].forEach(([id,key])=>{
+  const a = document.getElementById(id);
+  if (!a) return;
+  const url = data[key];
+  if (url && /^https?:/i.test(url)) { a.href = url; a.style.display = 'inline'; }
+  else { a.style.display = 'none'; }
+});
+      
+
+// ===== Organization JSON-LD（簡易・既存キーで生成）=====
+(() => {
+  const org = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": data.key_name || "",
+    "image": data.hero_image || "",
+    "telephone": (data.key_tel_display || "").replace(/[^\d+]/g,''),
+    "address": { "@type":"PostalAddress", "streetAddress": data.access_address || "" },
+    "areaServed": data.service_area || "Japan",
+    "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
+    "url": location.origin + location.pathname
+  };
+  const el = document.getElementById('org_jsonld');
+  if (el) el.textContent = JSON.stringify(org);
+})();
+     
     })
     .catch(err => console.error('JSON読み込みエラー:', err));
 })();
