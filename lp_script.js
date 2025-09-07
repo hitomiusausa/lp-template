@@ -1,8 +1,9 @@
-// フラットJSONに対応した描画スクリプト（方法B対応版・完成 v3）
+// フラットJSONに対応した描画スクリプト（方法B対応版・完成 v3.2）
 // - Hero: <picture> がある場合は JS で上書きしない（ブラウザの最適フォーマット選択を尊重）
 // - setImage: 先に error を登録してから src をセット（レース回避）
 // - fetch: cache: 'no-store' で常に最新の config.json を取得
-// - SEO: data を受け取ってから <head> を更新（JS 実行順の不整合を解消）
+// - SEO: data を受け取ってから <head> を更新
+// - Org JSON-LD: openingHoursSpecification を access_hours から自動生成
 
 (function(){
   'use strict';
@@ -105,30 +106,32 @@
   fetch(file, { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
+      // 必須チェック & SEO
       validateConfig(data);
       applySEOMeta(data);
+
       function validateConfig(d){
-  const required = ['key_name','hero_image'];
-  const missing = required.filter(k => !d[k] || String(d[k]).trim()==='');
-  if (missing.length){
-    console.warn('[config] 必須キー不足:', missing);
-    showConfigAlert('設定の一部が未入力です: ' + missing.join(', '));
-  }
-}
-function showConfigAlert(msg){
-  let bar = document.getElementById('config_alert');
-  if (!bar){
-    bar = document.createElement('div');
-    bar.id = 'config_alert';
-    Object.assign(bar.style, {
-      position:'fixed', left:0, right:0, top:0, zIndex:9999,
-      background:'#fee2e2', color:'#991b1b', padding:'8px 12px',
-      fontSize:'14px', textAlign:'center', boxShadow:'0 2px 6px rgba(0,0,0,.08)'
-    });
-    document.body.appendChild(bar);
-  }
-  bar.textContent = '⚠ ' + msg;
-}
+        const required = ['key_name','hero_image'];
+        const missing = required.filter(k => !d[k] || String(d[k]).trim()==='');
+        if (missing.length){
+          console.warn('[config] 必須キー不足:', missing);
+          showConfigAlert('設定の一部が未入力です: ' + missing.join(', '));
+        }
+      }
+      function showConfigAlert(msg){
+        let bar = document.getElementById('config_alert');
+        if (!bar){
+          bar = document.createElement('div');
+          bar.id = 'config_alert';
+          Object.assign(bar.style, {
+            position:'fixed', left:0, right:0, top:0, zIndex:9999,
+            background:'#fee2e2', color:'#991b1b', padding:'8px 12px',
+            fontSize:'14px', textAlign:'center', boxShadow:'0 2px 6px rgba(0,0,0,.08)'
+          });
+          document.body.appendChild(bar);
+        }
+        bar.textContent = '⚠ ' + msg;
+      }
 
       // ===== Hero（<picture> がある場合は上書きしない）=====
       (() => {
@@ -141,6 +144,9 @@ function showConfigAlert(msg){
         }
         // <picture> がある場合は HTML 側（<source>含む）の指定を優先
       })();
+
+      // ロゴ（ヘッダー/ヒーロー用）
+      setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
 
       setText ('key_name', data.key_name);
       setText ('hero_message', data.hero_message || '');
@@ -458,6 +464,16 @@ function showConfigAlert(msg){
       })();
 
       // 営業時間：平日/休日を自動判別して分割表示（どちらも無ければ行を隠す）
+      const parseHours = (text) => {
+        if (!text) return null;
+        const t = text.replace(/\s+/g,'').replace(/[~～〜]/g,'〜');
+        const m = t.match(/(\d{1,2}):?(\d{2})?〜(\d{1,2}):?(\d{2})?/);
+        if (!m) return null;
+        const HH = n => String(n).padStart(2,'0');
+        const open  = `${HH(m[1])}:${HH(m[2]||'00')}`;
+        const close = `${HH(m[3])}:${HH(m[4]||'00')}`;
+        return { open, close };
+      };
       (() => {
         const lines = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
         let weekday = '', holiday = '';
@@ -495,8 +511,29 @@ function showConfigAlert(msg){
         else { a.style.display = 'none'; }
       });
 
-      // ===== Organization JSON-LD（簡易・既存キーで生成）=====
+      // ===== Organization JSON-LD（営業時間つき・構造化強化）=====
       (() => {
+        const lines  = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
+        const wdText = lines.find(l=>/平日|Weekdays/i.test(l)) || lines[0] || '';
+        const hdText = lines.find(l=>/休日|土日|祝|Weekend|Sat|Sun|Holiday/i.test(l)) || '';
+        const wd = parseHours(wdText);
+        const hd = parseHours(hdText);
+        const openingHoursSpecification = [];
+        if (wd){
+          openingHoursSpecification.push({
+            "@type":"OpeningHoursSpecification",
+            "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],
+            "opens": wd.open, "closes": wd.close
+          });
+        }
+        if (hd){
+          openingHoursSpecification.push({
+            "@type":"OpeningHoursSpecification",
+            "dayOfWeek":["Saturday","Sunday"],
+            "opens": hd.open, "closes": hd.close
+          });
+        }
+
         const org = {
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
@@ -508,29 +545,31 @@ function showConfigAlert(msg){
           "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
           "url": location.origin + location.pathname
         };
+        if (openingHoursSpecification.length){
+          org.openingHoursSpecification = openingHoursSpecification;
+        }
+
         const el = document.getElementById('org_jsonld');
         if (el) el.textContent = JSON.stringify(org);
       })();
 
-(() => {
-  if (new URLSearchParams(location.search).get('debug') !== '1') return;
-  console.info('[debug] LP debug mode ON');
-
-  const img = document.getElementById('hero_image');
-  const hasPicture = !!img?.closest('picture');
-
-  console.table({
-    key_name: data.key_name,
-    tel_link: data.key_tel_link,
-    reservation_url: data.key_reservation_url,
-    visa_items: (data.visa_types || '').split('\n').filter(Boolean).length,
-    pricing_rows: (data.pricing_items || '').split('\n').filter(Boolean).length,
-    has_picture: hasPicture
-  });
-
-  console.info('hero_image.src:', img?.currentSrc || img?.src);
-  console.info('body classes:', document.body.className);
-})();
+      // === Debug mode (?debug=1) ===
+      (() => {
+        if (new URLSearchParams(location.search).get('debug') !== '1') return;
+        console.info('[debug] LP debug mode ON');
+        const img = document.getElementById('hero_image');
+        const hasPicture = !!img?.closest('picture');
+        console.table({
+          key_name: data.key_name,
+          tel_link: data.key_tel_link,
+          reservation_url: data.key_reservation_url,
+          visa_items: (data.visa_types || '').split('\n').filter(Boolean).length,
+          pricing_rows: (data.pricing_items || '').split('\n').filter(Boolean).length,
+          has_picture: hasPicture
+        });
+        console.info('hero_image.src:', img?.currentSrc || img?.src);
+        console.info('body classes:', document.body.className);
+      })();
 
     })
     .catch(err => console.error('JSON読み込みエラー:', err));
