@@ -1,5 +1,10 @@
 {
   "customer_id": "ID250001",
+  "seo_title": "USA office | VISA更新・申請・翻訳",
+  "seo_description": "外国人向けのビザ申請・更新・翻訳をサポート。オンライン相談可。",
+  "canonical_url": "https://lp.example.com/",
+  "og_image": "/assets/images/hero.jpg",
+  "twitter_card": "summary_large_image"  
   "main_message": "うさうさな毎日を！",
   "hero_image": "/assets/images/hero.jpg",
   "hero_logo": "/assets/images/logo.png",
