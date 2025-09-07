@@ -1,32 +1,33 @@
+# index.html
+
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ランディングページ</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    .lp-section { padding: 2em; border-bottom: 1px solid #ccc; }
-    .lp-hero-image img { width: 100%; max-height: 400px; object-fit: cover; }
-    .lp-profile, .lp-access-wrapper { display: flex; gap: 1em; }
-    .lp-cta { background: #f0f0f0; padding: 1em; text-align: center; }
-  </style>
+  <meta name="description" content="専門サービスの紹介LP">
   <link rel="icon" href="/assets/images/logo.png" type="image/png">
+  <link rel="preload" as="image" href="/assets/images/hero.jpg">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
   <!-- セクション1：ヒーローエリア -->
-  <section class="lp-section">
-    <div class="lp-hero-image"><img id="hero_image" alt="ヒーロー画像"></div>
-    <h1 id="key_name"></h1>
-    <p id="hero_message"></p>
-    <p id="hero_title"></p>
-    <div><img id="hero_logo" alt="ヒーローロゴ"></div>
+  <section class="lp-section lp-hero">
+    <div class="lp-hero-image">
+      <img id="hero_image" alt="ヒーロー画像">
+      <div class="lp-hero-overlay">
+        <h1 id="key_name"></h1>
+        <p id="hero_message"></p>
+      </div>
+    </div>
+    <div class="lp-hero-logo"><img id="hero_logo" alt="ヒーローロゴ"></div>
   </section>
 
   <!-- セクション2：メッセージ -->
   <section class="lp-section">
-    <p id="main_message"></p>
+    <p id="main_message" class="lead"></p>
   </section>
 
   <div class="lp-cta"><p id="cta_mid1"></p></div>
@@ -34,14 +35,14 @@
   <!-- セクション3：Key Facts -->
   <section class="lp-section">
     <h2>基本情報</h2>
-    <ul>
+    <ul class="facts">
       <li>事業所名: <span id="key_name_fact"></span></li>
       <li>所在地: <span id="key_location"></span></li>
       <li>言語: <span id="key_language"></span></li>
       <li>創業年: <span id="key_founded"></span></li>
       <li>サービス内容: <span id="key_services"></span></li>
       <li>電話番号: <span id="key_tel_display"></span> (<a id="key_tel_link" href="#">電話する</a>)</li>
-      <li>予約URL: <a id="key_reservation_url" href="#">こちら</a></li>
+      <li>予約URL: <a id="key_reservation_url" href="#" target="_blank" rel="noopener">こちら</a></li>
     </ul>
   </section>
 
@@ -49,8 +50,8 @@
   <section class="lp-section">
     <h2>運営者情報</h2>
     <div class="lp-profile">
-      <div><img id="owner_image" alt="運営者画像"></div>
-      <div>
+      <div class="profile-image"><img id="owner_image" alt="運営者画像"></div>
+      <div class="profile-body">
         <p>運営者名: <span id="owner_name"></span></p>
         <p>資格: <span id="owner_license"></span></p>
         <p>登録番号: <span id="owner_reg_number"></span></p>
@@ -62,7 +63,7 @@
   <!-- セクション5：FAQ -->
   <section class="lp-section">
     <h2>よくある質問</h2>
-    <dl>
+    <dl class="faq">
       <dt id="faq_q1"></dt>
       <dd id="faq_a1"></dd>
       <dt id="faq_q2"></dt>
@@ -78,22 +79,151 @@
   <section class="lp-section">
     <h2>アクセス</h2>
     <div class="lp-access-wrapper">
-      <div><iframe id="access_map" width="100%" height="300" style="border:0;" loading="lazy"></iframe></div>
-      <div>
+      <div class="map"><iframe id="access_map" width="100%" height="300" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <div class="access-body">
         <p>住所: <span id="access_address"></span></p>
         <p>営業時間: <span id="access_hours"></span></p>
-        <p>電話番号: <span id="key_tel_display"></span></p>
         <p>最寄駅: <span id="access_station"></span></p>
       </div>
     </div>
   </section>
 
   <!-- 最終CTA -->
-  <section class="lp-cta">
+  <section class="lp-cta lp-section">
     <h2 id="cta_final"></h2>
   </section>
-<script>console.log('lp_script.js 走ってるよ🐰');</script>
 
-  <script src="lp_script.js"></script>
+  <script src="lp_script.js" defer></script>
 </body>
 </html>
+```
+
+---
+
+# style.css
+
+```css
+:root { --brand:#1f6feb; --ink:#222; --bg:#f8fafc; }
+html,body{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,Segöe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.7;background:#fff;margin:0}
+img{max-width:100%;height:auto;display:block}
+
+.lp-section{padding:clamp(16px,4vw,40px);max-width:1000px;margin:0 auto}
+.lead{font-size:clamp(16px,2.6vw,18px)}
+
+/* Hero */
+.lp-hero-image{position:relative}
+.lp-hero-image img{width:100%;max-height:clamp(240px,40vh,520px);object-fit:cover;border-radius:16px}
+.lp-hero-overlay{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35);padding:16px}
+.lp-hero-overlay h1{margin:.2em 0;font-size:clamp(24px,6vw,44px)}
+.lp-hero-overlay p{margin:0;font-size:clamp(14px,3vw,18px)}
+.lp-hero-logo{display:grid;place-content:center;margin-top:12px}
+
+/* CTA */
+.lp-cta{background:var(--bg);padding:clamp(12px,3vw,20px);text-align:center;border-radius:12px;margin:16px auto}
+
+/* Facts */
+.facts{list-style:none;padding:0;margin:0}
+.facts li{padding:8px 0;border-bottom:1px solid #eee}
+
+/* Profile */
+.lp-profile{display:grid;gap:20px}
+.profile-image img{border-radius:16px}
+@media (min-width:768px){
+  .lp-profile{grid-template-columns:1fr 1.2fr}
+}
+
+/* Access */
+.lp-access-wrapper{display:grid;gap:20px}
+@media (min-width:768px){
+  .lp-access-wrapper{grid-template-columns:1.3fr 1fr}
+}
+
+/* FAQ */
+.faq dt{font-weight:700;margin-top:10px}
+.faq dd{margin:6px 0 12px}
+```
+
+---
+
+# lp\_script.js
+
+```js
+// フラットJSONに対応した描画スクリプト
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const setText = (id, text) => { const el = $(id); if (!el) return; if (text && String(text).trim()!=="") el.textContent = text; };
+  const setHTML = (id, html) => { const el = $(id); if (!el) return; if (html && String(html).trim()!=="") el.innerHTML = html; };
+  const setImage = (id, src, fallback = "/assets/images/logo.png") => {
+    const el = $(id); if (!el || !src) return; el.src = src; el.addEventListener('error', ()=>{ el.src = fallback; }, { once:true });
+  };
+  const setLink = (id, href) => { const el = $(id); if (el && href) el.href = href; };
+  const setSrc  = (id, src)  => { const el = $(id); if (el && src) el.src = src; };
+
+  const file = 'config.json';
+  fetch(file)
+    .then(r => r.json())
+    .then(data => {
+      // Hero
+      setImage('hero_image',   data.hero_image);
+      setImage('hero_logo',    data.hero_logo);
+      setText ('key_name',     data.key_name);
+      setText ('hero_message', data.hero_message || '');
+
+      // Message & CTA
+      setText('main_message', data.main_message);
+      setText('cta_mid1', data.cta_mid1);
+
+      // Facts（key_nameはヒーローとFactsの両方に反映）
+      setText('key_name_fact', data.key_name);
+      setText('key_location', data.key_location);
+      setText('key_language', data.key_language);
+      setText('key_founded',  data.key_founded);
+      setText('key_services', data.key_services);
+      setText('key_tel_display', data.key_tel_display);
+      setLink('key_tel_link', data.key_tel_link);
+      setLink('key_reservation_url', data.key_reservation_url);
+
+      // Owner
+      setImage('owner_image', data.owner_image);
+      setText('owner_name', data.owner_name);
+      setText('owner_license', data.owner_license);
+      setText('owner_reg_number', data.owner_reg_number);
+      setText('owner_cert_number', data.owner_cert_number);
+
+      // FAQ
+      setText('faq_q1', data.faq_q1); setText('faq_a1', data.faq_a1);
+      setText('faq_q2', data.faq_q2); setText('faq_a2', data.faq_a2);
+      setText('faq_q3', data.faq_q3); setText('faq_a3', data.faq_a3);
+
+      // Access（営業時間は改行保持）
+      setSrc ('access_map', data.access_map);
+      setHTML('access_hours', (data.access_hours||'').replace(/\n/g,'<br>'));
+      setText('access_address', data.access_address);
+      setText('access_station', data.access_station);
+
+      // Final CTA
+      setText('cta_mid2', data.cta_mid2);
+      setText('cta_final', data.cta_final);
+    })
+    .catch(err => console.error('JSON読み込みエラー:', err));
+})();
+```
+
+---
+
+# \_headers（Netlify 用／拡張子なし）
+
+```
+/config.json
+  Cache-Control: no-store
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+```
