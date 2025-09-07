@@ -255,31 +255,82 @@ setText('remote_available', data.remote_available || 'オンライン相談・�
   });
 })();
 
+// --- 料金のゆれ吸収＆整形（¥88,000 / ¥88,000〜120,000 / 無料 / 応相談 など対応）---
+const normalizePrice = (s) => {
+  if (!s) return '';
+  // 事前トリム＆全角→半角、記号ゆれ吸収
+  let t = String(s).trim()
+    .replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)) // 全角数字
+    .replace(/[￥]/g, '¥')               // 円記号統一
+    .replace(/[，、]/g, ',')             // カンマ統一
+    .replace(/[．。]/g, '.')             // ドット統一
+    .replace(/\s+/g, '')                 // 余分な空白除去
+    .replace(/円/g, '')                  // “円”は表示時に不要
+    .replace(/[~〜]/g, '〜')             // 波ダッシュ統一
+    .replace(/[ー–—―－]/g, '-');         // ダッシュ統一
+
+  // 非数値系ワードはそのまま返す
+  if (/^(無料|応相談|ASK|ask|Free|free)$/.test(t)) return s;
+
+  // 数値抽出ヘルパ
+  const fmt = (numStr) => {
+    const n = Number(numStr.replace(/[^\d]/g, ''));
+    if (Number.isNaN(n)) return ''; // 数字なし
+    return '¥' + n.toLocaleString('ja-JP');
+  };
+
+  // レンジ（〜 または -）
+  if (/[〜-]/.test(t)) {
+    const [left, right] = t.split(/[〜-]/, 2);
+    const L = fmt(left);
+    const R = fmt(right);
+    if (L && R) return `${L}〜${R}`;
+    if (L && /〜/.test(t)) return `${L}〜`; // “¥88,000〜”
+    return L || s;
+  }
+
+  // 単価
+  const one = fmt(t);
+  return one || s;
+};
+
 // ============ C) 料金テーブル（1行= "プラン|料金|補足" 改行区切り） ============
 (() => {
   const tbody = document.getElementById('pricing_rows');
   const sec   = document.getElementById('pricing_section');
   if (!tbody || !sec) return;
 
-  const lines = (data.pricing_items || '').split('\n').map(s=>s.trim()).filter(Boolean);
+  const lines = (data.pricing_items || '')
+    .split('\n').map(s => s.trim()).filter(Boolean);
+
   if (lines.length === 0) { sec.setAttribute('hidden',''); return; }
 
   const frag = document.createDocumentFragment();
+
   lines.forEach(line => {
-    const [plan='', price='', note=''] = line.split('|').map(s=> (s||'').trim());
-    const tr = document.createElement('tr');
-    const td1 = document.createElement('td'); td1.textContent = plan || '-';
-    const td2 = document.createElement('td'); td2.textContent = price || '-';
-    const td3 = document.createElement('td'); td3.textContent = note || '';
-    tr.append(td1, td2, td3); frag.appendChild(tr);
+    const [plan = '', price = '', note = ''] =
+      line.split('|').map(s => (s || '').trim());
+
+    const tr  = document.createElement('tr');
+    const td1 = document.createElement('td');
+    const td2 = document.createElement('td');
+    const td3 = document.createElement('td');
+
+    td1.textContent = plan || '-';
+    td2.textContent = price ? normalizePrice(price) : '-';
+    td3.textContent = note  || '';
+
+    tr.append(td1, td2, td3);
+    frag.appendChild(tr);
   });
-  tbody.innerHTML = ''; tbody.appendChild(frag);
+
+  tbody.innerHTML = '';
+  tbody.appendChild(frag);
   sec.removeAttribute('hidden');
 
   // 備考
-  const note = (data.pricing_note || '').trim();
   const noteEl = document.getElementById('pricing_note');
-  if (noteEl) noteEl.textContent = note;
+  if (noteEl) noteEl.textContent = (data.pricing_note || '').trim();
 })();
 
 // ============ D) 言語の詳細（あれば段落で追記したい場合・任意） ============
