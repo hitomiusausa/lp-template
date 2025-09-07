@@ -41,9 +41,17 @@ img{max-width:100%;height:auto;display:block}
 }
 
 
-/* FAQ */
-.faq dt{font-weight:700;margin-top:10px}
-.faq dd{margin:6px 0 12px}
+/* FAQの質問を常に太字にする（継承ゆれ対策） */
+.faq dt { font-weight: 700; }          
+.faq .faq-q { 
+  font-family: inherit; 
+  font-size: inherit; 
+  line-height: inherit;
+  font-weight: 700;                     /* ← これが決め手！ */
+}
+
+/* アイコンの太さはお好みで。細くしたいなら 400 に */
+.faq .faq-q .faq-icon { font-weight: 700; }
 
 /* --- FAQ accordion --- */
 .faq { margin: 0; padding: 0; }
