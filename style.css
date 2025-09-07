@@ -291,3 +291,23 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .price-table tbody tr:last-child td{ border-bottom:none; }
 .muted{ color:#6b7280; font-size:.95em; margin-top:8px; }
 
+/* フッター */
+.lp-footer{ background:#0f172a; color:#e5e7eb; }
+.lp-footer a{ color:#93c5fd; text-decoration:none; }
+.lp-footer a:hover{ text-decoration:underline; }
+
+.lp-footer-inner{ display:grid; gap:24px; }
+@media (min-width:768px){
+  .lp-footer-inner{ grid-template-columns: 1.2fr 1fr 1fr; }
+}
+
+.footer-brand{ display:flex; gap:12px; align-items:center; }
+.footer-name{ font-weight:700; margin:0; }
+.footer-license span{ display:inline-block; margin-right:8px; opacity:.9; font-size:.95em; }
+.footer-nap{ margin:.5em 0 0; line-height:1.6; }
+
+.footer-head{ font-size:1rem; margin:0 0 8px; font-weight:700; }
+.footer-links{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
+.footer-copy{ opacity:.9; margin-top:12px; font-size:.95em; }
+
+
