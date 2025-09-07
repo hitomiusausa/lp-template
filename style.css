@@ -46,15 +46,22 @@ h1,h2{ margin: 0 0 16px; }
 .lp-hero-image {
   position: relative;
   width: 100%;
-  min-width: 100%;
   max-width: 100vw;
   height: clamp(320px, 60vh, 720px);
   margin: 0 auto;
   overflow: hidden;
+}
+
+/* ヒーロー画像に直接効かせるスタイル */
+.lp-hero-image img {
+  width: 100vw;
+  min-width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 0; /* 角丸なしで今風フルブリードに */
+  border-radius: 0;
 }
+
 
 /* グラデーションオーバーレイ（黒→透明） */
 .lp-hero-image::before {
