@@ -112,17 +112,34 @@ h1,h2{ margin: 0 0 16px; }
   display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center;
 }
 
-/* 共通ボタン（同幅固定＆縮まない） */
+/* --- CTA buttons: force equal width & height --- */
+.cta-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px 20px;
+  justify-content:center;
+  align-items:stretch;                 /* ← 高さも揃える */
+}
+
+/* 同幅固定・縮まない・ボックス幅にパディング含める */
 .cta-actions .btn{
   box-sizing:border-box;
-  flex: 0 0 var(--cta-btn-w);   /* shrink:0 / basis=固定幅 */
+  flex: 0 0 var(--cta-btn-w);          /* shrink:0 / basis=固定幅 */
   width: var(--cta-btn-w);
-  min-height: var(--cta-btn-min-h);
-  display:inline-flex; align-items:center; justify-content:center;
-  gap:.6em; padding:14px 28px; border-radius:12px;
-  border:1px solid #e5e7eb; text-align:center; text-decoration:none;
-  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, border-color .15s ease, filter .15s ease;
+  min-height: var(--cta-btn-min-h);    /* 高さも同じに */
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
 }
+
+/* スマホは両方100%幅で完全一致 */
+@media (max-width:480px){
+  .cta-actions .btn{
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
 
 /* 下線ナシ（a内のテキストも） */
 a.btn, a.btn:visited, .btn *{ text-decoration:none; }
@@ -147,7 +164,3 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .btn-sub{ font-weight:600; font-size:clamp(13px,2.4vw,16px); opacity:.9; margin-top:2px; }
 .btn-phone{ flex-direction:column; align-items:center; gap:4px; line-height:1.25; }
 
-/* スマホは両方とも全幅で統一 */
-@media (max-width:480px){
-  .cta-actions .btn{ flex:1 1 100%; width:100%; }
-}
