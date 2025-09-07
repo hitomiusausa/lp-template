@@ -7,7 +7,7 @@
   --bg:#f8fafc;
   --brand-hover:#1c64e0;   /* ホバー時 */
   --brand-active:#1858c7;  /* クリック時 */
-  --radius-cta: 18px;                 /* 角の丸み（ちょい丸） */
+  --radius-cta: 16px;                 /* 角の丸み（ちょい丸） */
   --hover-shadow: 0 10px 24px rgba(0,0,0,.14);
   --hover-ring: 0 0 0 3px rgba(31,111,235,.12); /* うっすらリング */
 
