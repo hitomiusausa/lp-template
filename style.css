@@ -112,14 +112,27 @@ h1,h2{ margin: 0 0 16px; }
   display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center;
 }
 
-/* 共通ボタン */
+/* 共通ボタン（幅を固定し、縮まないようにする） */
 .cta-actions .btn{
-  width:var(--cta-btn-w); min-height:var(--cta-btn-min-h);
+  flex: 0 0 var(--cta-btn-w);   /* shrink:0 / basis=固定幅 */
+  width: var(--cta-btn-w);
+  min-height: var(--cta-btn-min-h);
+  box-sizing: border-box;
+
   display:inline-flex; align-items:center; justify-content:center;
   gap:.6em; padding:14px 28px; border-radius:12px;
   border:1px solid #e5e7eb; text-align:center; text-decoration:none;
   transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
+
+/* スマホ時は両方とも全幅でそろえる */
+@media (max-width:480px){
+  .cta-actions .btn{
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
 a.btn, a.btn:visited, .btn *{ text-decoration:none; }   /* 下線ナシ */
 
 .btn-primary{ background:var(--brand); color:#fff; border-color:var(--brand); }
