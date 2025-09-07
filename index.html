@@ -9,8 +9,10 @@
   <link rel="icon" href="/assets/images/logo.png" type="image/png">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+  
+  <!-- セクション1：ヒーローエリア -->
   <section class="lp-section lp-hero">
     <div class="lp-hero-image">
       <!-- *いまはJPEG一本。AVIF/WebPは実ファイル揃ってから復活でOK -->
@@ -52,10 +54,42 @@
       <li>サービス内容: <span id="key_services"></span></li>
       <li>電話番号: <span id="key_tel_display"></span> (<a id="key_tel_link" href="#">電話する</a>)</li>
       <li>予約URL: <a id="key_reservation_url" href="#" target="_blank" rel="noopener">こちら</a></li>
+      <li>対応エリア: <span id="service_area"></span></li>
+    <li>オンライン対応: <span id="remote_available"></span></li>
+    <li>
+      連絡手段:
+      <span class="contact-apps">
+        <a id="contact_line" href="#" target="_blank" rel="noopener">LINE</a> /
+        <a id="contact_whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a> /
+        <a id="contact_wechat" href="#" target="_blank" rel="noopener">WeChat</a>
+      </span>
+    </li>
     </ul>
   </section>
 
-  <!-- セクション4：運営者情報 -->
+  <!-- セクション4：サービス対象（ビザ種別） -->
+<section class="lp-section" id="visa_section">
+  <h2>サービス対象（ビザ種別）</h2>
+  <ul id="visa_types_list" class="list-grid"></ul>
+</section>
+
+
+<!-- セクション5：料金・相談プラン -->
+<section class="lp-section" id="pricing_section" hidden>
+  <h2>料金・相談プラン</h2>
+  <div class="table-wrap">
+    <table class="price-table" aria-describedby="pricing_note">
+      <thead>
+        <tr><th>プラン</th><th>料金</th><th>補足</th></tr>
+      </thead>
+      <tbody id="pricing_rows"></tbody>
+    </table>
+  </div>
+  <p id="pricing_note" class="muted"></p>
+</section>
+
+
+  <!-- セクション6：運営者情報 -->
   <section class="lp-section">
     <h2>運営者情報</h2>
     <div class="lp-profile">
@@ -69,7 +103,7 @@
     </div>
   </section>
 
-<!-- セクション5：FAQ -->
+<!-- セクション7：FAQ -->
 <section class="lp-section">
   <h2>よくある質問</h2>
   <dl class="faq" id="faq">
@@ -100,7 +134,7 @@
   </dl>
 </section>
 
-<!-- セクション6（中間CTA②） -->
+<!-- セクション8（中間CTA②） -->
 <section class="lp-cta lp-section" id="cta_mid2_block">
   <p id="cta_mid2" class="cta-message"></p>
   <div class="cta-actions">
@@ -112,7 +146,7 @@
   </div>
 </section>
   
-  <!-- セクション7：アクセス -->
+  <!-- セクション9：アクセス -->
   <section class="lp-section">
     <h2>アクセス</h2>
     <div class="lp-access-wrapper">
@@ -125,7 +159,7 @@
     </div>
   </section>
 
-  <!-- セクション8：最終CTA -->
+  <!-- セクション10：最終CTA -->
 <section class="lp-cta lp-section" id="cta_final_block">
   <h2 id="cta_final" class="cta-message"></h2>
   <div class="cta-actions">
