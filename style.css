@@ -75,4 +75,12 @@ img{max-width:100%;height:auto;display:block}
 .faq-a.open{ max-height:600px; } /* 充分大きめに */
 .faq-a[hidden]{ display:none; }  /* hiddenのときは完全非表示 */
 
+/* 常に質問文を太字化（状態に依らず強制） */
+.faq dt .faq-q { font-weight: 700 !important; }
+
+/* 念のため、質問テキストの <span id="faq_qN"> 側にも強制 */
+.faq dt .faq-q span[id^="faq_q"] { font-weight: 700 !important; }
+
+/* アイコンは好きな太さで（太字にする場合） */
+.faq .faq-q .faq-icon { font-weight: 700; }
 
