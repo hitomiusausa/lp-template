@@ -83,4 +83,6 @@ img{max-width:100%;height:auto;display:block}
 
 /* アイコンは好きな太さで（太字にする場合） */
 .faq .faq-q .faq-icon { font-weight: 700; }
+.faq dt { margin: 12px 0; }     /* 質問ボタン自体に上下マージン */
+.faq dd { margin: 8px 0 16px; } /* 開いてるときの余白も確保 */
 
