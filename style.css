@@ -38,21 +38,68 @@ img{ max-width:100%; height:auto; display:block; }
 h1,h2{ margin: 0 0 16px; }
 
 /* =========================
-   Hero
+   Hero（今風フル幅バージョン）
    ========================= */
-.lp-hero-image{ position:relative; }
-.lp-hero-image img{
-  width:100%; max-height:clamp(240px,40vh,520px);
-  object-fit:cover; border-radius:16px;
+.lp-hero-image {
+  position: relative;
+  width: 100vw;
+  margin: 0 auto;
+  overflow: hidden;
 }
-.lp-hero-overlay{
-  position:absolute; inset:0; display:grid; place-content:center;
-  text-align:center; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.35); padding:16px;
+
+.lp-hero-image img {
+  width: 100vw;
+  height: clamp(320px, 60vh, 720px);
+  object-fit: cover;
+  display: block;
+  border-radius: 0; /* 角丸なしで今風フルブリードに */
 }
-.lp-hero-overlay h1{ margin:.2em 0; font-size:clamp(24px,6vw,44px); }
-.lp-hero-overlay p{ margin:0; font-size:clamp(14px,3vw,18px); }
-.lp-hero-logo{ display:grid; place-content:center; margin-top:12px; }
-.lp-hero-logo img{ width:clamp(120px,18vw,200px); height:auto; }
+
+/* グラデーションオーバーレイ（黒→透明） */
+.lp-hero-image::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
+  z-index: 1;
+}
+
+/* 中央メッセージ */
+.lp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  z-index: 2;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  padding: 16px;
+}
+
+/* キャッチコピー */
+.lp-hero-overlay h1 {
+  margin: 0.2em 0;
+  font-size: clamp(28px, 6vw, 48px);
+}
+
+/* サブコピー */
+.lp-hero-overlay p {
+  margin: 0;
+  font-size: clamp(16px, 3vw, 20px);
+}
+
+/* ロゴ */
+.lp-hero-logo {
+  display: grid;
+  place-content: center;
+  margin-top: 16px;
+}
+
+.lp-hero-logo img {
+  width: clamp(120px, 18vw, 220px);
+  height: auto;
+}
 
 /* =========================
    Key Facts
