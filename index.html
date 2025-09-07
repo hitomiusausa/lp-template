@@ -7,39 +7,39 @@
   <title>ランディングページ</title>
   <meta name="description" content="専門サービスの紹介LP">
   <link rel="icon" href="/assets/images/logo.png" type="image/png">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body>
   <!-- セクション1：ヒーローエリア -->
-  <section class="lp-section lp-hero">
-    <div class="lp-hero-image">
-      <picture>
-        <source type="image/avif"
-          srcset="/assets/images/hero-768.avif 768w, /assets/images/hero-1280.avif 1280w, /assets/images/hero-1920.avif 1920w"
-          sizes="100vw">
-        <source type="image/webp"
-          srcset="/assets/images/hero-768.webp 768w, /assets/images/hero-1280.webp 1280w, /assets/images/hero-1920.webp 1920w"
-          sizes="100vw">
-        <img id="hero_image"
-             src="/assets/images/hero.jpg"
-             srcset="/assets/images/hero-768.jpg 768w, /assets/images/hero-1280.jpg 1280w, /assets/images/hero-1920.jpg 1920w"
-             sizes="100vw"
-             width="1920" height="1000"
-             alt="ヒーロー画像（サービスの魅力を伝えるビジュアル）"
-             decoding="async" fetchpriority="high">
-      </picture>
+<section class="lp-section lp-hero">
+  <div class="lp-hero-image">
+    <picture>
+      <source type="image/avif"
+              srcset="/assets/images/hero-768.avif 768w, /assets/images/hero-1280.avif 1280w, /assets/images/hero-1920.avif 1920w"
+              sizes="100vw">
+      <source type="image/webp"
+              srcset="/assets/images/hero-768.webp 768w, /assets/images/hero-1280.webp 1280w, /assets/images/hero-1920.webp 1920w"
+              sizes="100vw">
+      <img id="hero_image"
+           src="/assets/images/hero.jpg"
+           srcset="/assets/images/hero-768.jpg 768w, /assets/images/hero-1280.jpg 1280w, /assets/images/hero-1920.jpg 1920w"
+           sizes="100vw"
+           width="1920" height="1000"
+           alt="ヒーロー画像（サービスの魅力を伝えるビジュアル）"
+           decoding="async" fetchpriority="high" loading="eager">
+    </picture>
 
-      <div class="lp-hero-overlay">
-        <h1 id="key_name"></h1>
-        <p id="hero_message"></p>
-      </div>
+    <div class="lp-hero-overlay">
+      <h1 id="key_name"></h1>
+      <p id="hero_message"></p>
     </div>
+  </div>
 
-    <div class="lp-hero-logo"><img id="hero_logo" alt="ヒーローロゴ"></div>
-  </section>
-</body>
+  <div class="lp-hero-logo"><img id="hero_logo" alt="ヒーローロゴ"></div>
+</section>
+
 
 
   <!-- セクション2：CTA①メッセージ -->
