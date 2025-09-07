@@ -154,4 +154,26 @@ h2{ margin: 0 0 16px; }
   .cta-actions .btn{ width:100%; }       /* スマホは全幅で押しやすく */
 }
 
+/* 電話ボタンを2行・中央配置に */
+.btn-phone{
+  /* 親の .btn は inline-flex。縦積みに切替 */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;              /* 1行目と2行目の間隔 */
+  line-height: 1.25;
+}
+
+.btn-phone .btn-label{
+  font-weight: 700;
+  font-size: clamp(15px, 2.7vw, 18px);
+}
+
+.btn-phone .btn-sub{
+  display: block;
+  font-weight: 600;
+  font-size: clamp(13px, 2.4vw, 16px);
+  opacity: .9;
+}
+
 
