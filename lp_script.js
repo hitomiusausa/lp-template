@@ -241,15 +241,7 @@
 // ============ A) 連絡手段・対応エリア（Key Factsへの追加） ============
 setText('service_area', data.service_area || '全国（オンライン対応）');
 setText('remote_available', data.remote_available || 'オンライン相談・海外在住OK');
-setLink('contact_line', data.contact_line);
-setLink('contact_whatsapp', data.contact_whatsapp);
-setLink('contact_wechat', data.contact_wechat);
 
-// 空リンクは非表示
-['contact_line','contact_whatsapp','contact_wechat'].forEach(id=>{
-  const a = document.getElementById(id);
-  if (a && (!a.href || a.getAttribute('href')==='#')) a.style.display='none';
-});
 
 // ============ B) ビザ種別（改行→li） ============
 (() => {
