@@ -119,7 +119,6 @@ h1,h2{ margin: 0 0 16px; }
   flex: 0 0 var(--cta-btn-w);   /* shrink:0 / basis=固定幅 */
   width: var(--cta-btn-w);
   min-height: var(--cta-btn-min-h);
-
   display:inline-flex; align-items:center; justify-content:center;
   gap:.6em; padding:14px 28px; border-radius:12px;
   border:1px solid #e5e7eb; text-align:center; text-decoration:none;
