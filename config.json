@@ -2,7 +2,7 @@
   "customer_id": "ID250001",
   "main_message": "うさうさな毎日を！",
   "hero_image": "/assets/images/hero.jpg",
-  "hero_logo": "/assets/images/logo.jpg",
+  "hero_logo": "/assets/images/logo.png",
   "key_name": "USA office",
   "key_location": "愛知県日進市",
   "key_language": "日本語／英語",
@@ -18,18 +18,32 @@
   "owner_license": "行政書士",
   "owner_reg_number": "9876554",
   "owner_cert_number": "112888",
+
   "faq_q1": "アライグマはいますか",
   "faq_a1": "はい、3匹います",
   "faq_q2": "冷房は効いていますか",
   "faq_a2": "はい、十分に効いています",
   "faq_q3": "支払いはクレジットカードもOKですか",
   "faq_a3": "はい、現金、クレジットカード、PAYPAYが使えます",
+
   "access_map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52203.74220841652!2d137.04932399999998!3d35.1383138!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6003641aba1633bb%3A0x1f734f6ac0c0e97!2z5oSb55-l55yM5pel6YCy5biC!5e0!3m2!1sja!2sjp!4v1757214204183!5m2!1sja!2sjp",
   "access_address": "811-0333 愛知県日進市魚3-22-33",
   "access_hours": "平日 10:00〜19:00\n休日 11:00〜17:00",
   "access_station": "まじま駅",
+
   "hero_message": "うさ？うさうさ！",
   "cta_mid1": "まずはご連絡ください",
   "cta_mid2": "全力でお話を聞きます",
-  "cta_final": "ご連絡をお待ちしています"
+  "cta_final": "ご連絡をお待ちしています",
+
+  // ===== 追加：サービス対象（ビザ種別） =====
+  "visa_types": "Engineer/Specialist in Humanities/International Services\nBusiness Manager\nSpecified Skilled Worker (i)/(ii)\nSpouse/Dependent\nPermanent Residency\nNaturalization",
+
+  // ===== 追加：料金・相談プラン（1行= プラン|料金|補足）=====
+  "pricing_items": "初回相談(15分)|無料|オンライン/電話対応\n就労ビザ申請|¥88,000〜|書類作成・申請代行\n経営・管理(会社設立含む)|¥198,000〜|要件ヒアリング含む\n在留期間更新|¥55,000〜|急ぎ対応可",
+  "pricing_note": "料金は案件の難易度・言語対応により変動。正式見積りをご案内。",
+
+  // ===== 追加：対応エリア・オンライン可否（Key Factsに表示）=====
+  "service_area": "全国（オンライン対応）",
+  "remote_available": "海外在住の方もオンライン面談OK"
 }
