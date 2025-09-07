@@ -238,6 +238,64 @@
         dd.addEventListener('transitionend', onEnd);
       }
 
+// ============ A) 連絡手段・対応エリア（Key Factsへの追加） ============
+setText('service_area', data.service_area || '全国（オンライン対応）');
+setText('remote_available', data.remote_available || 'オンライン相談・海外在住OK');
+setLink('contact_line', data.contact_line);
+setLink('contact_whatsapp', data.contact_whatsapp);
+setLink('contact_wechat', data.contact_wechat);
+
+// 空リンクは非表示
+['contact_line','contact_whatsapp','contact_wechat'].forEach(id=>{
+  const a = document.getElementById(id);
+  if (a && (!a.href || a.getAttribute('href')==='#')) a.style.display='none';
+});
+
+// ============ B) ビザ種別（改行→li） ============
+(() => {
+  const ul = document.getElementById('visa_types_list');
+  if (!ul) return;
+  const raw = (data.visa_types || '').trim();
+  if (!raw) { ul.closest('section')?.setAttribute('hidden',''); return; }
+  ul.innerHTML = ''; // reset
+  raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(item => {
+    const li = document.createElement('li'); li.textContent = item; ul.appendChild(li);
+  });
+})();
+
+// ============ C) 料金テーブル（1行= "プラン|料金|補足" 改行区切り） ============
+(() => {
+  const tbody = document.getElementById('pricing_rows');
+  const sec   = document.getElementById('pricing_section');
+  if (!tbody || !sec) return;
+
+  const lines = (data.pricing_items || '').split('\n').map(s=>s.trim()).filter(Boolean);
+  if (lines.length === 0) { sec.setAttribute('hidden',''); return; }
+
+  const frag = document.createDocumentFragment();
+  lines.forEach(line => {
+    const [plan='', price='', note=''] = line.split('|').map(s=> (s||'').trim());
+    const tr = document.createElement('tr');
+    const td1 = document.createElement('td'); td1.textContent = plan || '-';
+    const td2 = document.createElement('td'); td2.textContent = price || '-';
+    const td3 = document.createElement('td'); td3.textContent = note || '';
+    tr.append(td1, td2, td3); frag.appendChild(tr);
+  });
+  tbody.innerHTML = ''; tbody.appendChild(frag);
+  sec.removeAttribute('hidden');
+
+  // 備考
+  const note = (data.pricing_note || '').trim();
+  const noteEl = document.getElementById('pricing_note');
+  if (noteEl) noteEl.textContent = note;
+})();
+
+// ============ D) 言語の詳細（あれば段落で追記したい場合・任意） ============
+// 既存の key_language を詳細に置き換えたいときは下行のコメントを外してね。
+// if (data.languages_detail) setText('key_language', data.languages_detail);
+
+
+      
       // ===== Access（営業時間は改行保持）=====
       setSrc ('access_map', data.access_map);
       setHTML('access_hours', (data.access_hours||'').replace(/\n/g,'<br>'));
