@@ -97,52 +97,24 @@ function initFAQAccordion() {
   });
 }
 
-// アニメ付きで開く
 function openPanel(dd, btn) {
   btn.setAttribute('aria-expanded', 'true');
   const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '−';
-
-  dd.hidden = false;                   // 測れるように表示
-  dd.style.overflow = 'hidden';
-  dd.style.height = '0px';             // 開始高さ
-  dd.style.transition = 'height 250ms ease';
-
-  requestAnimationFrame(() => {
-    const h = dd.scrollHeight;         // 本来の高さ
-    dd.style.height = h + 'px';
-    const onEnd = (ev) => {
-      if (ev.propertyName !== 'height') return;
-      dd.style.transition = '';
-      dd.style.height = '';            // 高さリセット（コンテンツ変化に強い）
-      dd.style.overflow = '';
-      dd.removeEventListener('transitionend', onEnd);
-    };
-    dd.addEventListener('transitionend', onEnd);
-  });
+  dd.removeAttribute('hidden');     // 表示にしてから
+  dd.classList.add('open');         // CSSでmax-heightを滑らかに上げる
 }
 
-// アニメ付きで閉じる
 function closePanel(dd, btn) {
   btn.setAttribute('aria-expanded', 'false');
   const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '+';
-
-  const h = dd.scrollHeight;           // 現在高さ
-  dd.style.overflow = 'hidden';
-  dd.style.height = h + 'px';          // まず現在値を固定
-  dd.style.transition = 'height 200ms ease';
-
-  requestAnimationFrame(() => {
-    dd.style.height = '0px';
-    const onEnd = (ev) => {
-      if (ev.propertyName !== 'height') return;
-      dd.hidden = true;                // 完全に閉じたら隠す
-      dd.style.transition = '';
-      dd.style.height = '';
-      dd.style.overflow = '';
-      dd.removeEventListener('transitionend', onEnd);
-    };
-    dd.addEventListener('transitionend', onEnd);
-  });
+  dd.classList.remove('open');      // max-heightを0に戻す（アニメ）
+  // アニメ後に hidden を戻してアクセシビリティ的にも閉じた状態に
+  const onEnd = (ev) => {
+    if (ev.propertyName !== 'max-height') return;
+    dd.setAttribute('hidden','');
+    dd.removeEventListener('transitionend', onEnd);
+  };
+  dd.addEventListener('transitionend', onEnd);
 }
 
 
