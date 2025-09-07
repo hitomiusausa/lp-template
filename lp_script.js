@@ -61,7 +61,7 @@ function initFAQAccordion() {
   const root = document.getElementById('faq');
   if (!root) return;
 
-  // まず、QかAが空の項目は消す（空ボタン防止）
+  // 空項目は削除（空ボタン出さない）
   root.querySelectorAll('.faq-q').forEach(btn => {
     const ddId = btn.getAttribute('aria-controls');
     const dd = document.getElementById(ddId);
@@ -74,30 +74,76 @@ function initFAQAccordion() {
     }
   });
 
-  // クリックはイベント委任で確実に拾う
+  // 開閉（イベント委任）
   root.addEventListener('click', (e) => {
     const btn = e.target.closest('.faq-q');
     if (!btn || !root.contains(btn)) return;
+    e.preventDefault();
 
     const ddId = btn.getAttribute('aria-controls');
     const dd = document.getElementById(ddId);
     if (!dd) return;
 
     const isOpen = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!isOpen));
-
     if (isOpen) {
-      // 閉じる
-      dd.setAttribute('hidden', '');
-      const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '+';
+      closePanel(dd, btn);
     } else {
-      // 開く
-      dd.removeAttribute('hidden');
-      const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '−';
+      // ▼ 1個だけ開きたい場合はここを有効化
+      // root.querySelectorAll('.faq-a:not([hidden])').forEach(open => {
+      //   if (open.id !== ddId) closePanel(open, root.querySelector(`.faq-q[aria-controls="${open.id}"]`));
+      // });
+      openPanel(dd, btn);
     }
   });
 }
 
+// アニメ付きで開く
+function openPanel(dd, btn) {
+  btn.setAttribute('aria-expanded', 'true');
+  const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '−';
+
+  dd.hidden = false;                   // 測れるように表示
+  dd.style.overflow = 'hidden';
+  dd.style.height = '0px';             // 開始高さ
+  dd.style.transition = 'height 250ms ease';
+
+  requestAnimationFrame(() => {
+    const h = dd.scrollHeight;         // 本来の高さ
+    dd.style.height = h + 'px';
+    const onEnd = (ev) => {
+      if (ev.propertyName !== 'height') return;
+      dd.style.transition = '';
+      dd.style.height = '';            // 高さリセット（コンテンツ変化に強い）
+      dd.style.overflow = '';
+      dd.removeEventListener('transitionend', onEnd);
+    };
+    dd.addEventListener('transitionend', onEnd);
+  });
+}
+
+// アニメ付きで閉じる
+function closePanel(dd, btn) {
+  btn.setAttribute('aria-expanded', 'false');
+  const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '+';
+
+  const h = dd.scrollHeight;           // 現在高さ
+  dd.style.overflow = 'hidden';
+  dd.style.height = h + 'px';          // まず現在値を固定
+  dd.style.transition = 'height 200ms ease';
+
+  requestAnimationFrame(() => {
+    dd.style.height = '0px';
+    const onEnd = (ev) => {
+      if (ev.propertyName !== 'height') return;
+      dd.hidden = true;                // 完全に閉じたら隠す
+      dd.style.transition = '';
+      dd.style.height = '';
+      dd.style.overflow = '';
+      dd.removeEventListener('transitionend', onEnd);
+    };
+    dd.addEventListener('transitionend', onEnd);
+  });
+}
 
 
 // Access（営業時間は改行保持）
