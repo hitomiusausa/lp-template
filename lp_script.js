@@ -129,8 +129,6 @@ function showConfigAlert(msg){
   }
   bar.textContent = '⚠ ' + msg;
 }
-      // まず SEO を反映（data が確実にあるタイミング）
-      applySEOMeta(data);
 
       // ===== Hero（<picture> がある場合は上書きしない）=====
       (() => {
