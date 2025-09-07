@@ -1,148 +1,46 @@
-/* ベーススタイル */
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #fdfdfd;
-  color: #333;
-  line-height: 1.6;
-}
-
-.lp-section {
-  padding: 3em 1.5em;
-  border-bottom: 1px solid #eee;
-  background-color: #fff;
-}
-
-h1, h2 {
-  color: #444;
-  margin-top: 0;
-}
-
-p, li, dt, dd {
-  font-size: 1rem;
-}
-
-/* ヒーローエリア */
-.lp-hero-image img {
-  width: 100%;
-  max-height: 450px;
-  object-fit: cover;
-  filter: brightness(0.9);
-  border-bottom: 3px solid #ddd;
-}
-
-.lp-section h1 {
-  font-size: 2.2rem;
-  text-align: center;
-  margin: 1em 0 0.5em;
-}
-
-#hero_message {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #666;
-}
-
-#hero_logo {
-  display: block;
-  max-width: 150px;
-  margin: 1em auto;
-}
-
-/* CTA */
-.lp-cta {
-  background-color: #f0f9ff;
-  color: #0077cc;
-  font-weight: bold;
-  font-size: 1.1rem;
-  text-align: center;
-  padding: 2em 1em;
-  margin: 2em 0;
-}
-
-/* Key Facts */
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-ul li {
-  margin-bottom: 0.5em;
-}
-
-/* 運営者情報 */
-.lp-profile {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em;
-}
-
-.lp-profile img {
-  max-width: 200px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-/* FAQ */
-dt {
-  font-weight: bold;
-  margin-top: 1em;
-}
-
-dd {
-  margin: 0 0 1em 0;
-}
-
-/* アクセス */
-.lp-access-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2em;
-}
-
-.lp-access-wrapper iframe {
-  flex: 1;
-  min-width: 280px;
-  height: 300px;
-  border-radius: 8px;
-}
-
-.lp-access-wrapper div {
-  flex: 1;
-  min-width: 280px;
-}
-
-/* レスポンシブ */
-@media (max-width: 768px) {
-  .lp-profile, .lp-access-wrapper {
-    flex-direction: column;
-  }
-  h1 {
-    font-size: 1.8rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-}
-/* --- Morning Polish --- */
 :root { --brand:#1f6feb; --ink:#222; --bg:#f8fafc; }
 html,body{scroll-behavior:smooth}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; color:var(--ink); line-height:1.7}
+body{font-family:system-ui,-apple-system,Segöe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink);line-height:1.7;background:#fff;margin:0}
+img{max-width:100%;height:auto;display:block}
 
-.lp-section{padding:clamp(16px,4vw,40px); max-width:960px; margin:0 auto}
-h1,h2{line-height:1.25; margin:0.4em 0}
-h1{font-size:clamp(24px,6vw,40px)}
-h2{font-size:clamp(18px,3.5vw,24px)}
-p,li,dd{font-size:clamp(14px,2.6vw,17px)}
 
-img{display:block; max-width:100%; height:auto}
-#owner_image{border-radius:16px}
+.lp-section{padding:clamp(16px,4vw,40px);max-width:1000px;margin:0 auto}
+.lead{font-size:clamp(16px,2.6vw,18px)}
 
-.lp-hero-image img{max-height:clamp(220px,40vh,480px); object-fit:cover; border-radius:16px}
 
-.lp-cta{background:var(--bg); padding:clamp(12px,3vw,20px); text-align:center; border-radius:12px; margin:16px auto; max-width:960px}
+/* Hero */
+.lp-hero-image{position:relative}
+.lp-hero-image img{width:100%;max-height:clamp(240px,40vh,520px);object-fit:cover;border-radius:16px}
+.lp-hero-overlay{position:absolute;inset:0;display:grid;place-content:center;text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.35);padding:16px}
+.lp-hero-overlay h1{margin:.2em 0;font-size:clamp(24px,6vw,44px)}
+.lp-hero-overlay p{margin:0;font-size:clamp(14px,3vw,18px)}
+.lp-hero-logo{display:grid;place-content:center;margin-top:12px}
 
-@media (min-width: 768px){
-  .lp-profile,.lp-access-wrapper{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+
+/* CTA */
+.lp-cta{background:var(--bg);padding:clamp(12px,3vw,20px);text-align:center;border-radius:12px;margin:16px auto}
+
+
+/* Facts */
+.facts{list-style:none;padding:0;margin:0}
+.facts li{padding:8px 0;border-bottom:1px solid #eee}
+
+
+/* Profile */
+.lp-profile{display:grid;gap:20px}
+.profile-image img{border-radius:16px}
+@media (min-width:768px){
+.lp-profile{grid-template-columns:1fr 1.2fr}
 }
+
+
+/* Access */
+.lp-access-wrapper{display:grid;gap:20px}
+@media (min-width:768px){
+.lp-access-wrapper{grid-template-columns:1.3fr 1fr}
+}
+
+
+/* FAQ */
+.faq dt{font-weight:700;margin-top:10px}
+.faq dd{margin:6px 0 12px}
