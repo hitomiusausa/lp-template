@@ -2,6 +2,81 @@
 // - Hero: <picture> がある場合は JS で上書きしない（ブラウザの最適フォーマット選択を尊重）
 // - setImage: 先に error を登録してから src をセット（レース回避）
 // - fetch: cache: 'no-store' で常に最新の config.json を取得
+// === SEO meta from JSON ===
+(() => {
+  // ---- 1) フィールドの決定（JSONが無ければ既存キーでフォールバック）----
+  const title = (data.seo_title && data.seo_title.trim())
+    || `${data.key_name || ''} | ${data.key_services || '行政書士'}`.trim();
+
+  const desc = (data.seo_description && data.seo_description.trim())
+    || (data.main_message && data.main_message.trim())
+    || '外国人向けのビザ申請・更新・翻訳をサポート';
+
+  const baseUrl = (data.canonical_url && data.canonical_url.trim())
+    || (location.origin + location.pathname);
+
+  const ogImg = (data.og_image && data.og_image.trim())
+    || (data.hero_image && data.hero_image.trim())
+    || '/assets/images/hero.jpg';
+
+  // ---- 2) 便利ヘルパー（無ければ作って、あれば上書き）----
+  const upsertMetaByName = (name, content) => {
+    if (!content) return;
+    let el = document.head.querySelector(`meta[name="${CSS.escape(name)}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute('name', name);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  };
+
+  const upsertMetaByProp = (prop, content) => {
+    if (!content) return;
+    let el = document.head.querySelector(`meta[property="${CSS.escape(prop)}"]`);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute('property', prop);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  };
+
+  const upsertLink = (rel, href) => {
+    if (!href) return;
+    let el = document.head.querySelector(`link[rel="${CSS.escape(rel)}"]`);
+    if (!el) {
+      el = document.createElement('link');
+      el.setAttribute('rel', rel);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('href', href);
+  };
+
+  const abs = (url) => {
+    try { return new URL(url, location.origin).href; } catch { return url; }
+  };
+
+  // ---- 3) 反映本体 ----
+  document.title = title;
+  upsertMetaByName('description', desc);
+  upsertLink('canonical', baseUrl);
+
+  // OGP
+  upsertMetaByProp('og:type', 'website');
+  upsertMetaByProp('og:title', title);
+  upsertMetaByProp('og:description', desc);
+  upsertMetaByProp('og:url', baseUrl);
+  upsertMetaByProp('og:image', abs(ogImg));
+
+  // Twitter
+  upsertMetaByName('twitter:card', data.twitter_card || 'summary_large_image');
+  upsertMetaByName('twitter:title', title);
+  upsertMetaByName('twitter:description', desc);
+  upsertMetaByName('twitter:image', abs(ogImg));
+})();
+
+
 (function(){
   'use strict';
 
