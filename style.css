@@ -408,6 +408,34 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .price-table tbody tr:last-child td{ border-bottom:none; }
 .muted{ color:#6b7280; font-size:.95em; margin-top:8px; }
 
+
+/* =========================
+   Section Headings (center)
+   ========================= */
+.lp-section > h2{
+  text-align: center;
+  margin: 0 auto clamp(16px, 3vw, 28px);
+  letter-spacing: .02em;
+}
+
+/* オプション：細いアクセントラインを見出し下に */
+.lp-section > h2::after{
+  content:"";
+  display:block;
+  width: clamp(48px, 6vw, 96px);
+  height: 2px;
+  margin: clamp(8px, 1.6vw, 14px) auto 0;
+  background: var(--rule-strong, rgba(2,6,23,.22));
+  border-radius: 999px;
+  opacity:.9;
+}
+
+/* 濃色背景のセクション（例：CTAなど）ではライン色だけ明るく */
+.lp-section.lp-cta > h2::after{
+  background: rgba(255,255,255,.35);
+}
+
+
 /* ===== footer tokens ===== */
 :root{
   --footer-bg: #111827;      /* deep slate/navy（真っ黒より柔らかい） */
@@ -465,5 +493,6 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .footer-head{ font-size:1rem; margin:0 0 8px; font-weight:700; }
 .footer-links{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
 .footer-copy{ opacity:.9; margin-top:12px; font-size:.95em; }
+
 
 
