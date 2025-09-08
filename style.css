@@ -927,6 +927,8 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 /* ついでにリンク行＆©も余白最小化 */
 .footer-legal .legal-links{ margin: 0; }
 .footer-legal .copyright{ margin: 0; }
+.footer-col.footer-legal{ gap: clamp(8px,1.2vw,14px); }
+
 .footer-logo-wrap{ margin: 0 0 clamp(12px, 3vw, 28px); }
 .footer-logo-wrap img{
   width: clamp(72px, 9vw, 110px);
