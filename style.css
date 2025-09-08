@@ -95,7 +95,7 @@ h1,h2{ margin: 0 0 16px; }
 /* 共通：センター寄せ＋擬似要素の基礎 */
 .lp-section > h2.sec-title{
   position: relative;
-  display: inline-block;       /* 擬似要素のセンタリング用 */
+  display: block;       /* 擬似要素のセンタリング用 */
   margin: 0 auto clamp(16px,3vw,28px);
   text-align: center;
   letter-spacing: .02em;
