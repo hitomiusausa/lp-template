@@ -395,23 +395,6 @@ h1,h2{ margin: 0 0 16px; }
   }
 }
 
-/* 任意：セクションの下に“控えめな細線”を足したい場合 */
-.owner-section::after{
-  content:"";
-  display:block;
-  width: min(100%, 880px);
-  height:1px;
-  margin: clamp(24px, 5vw, 48px) auto 0;
-  background: linear-gradient(to right,
-    transparent 0,
-    var(--rule, rgba(2,6,23,.14)) 12%,
-    var(--rule-strong, rgba(2,6,23,.22)) 50%,
-    var(--rule, rgba(2,6,23,.14)) 88%,
-    transparent 100%);
-  border-radius: 999px;
-  opacity: .9;
-}
-
 
 /* =========================
    CTA Blocks (final clean)
