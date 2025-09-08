@@ -15,6 +15,11 @@
   --radius-cta: 16px;                 /* 角の丸み（ちょい丸） */
   --hover-shadow: 0 10px 24px rgba(0,0,0,.14);
   --hover-ring: 0 0 0 3px rgba(31,111,235,.12); /* うっすらリング */
+  --faq-radius: 12px;
+  --faq-pad-x: clamp(12px, 3vw, 20px);
+  --faq-pad-y: clamp(10px, 2.4vw, 16px);
+  --faq-rule: rgba(2, 6, 23, .18);
+  --faq-rule-strong: rgba(2, 6, 23, .28);
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
@@ -184,26 +189,67 @@ h1,h2{ margin: 0 0 16px; }
 @media (min-width:768px){ .lp-access-wrapper{ grid-template-columns:1.3fr 1fr; }}
 
 /* =========================
-   FAQ (Accordion)
+   FAQ (Accordion) — dashed card ver.
    ========================= */
+
+/* 追加トークン（既存 :root があれば追記でOK） */
+:root{
+  --faq-radius: 12px;
+  --faq-pad-x: clamp(12px, 3vw, 20px);
+  --faq-pad-y: clamp(10px, 2.4vw, 16px);
+  --faq-rule: rgba(2, 6, 23, .18);
+  --faq-rule-strong: rgba(2, 6, 23, .28);
+}
+
+/* ベース */
 .faq{ margin:0; padding:0; }
 .faq dt{ margin:12px 0 0; }
-.faq dd{ margin:8px 0 16px; padding:0 12px; }
-.faq dd[hidden] + dt{ margin-top:16px; }            /* 閉じてても間隔を維持 */
+.faq dd{ margin:8px 0 16px; }                 /* パディングは .faq-a 側で管理 */
+.faq dd[hidden] + dt{ margin-top:16px; }      /* 閉じてても間隔を維持 */
 
+/* 質問ボタン */
 .faq-q{
   width:100%;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
   padding:12px 16px; border:1px solid #e5e7eb; border-radius:10px;
   background:#fff; cursor:pointer; text-align:left;
-  font:inherit; font-weight:700;                     /* 常に太字 */
+  font:inherit; font-weight:700;
 }
 .faq-q:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
 .faq-icon{ width:1.25em; text-align:center; font-weight:700; }
 
-.faq-a[hidden]{ display:none; }                      /* 完全非表示 */
-.faq-a{ overflow:hidden; max-height:0; transition:max-height .25s ease; }
-.faq-a.open{ max-height:600px; }                     /* しゅるん */
+/* 回答（アコーディオン本体） */
+.faq-a[hidden]{ display:none; }
+.faq-a{
+  overflow:hidden;
+  max-height:0;
+  padding:0 var(--faq-pad-x);                 /* 閉時は上下0、横だけキープ */
+  margin:0;
+  border-radius:var(--faq-radius);
+  background:transparent;
+  border:1px dashed transparent;              /* 点線はデフォ透明 */
+  box-shadow:none;
+  transition:
+    max-height .25s ease,
+    padding .25s ease,
+    background .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease;
+}
+.faq-a.open{
+  max-height: var(--faq-maxh, 600px);         /* 必要なら --faq-maxh で延長 */
+  padding: var(--faq-pad-y) var(--faq-pad-x);
+}
+
+/* ▼ 点線カード枠（dl に .faq--dashed を付けたときだけ発動） */
+.faq.faq--dashed .faq-a.open{
+  border-color: var(--faq-rule);
+  background:#fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+.faq.faq--dashed .faq-a.open:hover{
+  border-color: var(--faq-rule-strong);
+}
 
 
 /* =========================
