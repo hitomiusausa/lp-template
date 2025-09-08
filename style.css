@@ -616,8 +616,8 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   display: grid;
   place-items: center start;                 /* 縦:center / 横:left */
   text-align: left;
-  min-height: clamp(96px, 12vw, 160px);      /* ← コンパクト幅（好みで調整） */
-  padding-block: clamp(10px, 2.2vw, 16px);
+  min-height: clamp(88px, 11vw, 140px);      /* ← コンパクト幅（好みで調整） */
+  padding-block: clamp(8px, 2vw, 14px);
   padding-inline: clamp(12px, 3vw, 18px);
   border: 1px solid var(--rule, rgba(2,6,23,.12));
   border-radius: 12px;
