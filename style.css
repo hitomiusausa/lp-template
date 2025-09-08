@@ -636,7 +636,7 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   gap: clamp(8px, 1.6vw, 14px);
 }
 #visa_section .list-grid.cards--compact > li{
-  min-height: clamp(72px, 9vw, 112px);     /* ← 高さをギュッと */
+  min-height: clamp(68px, 9vw, 112px);     /* ← 高さをギュッと */
   padding-block: clamp(8px, 1.6vw, 12px);
   padding-inline: clamp(10px, 2.2vw, 14px);
   border-radius: 10px;                     /* 小さめ角丸で引き締め */
