@@ -598,6 +598,25 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   .facts li > a{ display: inline; white-space: normal; }
 }
 
+/* ===== サービス概要セクション ===== */
+/* 枠（カード）要素に適用：左寄せのまま縦中央 */
+.service-card{
+  display: grid;
+  place-items: center start;                   /* ← 縦: center / 横: left */
+  text-align: left;
+  min-height: clamp(120px, 14vw, 180px);      /* 高さに余裕（好みで調整） */
+  padding: clamp(14px, 3vw, 22px);
+  border: 1px solid var(--rule, rgba(2,6,23,.12));
+  border-radius: 12px;
+  background: #fff;
+}
+
+/* 見出しや段落の“デフォルト上マージン”がズレの原因になりがちなのでリセット */
+.service-card > h3,
+.service-card > p{ margin: 0; }
+.service-card > h3{ margin-bottom: .35em; }
+
+
 
 
 /* ===== footer tokens ===== */
