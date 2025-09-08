@@ -1,108 +1,147 @@
-// フラットJSONに対応した描画スクリプト（方法B対応版・完成 v3）
-// - Hero: <picture> がある場合は JS で上書きしない（ブラウザの最適フォーマット選択を尊重）
-// - setImage: 先に error を登録してから src をセット（レース回避）
-// - fetch: cache: 'no-store' で常に最新の config.json を取得
-// - SEO: data を受け取ってから <head> を更新（JS 実行順の不整合を解消）
-
 (function(){
   'use strict';
-const $ = (id) => document.getElementById(id);
-if (html && String(html).trim() !== "") el.innerHTML = html;
-};
 
+  // ---------- Helpers ----------
+  const $ = (id) => document.getElementById(id);
+  const hasCssEscape = (typeof CSS !== 'undefined' && typeof CSS.escape === 'function');
+  const esc = (s) => hasCssEscape ? CSS.escape(s) : s;
 
-const setImage = (id, src, fallback = "/assets/images/logo.png") => {
-const el = $(id);
-if (!el || !src) return;
-const onError = () => { el.src = fallback; };
-el.addEventListener('error', onError, { once: true });
-el.src = src;
-};
+  const setText = (id, text) => {
+    const el = $(id);
+    if (!el) return;
+    if (text && String(text).trim() !== "") el.textContent = text;
+  };
 
+  const setHTML = (id, html) => {
+    const el = $(id);
+    if (!el) return;
+    if (html && String(html).trim() !== "") el.innerHTML = html;
+  };
 
-const setLink = (id, href) => {
-const el = $(id);
-if (el && href) el.href = href;
-};
+  const setImage = (id, src, fallback = "/assets/images/logo.png") => {
+    const el = $(id);
+    if (!el || !src) return;
+    const onError = () => { el.src = fallback; };
+    el.addEventListener('error', onError, { once: true });
+    el.src = src;
+  };
 
+  const setLink = (id, href) => {
+    const el = $(id);
+    if (el && href) el.href = href;
+  };
 
-const setSrc = (id, src) => {
-const el = $(id);
-if (el && src) el.src = src;
-};
+  const setSrc = (id, src) => {
+    const el = $(id);
+    if (el && src) el.src = src;
+  };
 
+  const sanitizeTel = (s) => (s || '').replace(/[^\d+]/g, '');
 
-const applySEOMeta = (data) => {
-const title = (data.seo_title && data.seo_title.trim()) || `${data.key_name || ''} | ${data.key_services || '行政書士'}`.trim();
-const desc = (data.seo_description && data.seo_description.trim()) || (data.main_message && data.main_message.trim()) || '外国人向けのビザ申請・更新・翻訳をサポート';
-const baseUrl = (data.canonical_url && data.canonical_url.trim()) || (location.origin + location.pathname);
-const ogImg = (data.og_image && data.og_image.trim()) || (data.hero_image && data.hero_image.trim()) || '/assets/images/hero.jpg';
+  // ---------- SEO meta from JSON ----------
+  function applySEOMeta(data){
+    const title = (data.seo_title && data.seo_title.trim())
+      || `${data.key_name || ''} | ${data.key_services || '行政書士'}`.trim();
 
+    const desc = (data.seo_description && data.seo_description.trim())
+      || (data.main_message && data.main_message.trim())
+      || '外国人向けのビザ申請・更新・翻訳をサポート';
 
-const upsertMetaByName = (name, content) => {
-if (!content) return;
-let el = document.head.querySelector(`meta[name="${esc(name)}"]`);
-if (!el) { el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
-el.setAttribute('content', content);
-};
+    const baseUrl = (data.canonical_url && data.canonical_url.trim())
+      || (location.origin + location.pathname);
 
+    const ogImg = (data.og_image && data.og_image.trim())
+      || (data.hero_image && data.hero_image.trim())
+      || '/assets/images/hero.jpg';
 
-const upsertMetaByProp = (prop, content) => {
-if (!content) return;
-let el = document.head.querySelector(`meta[property="${esc(prop)}"]`);
-if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
-el.setAttribute('content', content);
-};
+    const upsertMetaByName = (name, content) => {
+      if (!content) return;
+      let el = document.head.querySelector(`meta[name="${esc(name)}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
 
+    const upsertMetaByProp = (prop, content) => {
+      if (!content) return;
+      let el = document.head.querySelector(`meta[property="${esc(prop)}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
 
-const upsertLink = (rel, href) => {
-if (!href) return;
-let el = document.head.querySelector(`link[rel="${esc(rel)}"]`);
-if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
-el.setAttribute('href', href);
-};
+    const upsertLink = (rel, href) => {
+      if (!href) return;
+      let el = document.head.querySelector(`link[rel="${esc(rel)}"]`);
+      if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
+      el.setAttribute('href', href);
+    };
 
+    const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
 
-const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
+    // 反映
+    document.title = title;
+    upsertMetaByName('description', desc);
+    upsertMetaByName('robots', data.robots || 'index,follow');
+    upsertLink('canonical', baseUrl);
 
-document.title = title;
-upsertMetaByName('description', desc);
-upsertMetaByName('robots', data.robots || 'index,follow');
-upsertLink('canonical', baseUrl);
-upsertMetaByProp('og:type', 'website');
-upsertMetaByProp('og:title', title);
-upsertMetaByProp('og:description', desc);
-upsertMetaByProp('og:url', baseUrl);
-upsertMetaByProp('og:image', abs(ogImg));
-upsertMetaByName('twitter:card', data.twitter_card || 'summary_large_image');
-upsertMetaByName('twitter:title', title);
-upsertMetaByName('twitter:description', desc);
-upsertMetaByName('twitter:image', abs(ogImg));
-};
+    // OGP
+    upsertMetaByProp('og:type', 'website');
+    upsertMetaByProp('og:title', title);
+    upsertMetaByProp('og:description', desc);
+    upsertMetaByProp('og:url', baseUrl);
+    upsertMetaByProp('og:image', abs(ogImg));
 
+    // Twitter
+    upsertMetaByName('twitter:card', data.twitter_card || 'summary_large_image');
+    upsertMetaByName('twitter:title', title);
+    upsertMetaByName('twitter:description', desc);
+    upsertMetaByName('twitter:image', abs(ogImg));
+  }
 
-const file = 'config.json';
-fetch(file, { cache: 'no-store' })
-.then(r => r.json())
-.then(data => {
-applySEOMeta(data);
-const img = document.getElementById('hero_image');
-if (img && !img.closest('picture')) setImage('hero_image', data.hero_image);
-setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
-setText('key_name', data.key_name);
-setText('hero_message', data.hero_message || '');
-document.getElementById("key_name_fact").textContent = data.key_name;
-document.getElementById("key_name_link").setAttribute("href", data.main_url);
-document.getElementById("key_tel_display").textContent = data.key_tel_display;
-document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_tel_display);
+  // ---------- Main ----------
+  const file = 'config.json';
+  fetch(file, { cache: 'no-store' })
+    .then(r => r.json())
+    .then(data => {
+      // SEOを適用
+      applySEOMeta(data);
+
+      // Hero（<picture> がある場合は上書きしない）
+      (() => {
+        const img = document.getElementById('hero_image');
+        if (!img) return;
+        const pic = img.closest('picture');
+        if (!pic) setImage('hero_image', data.hero_image);
+      })();
+
+      setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
+      setText('key_name', data.key_name);
+      setText('hero_message', data.hero_message || '');
+
+      // 事業所名リンク＆電話リンク（Facts）
+      if (document.getElementById('key_name_fact')) {
+        document.getElementById('key_name_fact').textContent = data.key_name || '';
+      }
+      if (document.getElementById('key_name_link')) {
+        const url = data.main_url || '#';
+        document.getElementById('key_name_link').setAttribute('href', url);
+      }
+
+      const telDisplay = data.key_tel_display || '';
+      const telHref    = data.key_tel_link || (telDisplay ? `tel:${sanitizeTel(telDisplay)}` : '');
+      if (document.getElementById('key_tel_display')) {
+        document.getElementById('key_tel_display').textContent = telDisplay;
+      }
+      if (document.getElementById('key_tel_link') && telHref) {
+        document.getElementById('key_tel_link').setAttribute('href', telHref);
+      }
 
       // ===== CTA: 3ブロックをまとめてセット =====
       setupCTA({
         blockId: 'cta_mid1_block',
         messageId: 'cta_mid1',
         message: data.cta_mid1,
-        telDisplay: data.key_tel_display,
-        telHref: data.key_tel_link,
+        telDisplay: telDisplay,
+        telHref: telHref,
         reserveUrl: data.key_reservation_url,
         telElId: 'cta1_tel',
         telDispElId: 'cta1_tel_display',
@@ -112,8 +151,8 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         blockId: 'cta_mid2_block',
         messageId: 'cta_mid2',
         message: data.cta_mid2,
-        telDisplay: data.key_tel_display,
-        telHref: data.key_tel_link,
+        telDisplay: telDisplay,
+        telHref: telHref,
         reserveUrl: data.key_reservation_url,
         telElId: 'cta2_tel',
         telDispElId: 'cta2_tel_display',
@@ -123,8 +162,8 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         blockId: 'cta_final_block',
         messageId: 'cta_final',
         message: data.cta_final,
-        telDisplay: data.key_tel_display,
-        telHref: data.key_tel_link,
+        telDisplay: telDisplay,
+        telHref: telHref,
         reserveUrl: data.key_reservation_url,
         telElId: 'ctaf_tel',
         telDispElId: 'ctaf_tel_display',
@@ -147,27 +186,18 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         // 電話ボタン
         const telA = document.getElementById(opts.telElId);
         const telDisp = document.getElementById(opts.telDispElId);
-
         if (telA) {
-          // ゆるめの tel バリデーション（tel: の後は数字/スペース/()-/+OK）
           const isTel = !!(opts.telHref && /^tel:\+?[\d\s\-()]+$/i.test(opts.telHref));
-
           if (isTel) {
             telA.href = opts.telHref;
             telA.style.display = 'inline-flex';
-
-            // 上段の文言を統一
             const labelEl = telA.querySelector('.btn-label');
             if (labelEl) labelEl.textContent = '電話で問い合わせる';
-
-            // 下段に表示用の番号（未設定なら非表示）
             const num = (opts.telDisplay || '').trim();
             if (telDisp) {
               telDisp.textContent = num;
               telDisp.style.display = num ? 'block' : 'none';
             }
-
-            // アクセシビリティ表現も合わせる
             telA.setAttribute('aria-label', `電話で問い合わせる ${num || ''}`.trim());
           } else {
             telA.style.display = 'none';
@@ -186,14 +216,14 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         }
       }
 
-      // ===== Facts（key_nameはヒーローとFactsの両方に反映）=====
+      // ===== Facts =====
       setText('key_name_fact', data.key_name);
       setText('key_location', data.key_location);
       setText('key_language', data.key_language);
       setText('key_founded', data.key_founded);
       setText('key_services', data.key_services);
       setText('key_tel_display', data.key_tel_display);
-      setLink('key_tel_link', data.key_tel_link);
+      setLink('key_tel_link', telHref);
       setLink('key_reservation_url', data.key_reservation_url);
 
       // ===== Owner =====
@@ -206,10 +236,8 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
       // ===== Q&A（回答は改行を<br>化）=====
       setText('faq_q1', data.faq_q1);
       setHTML('faq_a1', (data.faq_a1 || '').replace(/\n/g,'<br>'));
-
       setText('faq_q2', data.faq_q2);
       setHTML('faq_a2', (data.faq_a2 || '').replace(/\n/g,'<br>'));
-
       setText('faq_q3', data.faq_q3);
       setHTML('faq_a3', (data.faq_a3 || '').replace(/\n/g,'<br>'));
 
@@ -246,7 +274,7 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
           if (isOpen) {
             closePanel(dd, btn);
           } else {
-            // ★同時に1つだけ開きたい場合はこのブロックのコメント外してね
+            // 同時に1つだけ開きたい場合は下記を有効化
             // root.querySelectorAll('.faq-a.open').forEach(open => {
             //   if (open.id !== ddId) closePanel(open, root.querySelector(`.faq-q[aria-controls="${open.id}"]`));
             // });
@@ -255,22 +283,20 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         });
       }
 
-      // しゅるん開く（CSSのopenクラスでmax-heightを上げる）
       function openPanel(dd, btn) {
         btn.setAttribute('aria-expanded', 'true');
         const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '−';
-        dd.removeAttribute('hidden');  // 測れるようにまず表示
-        dd.classList.add('open');      // アニメ開始（max-height↑）
+        dd.removeAttribute('hidden');
+        dd.classList.add('open');
       }
 
-      // しゅるん閉じる（open外して→アニメ終了後にhidden）
       function closePanel(dd, btn) {
         btn.setAttribute('aria-expanded', 'false');
         const icon = btn.querySelector('.faq-icon'); if (icon) icon.textContent = '+';
-        dd.classList.remove('open');   // max-height→0（アニメ）
+        dd.classList.remove('open');
         const onEnd = (ev) => {
           if (ev.propertyName !== 'max-height') return;
-          dd.setAttribute('hidden','');        // 完全に閉じたら非表示
+          dd.setAttribute('hidden','');
           dd.removeEventListener('transitionend', onEnd);
         };
         dd.addEventListener('transitionend', onEnd);
@@ -286,47 +312,37 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         if (!ul) return;
         const raw = (data.visa_types || '').trim();
         if (!raw) { ul.closest('section')?.setAttribute('hidden',''); return; }
-        ul.innerHTML = ''; // reset
+        ul.innerHTML = '';
         raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(item => {
           const li = document.createElement('li'); li.textContent = item; ul.appendChild(li);
         });
       })();
 
-      // --- 料金のゆれ吸収＆整形（¥88,000 / ¥88,000〜120,000 / 無料 / 応相談 など対応）---
+      // --- 料金のゆれ吸収＆整形 ---
       const normalizePrice = (s) => {
         if (!s) return '';
-        // 事前トリム＆全角→半角、記号ゆれ吸収
         let t = String(s).trim()
-          .replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)) // 全角数字
-          .replace(/[￥]/g, '¥')               // 円記号統一
-          .replace(/[，、]/g, ',')             // カンマ統一
-          .replace(/[．。]/g, '.')             // ドット統一
-          .replace(/\s+/g, '')                 // 余分な空白除去
-          .replace(/円/g, '')                  // “円”は表示時に不要
-          .replace(/[~〜]/g, '〜')             // 波ダッシュ統一
-          .replace(/[ー–—―－]/g, '-');         // ダッシュ統一
-
-        // 非数値系ワードはそのまま返す
+          .replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0))
+          .replace(/[￥]/g, '¥')
+          .replace(/[，、]/g, ',')
+          .replace(/[．。]/g, '.')
+          .replace(/\s+/g, '')
+          .replace(/円/g, '')
+          .replace(/[~〜]/g, '〜')
+          .replace(/[ー–—―－]/g, '-');
         if (/^(無料|応相談|ASK|ask|Free|free)$/.test(t)) return s;
-
-        // 数値抽出ヘルパ
         const fmt = (numStr) => {
           const n = Number(numStr.replace(/[^\d]/g, ''));
-          if (Number.isNaN(n)) return ''; // 数字なし
+          if (Number.isNaN(n)) return '';
           return '¥' + n.toLocaleString('ja-JP');
         };
-
-        // レンジ（〜 または -）
         if (/[〜-]/.test(t)) {
           const [left, right] = t.split(/[〜-]/, 2);
-          const L = fmt(left);
-          const R = fmt(right);
+          const L = fmt(left); const R = fmt(right);
           if (L && R) return `${L}〜${R}`;
-          if (L && /〜/.test(t)) return `${L}〜`; // “¥88,000〜”
+          if (L && /〜/.test(t)) return `${L}〜`;
           return L || s;
         }
-
-        // 単価
         const one = fmt(t);
         return one || s;
       };
@@ -365,7 +381,6 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         tbody.appendChild(frag);
         sec.removeAttribute('hidden');
 
-        // 備考
         const noteEl = document.getElementById('pricing_note');
         if (noteEl) noteEl.textContent = (data.pricing_note || '').trim();
       })();
@@ -380,7 +395,7 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
       setText('cta_mid2', data.cta_mid2);
       setText('cta_final', data.cta_final);
 
-      // ===== Footer fill（左欄 v2：ロゴ＋事務所名＋住所＋TEL＋営業時間）=====
+      // ===== Footer fill =====
       setImage('footer_logo', data.hero_logo || '/assets/images/logo.png');
       setText ('footer_name',       data.key_name || '');
       setText ('footer_name_copy',  data.key_name || '');
@@ -389,7 +404,7 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
       setText ('footer_cert',       data.owner_cert_number? `認証番号: ${data.owner_cert_number}` : '');
       setText ('footer_address',    data.access_address || '');
       setText ('footer_tel',        data.key_tel_display || '');
-      setLink ('footer_tel_link',   data.key_tel_link || '#');
+      setLink ('footer_tel_link',   telHref || '#');
 
       // 住所・電話：空なら行ごと非表示
       (() => {
@@ -408,7 +423,7 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         if (!showTel && telA) telA.closest('.footer-contact')?.style.setProperty('display','none');
       })();
 
-      // 営業時間：平日/休日を自動判別して分割表示（どちらも無ければ行を隠す）
+      // 営業時間：平日/休日を自動判別して分割表示
       (() => {
         const lines = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
         let weekday = '', holiday = '';
@@ -446,93 +461,79 @@ document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_t
         else { a.style.display = 'none'; }
       });
 
-      // ===== Organization JSON-LD（営業時間つき・住所分解つき）=====
-(() => {
-  // 日本住所の簡易パーサ
-  function parseJPAddress(input){
-    let s = (input || '').trim();
-    const out = { postalCode:'', addressRegion:'', addressLocality:'', streetAddress:'', addressCountry:'JP' };
+      // ===== Organization JSON-LD =====
+      (() => {
+        function parseJPAddress(input){
+          let s = (input || '').trim();
+          const out = { postalCode:'', addressRegion:'', addressLocality:'', streetAddress:'', addressCountry:'JP' };
+          const mZip = s.match(/(?:〒\s*)?(\d{3})[-－‐]?(\d{4})/);
+          if (mZip){ out.postalCode = `${mZip[1]}-${mZip[2]}`; s = s.replace(mZip[0], '').trim(); }
+          const mPref = s.match(/(北海道|東京都|京都府|大阪府|..県)/);
+          if (mPref){ out.addressRegion = mPref[1]; s = s.replace(mPref[0], '').trim(); }
+          const mLocal = s.match(/^[^0-9\-ー－]+?(市|区|町|村)/);
+          if (mLocal){ out.addressLocality = mLocal[0]; s = s.slice(mLocal[0].length).trim(); }
+          out.streetAddress = s.replace(/^[\s,、-]+/, '');
+          return out;
+        }
 
-    // 郵便番号（〒は任意）
-    const mZip = s.match(/(?:〒\s*)?(\d{3})[-－‐]?(\d{4})/);
-    if (mZip){ out.postalCode = `${mZip[1]}-${mZip[2]}`; s = s.replace(mZip[0], '').trim(); }
+        const parseHours = (text) => {
+          if (!text) return null;
+          const t = text.replace(/\s+/g,'').replace(/[~～〜]/g,'〜');
+          const m = t.match(/(\d{1,2}):?(\d{2})?〜(\d{1,2}):?(\d{2})?/);
+          if (!m) return null;
+          const HH = n => String(n).padStart(2,'0');
+          return { opens: `${HH(m[1])}:${HH(m[2]||'00')}`, closes: `${HH(m[3])}:${HH(m[4]||'00')}` };
+        };
 
-    // 都道府県
-    const mPref = s.match(/(北海道|東京都|京都府|大阪府|..県)/);
-    if (mPref){ out.addressRegion = mPref[1]; s = s.replace(mPref[0], '').trim(); }
+        const lines  = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
+        const wdText = lines.find(l=>/平日|Weekdays/i.test(l)) || lines[0] || '';
+        const hdText = lines.find(l=>/休日|土日|祝|Weekend|Sat|Sun|Holiday/i.test(l)) || '';
+        const wd = parseHours(wdText);
+        const hd = parseHours(hdText);
 
-    // 市区町村（～市/区/町/村 まで）
-    const mLocal = s.match(/^[^0-9\-ー－]+?(市|区|町|村)/);
-    if (mLocal){ out.addressLocality = mLocal[0]; s = s.slice(mLocal[0].length).trim(); }
+        const openingHoursSpecification = [];
+        if (wd){ openingHoursSpecification.push({
+          "@type":"OpeningHoursSpecification",
+          "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],
+          "opens": wd.opens, "closes": wd.closes
+        });}
+        if (hd){ openingHoursSpecification.push({
+          "@type":"OpeningHoursSpecification",
+          "dayOfWeek":["Saturday","Sunday"],
+          "opens": hd.opens, "closes": hd.closes
+        });}
 
-    // 残りは番地・建物
-    out.streetAddress = s.replace(/^[\s,、-]+/, '');
-    return out;
-  }
+        const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
+        const parts = parseJPAddress(data.access_address);
+        const postalAddress = {
+          "@type": "PostalAddress",
+          streetAddress: parts.streetAddress || (data.access_address || ''),
+          addressCountry: parts.addressCountry
+        };
+        if (parts.addressRegion)   postalAddress.addressRegion   = parts.addressRegion;
+        if (parts.addressLocality) postalAddress.addressLocality = parts.addressLocality;
+        if (parts.postalCode)      postalAddress.postalCode      = parts.postalCode;
 
-  // 時間のパース（平日/休日）
-  const parseHours = (text) => {
-    if (!text) return null;
-    const t = text.replace(/\s+/g,'').replace(/[~～〜]/g,'〜');
-    const m = t.match(/(\d{1,2}):?(\d{2})?〜(\d{1,2}):?(\d{2})?/);
-    if (!m) return null;
-    const HH = n => String(n).padStart(2,'0');
-    return { opens: `${HH(m[1])}:${HH(m[2]||'00')}`, closes: `${HH(m[3])}:${HH(m[4]||'00')}` };
-  };
+        const org = {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "name": data.key_name || "",
+          "image": abs(data.hero_image || ""),
+          "logo":  abs(data.hero_logo || "/assets/images/logo.png"),
+          "telephone": (data.key_tel_display || "").replace(/[^\d+]/g,''),
+          "address": postalAddress,
+          "areaServed": data.service_area || "Japan",
+          "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
+          "url": location.origin + location.pathname
+        };
+        if (openingHoursSpecification.length){
+          org.openingHoursSpecification = openingHoursSpecification;
+        }
 
-  const lines  = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
-  const wdText = lines.find(l=>/平日|Weekdays/i.test(l)) || lines[0] || '';
-  const hdText = lines.find(l=>/休日|土日|祝|Weekend|Sat|Sun|Holiday/i.test(l)) || '';
-  const wd = parseHours(wdText);
-  const hd = parseHours(hdText);
+        const el = document.getElementById('org_jsonld');
+        if (el) el.textContent = JSON.stringify(org);
+      })();
 
-  const openingHoursSpecification = [];
-  if (wd){
-    openingHoursSpecification.push({
-      "@type":"OpeningHoursSpecification",
-      "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],
-      "opens": wd.opens, "closes": wd.closes
-    });
-  }
-  if (hd){
-    openingHoursSpecification.push({
-      "@type":"OpeningHoursSpecification",
-      "dayOfWeek":["Saturday","Sunday"],
-      "opens": hd.opens, "closes": hd.closes
-    });
-  }
-
-  const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
-  const parts = parseJPAddress(data.access_address);
-  const postalAddress = {
-    "@type": "PostalAddress",
-    streetAddress: parts.streetAddress || (data.access_address || ''),
-    addressCountry: parts.addressCountry
-  };
-  if (parts.addressRegion)   postalAddress.addressRegion   = parts.addressRegion;
-  if (parts.addressLocality) postalAddress.addressLocality = parts.addressLocality;
-  if (parts.postalCode)      postalAddress.postalCode      = parts.postalCode;
-
-  const org = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": data.key_name || "",
-    "image": abs(data.hero_image || ""),
-    "logo":  abs(data.hero_logo || "/assets/images/logo.png"),
-    "telephone": (data.key_tel_display || "").replace(/[^\d+]/g,''),
-    "address": postalAddress,
-    "areaServed": data.service_area || "Japan",
-    "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
-    "url": location.origin + location.pathname
-  };
-  if (openingHoursSpecification.length){
-    org.openingHoursSpecification = openingHoursSpecification;
-  }
-
-  const el = document.getElementById('org_jsonld');
-  if (el) el.textContent = JSON.stringify(org);
-})();
-
-})
-.catch(err => console.error('JSON読み込みエラー:', err));
+    })
+    .catch(err => console.error('JSON読み込みエラー:', err));
 })();
