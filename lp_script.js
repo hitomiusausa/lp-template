@@ -478,7 +478,6 @@
       });
 // ===== Organization JSON-LD（営業時間つき・構造化強化）=====
 (() => {
-  // access_hours から平日/休日の時間帯を抽出（例: "平日 10:00〜19:00" / "休日 11:00〜17:00"）
   const parseHours = (text) => {
     if (!text) return null;
     const t = text.replace(/\s+/g,'').replace(/[~～〜]/g,'〜');
@@ -532,6 +531,7 @@
   const el = document.getElementById('org_jsonld');
   if (el) el.textContent = JSON.stringify(org);
 })();
+
       
 
     })
