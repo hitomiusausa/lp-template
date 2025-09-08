@@ -54,10 +54,33 @@ h1,h2{ margin: 0 0 16px; }
    インセット ライン
    ========================= */
 
-/* 連続するセクションの上に薄い線を引く（本文幅に合わせてインセット） */
+/* インセットの“普通の1px線　連続するセクションの上に薄い線を引く（本文幅に合わせてインセット）
 .lp-section + .lp-section{
   border-top: 1px solid var(--rule);
   padding-top: calc(var(--rule-gap) + 1px);
+}
+ */
+
+ /* フルブリード（左右端まで“スッ”と走る線）フル幅の区切り線：必要なセクションに .rule-bleed を付与して使う */
+.lp-section{ position: relative; }
+.lp-section.rule-bleed{
+  padding-top: var(--rule-gap);
+}
+.lp-section.rule-bleed::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;           /* 中央基準で 100vw */
+  width: 100vw;
+  height: 1px;
+  background: linear-gradient(to right,
+    transparent 0,
+    var(--rule) 12%,
+    var(--rule-strong) 50%,
+    var(--rule) 88%,
+    transparent 100%);
+  pointer-events: none;
 }
 
 
