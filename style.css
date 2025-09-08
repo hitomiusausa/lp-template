@@ -554,6 +554,47 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .lp-section.lp-cta > h2::after{
   background: rgba(255,255,255,.35);
 }
+/* ===== Basic Facts: 中央寄せ＋項目名を強調 ===== */
+:root{
+  --facts-w: clamp(640px, 72vw, 880px);   /* 基本情報ブロックの最大幅 */
+  --facts-gap-y: clamp(10px, 2vw, 14px);  /* 行の縦間隔 */
+}
+
+/* ブロック全体を中央に寄せる */
+.facts{
+  list-style: none;
+  padding: 0;
+  margin: clamp(12px, 2.4vw, 20px) auto 0;
+  max-width: var(--facts-w);
+}
+
+/* 各行の見た目（区切り線はそのまま上品に） */
+.facts li{
+  padding: var(--facts-gap-y) 0;
+  border-bottom: 1px solid rgba(2,6,23,.10);
+  /* ラベル側（= spanより前の文字）をやや強調 */
+  font-weight: 600;
+  color: color-mix(in srgb, var(--brand, #1f6feb) 35%, #0b1220);
+}
+
+/* 値（<span>）とリンクは読みやすい通常ウェイト＆色に戻す */
+.facts li > span,
+.facts li > a{
+  font-weight: 500;
+  color: var(--ink, #222);
+}
+
+/* 電話行のカッコ付きリンクが浮く場合の微調整（任意） */
+.facts li a{
+  text-underline-offset: 2px;
+}
+
+/* スマホでの詰まりを軽減（値だけ改行OK） */
+@media (max-width: 480px){
+  .facts li > span,
+  .facts li > a{ display: inline; white-space: normal; }
+}
+
 
 
 /* ===== footer tokens ===== */
