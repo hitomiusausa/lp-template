@@ -102,48 +102,42 @@
     upsertMetaByName('twitter:image', abs(ogImg));
   }
 
-  // ---------- Main ----------
-  const file = 'config.json';
-  fetch(file, { cache: 'no-store' })
-    .then(r => r.json())
-    .then(data => {
+// ---------- Main ----------
+const file = 'config.json';
+fetch(file, { cache: 'no-store' })
+  .then(r => r.json())
+  .then(data => {
 
-      // まず SEO を反映（data が確実にあるタイミング）
-      applySEOMeta(data);
+    // まず SEO を反映（data が確実にあるタイミング）
+    applySEOMeta(data);
 
-      // ===== Hero（<picture> がある場合は上書きしない）=====
-      (() => {
-        const img = document.getElementById('hero_image');
-        if (!img) return;
-        const pic = img.closest('picture');
-        if (!pic) {
-          // <picture> を使っていない構成のときだけ JSON で差し替え
-          setImage('hero_image', data.hero_image);
-        }
+    // ===== Hero（<picture> がある場合は上書きしない）=====
+    (() => {
+      const img = document.getElementById('hero_image');
+      if (!img) return;
+      const pic = img.closest('picture');
+      if (!pic) {
+        setImage('hero_image', data.hero_image);
+      }
+    })();
 
-// config.json の読み込み
-fetch('/path/to/config.json')
-  .then(res => res.json())
-  .then(config => {
-    // 事業所名リンクの設定
-    const name = config.key_name;       // 表示する事業所名
-    const url = config.main_url;        // クリック先URL
+    setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
+    setText ('key_name', data.key_name);
+    setText ('hero_message', data.hero_message || '');
 
+    // ===== 追加：事業所名リンクと電話番号リンクを設定 =====
+    // 事業所名クリックでメインサイトへ
+    const name = data.key_name;
+    const url  = data.main_url;
     document.getElementById("key_name_fact").textContent = name;
     document.getElementById("key_name_link").setAttribute("href", url);
 
-    // 電話番号のリンク化（ついでにこっちも）
-    const tel = config.key_tel_display;
+    // 電話番号もリンク化（番号表示とhref）
+    const tel = data.key_tel_display;
     document.getElementById("key_tel_display").textContent = tel;
     document.getElementById("key_tel_link").setAttribute("href", "tel:" + tel);
   });
 
-        // <picture> がある場合は HTML 側（<source>含む）の指定を優先
-      })();
-
-      setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
-      setText ('key_name', data.key_name);
-      setText ('hero_message', data.hero_message || '');
 
       // ===== CTA: 3ブロックをまとめてセット =====
       setupCTA({
