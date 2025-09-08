@@ -439,6 +439,30 @@ h1,h2{ margin: 0 0 16px; }
   margin: 0 0 8px 0;
 }
 
+.lp-profile.owner-card .profile-body div {
+  display: flex; /* ← これが超重要！ */
+  flex-wrap: wrap;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 6px 0;
+  gap: 4px; /* ← ちょっと余白もあるとキレイ */
+}
+
+.lp-profile.owner-card .profile-body dt {
+  font-weight: bold;
+  text-decoration: underline; /* ← 下線ここ！ */
+  margin-right: 8px;
+  min-width: 120px; /* ← ラベルの幅を固定 */
+  white-space: nowrap; /* ← 改行させない */
+}
+
+.lp-profile.owner-card .profile-body dd {
+  margin: 0;
+  font-weight: 500;
+  flex: 1;
+}
+
+
 /* スマホで1カラムに自然落ち */
 @media (max-width: 640px){
   .owner-section .lp-profile{
