@@ -477,6 +477,93 @@
         else { a.style.display = 'none'; }
       });
 
+      // ===== Organization JSON-LD（営業時間つき・住所分解つき）=====
+(() => {
+  // 日本住所の簡易パーサ
+  function parseJPAddress(input){
+    let s = (input || '').trim();
+    const out = { postalCode:'', addressRegion:'', addressLocality:'', streetAddress:'', addressCountry:'JP' };
+
+    // 郵便番号（〒は任意）
+    const mZip = s.match(/(?:〒\s*)?(\d{3})[-－‐]?(\d{4})/);
+    if (mZip){ out.postalCode = `${mZip[1]}-${mZip[2]}`; s = s.replace(mZip[0], '').trim(); }
+
+    // 都道府県
+    const mPref = s.match(/(北海道|東京都|京都府|大阪府|..県)/);
+    if (mPref){ out.addressRegion = mPref[1]; s = s.replace(mPref[0], '').trim(); }
+
+    // 市区町村（～市/区/町/村 まで）
+    const mLocal = s.match(/^[^0-9\-ー－]+?(市|区|町|村)/);
+    if (mLocal){ out.addressLocality = mLocal[0]; s = s.slice(mLocal[0].length).trim(); }
+
+    // 残りは番地・建物
+    out.streetAddress = s.replace(/^[\s,、-]+/, '');
+    return out;
+  }
+
+  // 時間のパース（平日/休日）
+  const parseHours = (text) => {
+    if (!text) return null;
+    const t = text.replace(/\s+/g,'').replace(/[~～〜]/g,'〜');
+    const m = t.match(/(\d{1,2}):?(\d{2})?〜(\d{1,2}):?(\d{2})?/);
+    if (!m) return null;
+    const HH = n => String(n).padStart(2,'0');
+    return { opens: `${HH(m[1])}:${HH(m[2]||'00')}`, closes: `${HH(m[3])}:${HH(m[4]||'00')}` };
+  };
+
+  const lines  = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
+  const wdText = lines.find(l=>/平日|Weekdays/i.test(l)) || lines[0] || '';
+  const hdText = lines.find(l=>/休日|土日|祝|Weekend|Sat|Sun|Holiday/i.test(l)) || '';
+  const wd = parseHours(wdText);
+  const hd = parseHours(hdText);
+
+  const openingHoursSpecification = [];
+  if (wd){
+    openingHoursSpecification.push({
+      "@type":"OpeningHoursSpecification",
+      "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": wd.opens, "closes": wd.closes
+    });
+  }
+  if (hd){
+    openingHoursSpecification.push({
+      "@type":"OpeningHoursSpecification",
+      "dayOfWeek":["Saturday","Sunday"],
+      "opens": hd.opens, "closes": hd.closes
+    });
+  }
+
+  const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
+  const parts = parseJPAddress(data.access_address);
+  const postalAddress = {
+    "@type": "PostalAddress",
+    streetAddress: parts.streetAddress || (data.access_address || ''),
+    addressCountry: parts.addressCountry
+  };
+  if (parts.addressRegion)   postalAddress.addressRegion   = parts.addressRegion;
+  if (parts.addressLocality) postalAddress.addressLocality = parts.addressLocality;
+  if (parts.postalCode)      postalAddress.postalCode      = parts.postalCode;
+
+  const org = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": data.key_name || "",
+    "image": abs(data.hero_image || ""),
+    "logo":  abs(data.hero_logo || "/assets/images/logo.png"),
+    "telephone": (data.key_tel_display || "").replace(/[^\d+]/g,''),
+    "address": postalAddress,
+    "areaServed": data.service_area || "Japan",
+    "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
+    "url": location.origin + location.pathname
+  };
+  if (openingHoursSpecification.length){
+    org.openingHoursSpecification = openingHoursSpecification;
+  }
+
+  const el = document.getElementById('org_jsonld');
+  if (el) el.textContent = JSON.stringify(org);
+})();
+
       })
     .catch(err => console.error('JSON読み込みエラー:', err));
 })();
