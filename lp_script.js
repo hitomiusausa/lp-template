@@ -123,7 +123,7 @@
         // <picture> がある場合は HTML 側（<source>含む）の指定を優先
       })();
 
-      setImage('hero_logo', data.hero_logo);
+      setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
       setText ('key_name', data.key_name);
       setText ('hero_message', data.hero_message || '');
 
