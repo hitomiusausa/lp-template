@@ -120,6 +120,24 @@
           // <picture> を使っていない構成のときだけ JSON で差し替え
           setImage('hero_image', data.hero_image);
         }
+
+// config.json の読み込み
+fetch('/path/to/config.json')
+  .then(res => res.json())
+  .then(config => {
+    // 事業所名リンクの設定
+    const name = config.key_name;       // 表示する事業所名
+    const url = config.main_url;        // クリック先URL
+
+    document.getElementById("key_name_fact").textContent = name;
+    document.getElementById("key_name_link").setAttribute("href", url);
+
+    // 電話番号のリンク化（ついでにこっちも）
+    const tel = config.key_tel_display;
+    document.getElementById("key_tel_display").textContent = tel;
+    document.getElementById("key_tel_link").setAttribute("href", "tel:" + tel);
+  });
+
         // <picture> がある場合は HTML 側（<source>含む）の指定を優先
       })();
 
