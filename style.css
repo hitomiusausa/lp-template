@@ -252,6 +252,39 @@ h1,h2{ margin: 0 0 16px; }
   border-color: var(--faq-rule-strong);
 }
 
+/* 開いたとき、QボタンとAカードの境界を一体化 */
+.faq-q[aria-expanded="true"]{
+  border-color: var(--faq-rule-strong);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.faq.faq--dashed .faq-a.open{
+  border-top-color: transparent;      /* Qの下線と重ならないように */
+  margin-top: -1px;                   /* 線の継ぎ目を消す */
+}
+
+/* 回答カードの左にうっすらアクセントバー（ブランド色） */
+.faq.faq--dashed .faq-a.open{
+  position: relative;
+}
+.faq.faq--dashed .faq-a.open::before{
+  content:"";
+  position:absolute; inset:8px auto 8px 0;
+  width:4px; border-radius:4px;
+  background: color-mix(in srgb, var(--brand) 65%, transparent);
+  /* color-mix 未対応ブラウザ用フォールバック */
+  background: var(--brand);
+  opacity:.55;
+}
+
+/* アイコンのちょいアニメ（+/- 切替と相性良し） */
+.faq-q .faq-icon{ transition: transform .2s ease, opacity .2s ease; }
+.faq-q[aria-expanded="true"] .faq-icon{ transform: rotate(0.001turn); opacity:.9; }
+
+/* モーション弱め設定の人にはアニメ無効化 */
+@media (prefers-reduced-motion: reduce){
+  .faq-a, .faq-q .faq-icon{ transition: none !important; }
+}
 
 /* =========================
    CTA Blocks (final clean)
