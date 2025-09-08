@@ -49,6 +49,18 @@ img{ max-width:100%; height:auto; display:block; }
 .lp-section + .lp-section{ margin-top: clamp(20px, 4vw, 48px); }
 h1,h2{ margin: 0 0 16px; }
 
+
+/* =========================
+   インセット ライン
+   ========================= */
+
+/* 連続するセクションの上に薄い線を引く（本文幅に合わせてインセット） */
+.lp-section + .lp-section{
+  border-top: 1px solid var(--rule);
+  padding-top: calc(var(--rule-gap) + 1px);
+}
+
+
 /* =========================
    Hero（今風フル幅バージョン）
    ========================= */
