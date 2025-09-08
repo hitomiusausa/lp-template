@@ -241,10 +241,31 @@ h1,h2{ margin: 0 0 16px; }
 
 
 /* =========================
-   Key Facts
+   Key Facts 基本情報
    ========================= */
 .facts{ list-style:none; padding:0; margin:0; }
 .facts li{ padding:8px 0; border-bottom:1px solid #eee; }
+
+.facts li {
+  display: flex; /* ← これが超重要！ */
+  align-items: baseline;
+  gap: 12px; /* ← ラベルと値の間に余白 */
+  flex-wrap: wrap; /* スマホで折り返しOK */
+}
+
+/* ラベルと値の幅を揃えるために class を使うと◎ */
+.facts li .fact-label {
+  font-weight: bold;
+  flex: 0 0 130px;
+  white-space: nowrap;
+}
+
+.facts li span:not(.fact-label),
+.facts li a {
+  flex: 1;
+  font-weight: 500;
+}
+
 
 /* =========================
    Profile
