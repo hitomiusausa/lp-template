@@ -6,138 +6,95 @@
 
 (function(){
   'use strict';
+const $ = (id) => document.getElementById(id);
+if (html && String(html).trim() !== "") el.innerHTML = html;
+};
 
-  // ---------- Helpers ----------
-  const $ = (id) => document.getElementById(id);
-  const hasCssEscape = (typeof CSS !== 'undefined' && typeof CSS.escape === 'function');
-  const esc = (s) => hasCssEscape ? CSS.escape(s) : s;
 
-  const setText = (id, text) => {
-    const el = $(id);
-    if (!el) return;
-    if (text && String(text).trim() !== "") el.textContent = text;
-  };
+const setImage = (id, src, fallback = "/assets/images/logo.png") => {
+const el = $(id);
+if (!el || !src) return;
+const onError = () => { el.src = fallback; };
+el.addEventListener('error', onError, { once: true });
+el.src = src;
+};
 
-  const setHTML = (id, html) => {
-    const el = $(id);
-    if (!el) return;
-    if (html && String(html).trim() !== "") el.innerHTML = html;
-  };
 
-  const setImage = (id, src, fallback = "/assets/images/logo.png") => {
-    const el = $(id);
-    if (!el || !src) return;
-    const onError = () => { el.src = fallback; };
-    el.addEventListener('error', onError, { once: true }); // 先に仕込む
-    el.src = src;                                          // 後で設定
-  };
+const setLink = (id, href) => {
+const el = $(id);
+if (el && href) el.href = href;
+};
 
-  const setLink = (id, href) => {
-    const el = $(id);
-    if (el && href) el.href = href;
-  };
 
-  const setSrc = (id, src) => {
-    const el = $(id);
-    if (el && src) el.src = src;
-  };
+const setSrc = (id, src) => {
+const el = $(id);
+if (el && src) el.src = src;
+};
 
-  // ---------- SEO meta from JSON（関数化：then内で呼ぶ） ----------
-  function applySEOMeta(data){
-    const title = (data.seo_title && data.seo_title.trim())
-      || `${data.key_name || ''} | ${data.key_services || '行政書士'}`.trim();
 
-    const desc = (data.seo_description && data.seo_description.trim())
-      || (data.main_message && data.main_message.trim())
-      || '外国人向けのビザ申請・更新・翻訳をサポート';
+const applySEOMeta = (data) => {
+const title = (data.seo_title && data.seo_title.trim()) || `${data.key_name || ''} | ${data.key_services || '行政書士'}`.trim();
+const desc = (data.seo_description && data.seo_description.trim()) || (data.main_message && data.main_message.trim()) || '外国人向けのビザ申請・更新・翻訳をサポート';
+const baseUrl = (data.canonical_url && data.canonical_url.trim()) || (location.origin + location.pathname);
+const ogImg = (data.og_image && data.og_image.trim()) || (data.hero_image && data.hero_image.trim()) || '/assets/images/hero.jpg';
 
-    const baseUrl = (data.canonical_url && data.canonical_url.trim())
-      || (location.origin + location.pathname);
 
-    const ogImg = (data.og_image && data.og_image.trim())
-      || (data.hero_image && data.hero_image.trim())
-      || '/assets/images/hero.jpg';
+const upsertMetaByName = (name, content) => {
+if (!content) return;
+let el = document.head.querySelector(`meta[name="${esc(name)}"]`);
+if (!el) { el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
+el.setAttribute('content', content);
+};
 
-    const upsertMetaByName = (name, content) => {
-      if (!content) return;
-      let el = document.head.querySelector(`meta[name="${esc(name)}"]`);
-      if (!el) { el = document.createElement('meta'); el.setAttribute('name', name); document.head.appendChild(el); }
-      el.setAttribute('content', content);
-    };
 
-    const upsertMetaByProp = (prop, content) => {
-      if (!content) return;
-      let el = document.head.querySelector(`meta[property="${esc(prop)}"]`);
-      if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
-      el.setAttribute('content', content);
-    };
+const upsertMetaByProp = (prop, content) => {
+if (!content) return;
+let el = document.head.querySelector(`meta[property="${esc(prop)}"]`);
+if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+el.setAttribute('content', content);
+};
 
-    const upsertLink = (rel, href) => {
-      if (!href) return;
-      let el = document.head.querySelector(`link[rel="${esc(rel)}"]`);
-      if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
-      el.setAttribute('href', href);
-    };
 
-    const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
+const upsertLink = (rel, href) => {
+if (!href) return;
+let el = document.head.querySelector(`link[rel="${esc(rel)}"]`);
+if (!el) { el = document.createElement('link'); el.setAttribute('rel', rel); document.head.appendChild(el); }
+el.setAttribute('href', href);
+};
 
-    // 反映
-    document.title = title;
-    upsertMetaByName('description', desc);
-    // SEO: robots を明示（未指定なら index,follow）
-    upsertMetaByName('robots', data.robots || 'index,follow');
-    upsertLink('canonical', baseUrl);
 
-    // OGP
-    upsertMetaByProp('og:type', 'website');
-    upsertMetaByProp('og:title', title);
-    upsertMetaByProp('og:description', desc);
-    upsertMetaByProp('og:url', baseUrl);
-    upsertMetaByProp('og:image', abs(ogImg));
+const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
 
-    // Twitter
-    upsertMetaByName('twitter:card', data.twitter_card || 'summary_large_image');
-    upsertMetaByName('twitter:title', title);
-    upsertMetaByName('twitter:description', desc);
-    upsertMetaByName('twitter:image', abs(ogImg));
-  }
+document.title = title;
+upsertMetaByName('description', desc);
+upsertMetaByName('robots', data.robots || 'index,follow');
+upsertLink('canonical', baseUrl);
+upsertMetaByProp('og:type', 'website');
+upsertMetaByProp('og:title', title);
+upsertMetaByProp('og:description', desc);
+upsertMetaByProp('og:url', baseUrl);
+upsertMetaByProp('og:image', abs(ogImg));
+upsertMetaByName('twitter:card', data.twitter_card || 'summary_large_image');
+upsertMetaByName('twitter:title', title);
+upsertMetaByName('twitter:description', desc);
+upsertMetaByName('twitter:image', abs(ogImg));
+};
 
-// ---------- Main ----------
+
 const file = 'config.json';
 fetch(file, { cache: 'no-store' })
-  .then(r => r.json())
-  .then(data => {
-
-    // まず SEO を反映（data が確実にあるタイミング）
-    applySEOMeta(data);
-
-    // ===== Hero（<picture> がある場合は上書きしない）=====
-    (() => {
-      const img = document.getElementById('hero_image');
-      if (!img) return;
-      const pic = img.closest('picture');
-      if (!pic) {
-        setImage('hero_image', data.hero_image);
-      }
-    })();
-
-    setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
-    setText ('key_name', data.key_name);
-    setText ('hero_message', data.hero_message || '');
-
-    // ===== 追加：事業所名リンクと電話番号リンクを設定 =====
-    // 事業所名クリックでメインサイトへ
-    const name = data.key_name;
-    const url  = data.main_url;
-    document.getElementById("key_name_fact").textContent = name;
-    document.getElementById("key_name_link").setAttribute("href", url);
-
-    // 電話番号もリンク化（番号表示とhref）
-    const tel = data.key_tel_display;
-    document.getElementById("key_tel_display").textContent = tel;
-    document.getElementById("key_tel_link").setAttribute("href", "tel:" + tel);
-  });
-
+.then(r => r.json())
+.then(data => {
+applySEOMeta(data);
+const img = document.getElementById('hero_image');
+if (img && !img.closest('picture')) setImage('hero_image', data.hero_image);
+setImage('hero_logo', data.hero_logo || '/assets/images/logo.png');
+setText('key_name', data.key_name);
+setText('hero_message', data.hero_message || '');
+document.getElementById("key_name_fact").textContent = data.key_name;
+document.getElementById("key_name_link").setAttribute("href", data.main_url);
+document.getElementById("key_tel_display").textContent = data.key_tel_display;
+document.getElementById("key_tel_link").setAttribute("href", "tel:" + data.key_tel_display);
 
       // ===== CTA: 3ブロックをまとめてセット =====
       setupCTA({
@@ -576,5 +533,6 @@ fetch(file, { cache: 'no-store' })
   if (el) el.textContent = JSON.stringify(org);
 })();
 
-      })
-    .catch(err => console.error('JSON読み込みエラー:', err));
+})
+.catch(err => console.error('JSON読み込みエラー:', err));
+})();
