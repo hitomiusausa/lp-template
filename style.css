@@ -90,6 +90,21 @@ h1,h2{ margin: 0 0 16px; }
   pointer-events: none;
 }
 
+/* このセクションだけ “短く＆薄く” */
+.lp-section.rule-bleed.rule--narrow{
+  --rule-gap: clamp(20px, 3.5vw, 36px); /* 線の上の余白を少し控えめ（任意） */
+}
+.lp-section.rule-bleed.rule--narrow::before{
+  /* 中央基準のまま横幅だけ短くする */
+  width: clamp(320px, 72%, 960px);  /* ← 64% / 80% / 880px などに調整OK */
+  background: linear-gradient(to right,
+    transparent 0,
+    rgba(2, 6, 23, .12) 18%,
+    rgba(2, 6, 23, .16) 50%,   /* ← もう少し薄くしたければ .14〜.15 に */
+    rgba(2, 6, 23, .12) 82%,
+    transparent 100%);
+}
+
 /* =========================
    h2 インセット ライン
    ========================= */
