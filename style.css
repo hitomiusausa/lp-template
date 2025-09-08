@@ -462,6 +462,56 @@ h1,h2{ margin: 0 0 16px; }
   flex: 1;
 }
 
+/* 運営者情報セクション用 */
+.lp-profile.owner-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(16px, 5vw, 32px);
+  align-items: center;
+  justify-content: center;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.lp-profile.owner-card .profile-image img {
+  width: clamp(180px, 30vw, 260px);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.lp-profile.owner-card .profile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: clamp(15px, 1.5vw, 17px);
+  flex: 1;
+  min-width: 240px;
+}
+
+.lp-profile.owner-card .profile-body div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 6px 0;
+  gap: 4px;
+}
+
+.lp-profile.owner-card .profile-body dt {
+  font-weight: bold;
+  text-decoration: underline;
+  margin-right: 8px;
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.lp-profile.owner-card .profile-body dd {
+  margin: 0;
+  font-weight: 500;
+  flex: 1;
+}
+
+
 
 /* スマホで1カラムに自然落ち */
 @media (max-width: 640px){
