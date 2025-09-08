@@ -4,6 +4,9 @@
 :root{
   --content: 1120px;                   /* 本文の最大幅 */
   --gutter: clamp(24px, 6vw, 64px);    /* 左右の余白（画面に応じて可変） */
+   --rule: rgba(2, 6, 23, .12);             /* 線（薄め） */
+  --rule-strong: rgba(2, 6, 23, .22);      /* 線（やや濃い） */
+  --rule-gap: clamp(24px, 5vw, 48px);      /* 線と本文の間隔 */
   --brand:#1f6feb;
   --ink:#222;
   --bg:#f8fafc;
