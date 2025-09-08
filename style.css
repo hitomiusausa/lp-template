@@ -302,7 +302,7 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 
 /* ===== footer tokens ===== */
 :root{
-  --footer-bg: #0f172a;      /* deep slate/navy（真っ黒より柔らかい） */
+  --footer-bg: #111827;      /* deep slate/navy（真っ黒より柔らかい） */
   --footer-ink: #e5e7eb;     /* テキスト（ほぼ白） */
   --footer-muted:#94a3b8;    /* 補助文字 */
   --footer-border: rgba(255,255,255,.08);
