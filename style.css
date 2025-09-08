@@ -300,6 +300,39 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .price-table tbody tr:last-child td{ border-bottom:none; }
 .muted{ color:#6b7280; font-size:.95em; margin-top:8px; }
 
+/* ===== footer tokens ===== */
+:root{
+  --footer-bg: #0f172a;      /* deep slate/navy（真っ黒より柔らかい） */
+  --footer-ink: #e5e7eb;     /* テキスト（ほぼ白） */
+  --footer-muted:#94a3b8;    /* 補助文字 */
+  --footer-border: rgba(255,255,255,.08);
+}
+
+/* フッター配色 */
+.site-footer{
+  background: var(--footer-bg);
+  color: var(--footer-ink);
+  border-top: 1px solid var(--footer-border);
+}
+.site-footer a{
+  color: var(--footer-ink);
+  text-decoration: none;
+  opacity: .95;
+}
+.site-footer a:hover{ opacity: 1; }
+.site-footer small, 
+.site-footer .muted{ color: var(--footer-muted); }
+
+/* フッター内の左右余白も本文に合わせる */
+.site-footer .footer-inner{
+  max-width: var(--content);
+  margin-inline: auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) 
+                  max(var(--gutter), env(safe-area-inset-right));
+  padding-block: clamp(20px, 4.5vw, 40px);
+}
+
+
 /* フッター */
 .lp-footer{ background:#0f172a; color:#e5e7eb; }
 .lp-footer a{ color:#93c5fd; text-decoration:none; }
