@@ -476,7 +476,8 @@
         if (url && /^https?:/i.test(url)) { a.href = url; a.style.display = 'inline'; }
         else { a.style.display = 'none'; }
       });
-// ===== Organization JSON-LD（営業時間つき・構造化強化）=====
+
+      // ===== Organization JSON-LD（営業時間つき・構造化強化）=====
 (() => {
   const parseHours = (text) => {
     if (!text) return null;
@@ -530,9 +531,7 @@
 
   const el = document.getElementById('org_jsonld');
   if (el) el.textContent = JSON.stringify(org);
-})();
-
-      
+})();      
 
     })
     .catch(err => console.error('JSON読み込みエラー:', err));
