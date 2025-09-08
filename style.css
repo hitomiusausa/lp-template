@@ -21,6 +21,7 @@
   --faq-rule: rgba(2, 6, 23, .18);
   --faq-rule-strong: rgba(2, 6, 23, .28);
   --faq-maxh: 1000px;
+  --title-gap: clamp(28px, 5vw, 64px);
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
@@ -96,7 +97,7 @@ h1,h2{ margin: 0 0 16px; }
 .lp-section > h2.sec-title{
   position: relative;
   display: block;       /* 擬似要素のセンタリング用 */
-  margin: 0 auto clamp(16px,3vw,28px);
+  margin: 0 auto var(--title-gap);  /* ← ここを変数に */
   text-align: center;
   letter-spacing: .02em;
 }
