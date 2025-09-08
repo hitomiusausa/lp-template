@@ -117,7 +117,7 @@ h1,h2{ margin: 0 0 16px; }
 .lp-section > h2.sec--diamond::before{
   content:"";
   position:absolute; left:50%; transform:translateX(-50%) rotate(45deg);
-  bottom:-16px;                          /* ダイヤの垂直位置（±で微調整） */
+  bottom:-18px;                          /* ダイヤの垂直位置（±で微調整） */
   width:10px; height:10px;
   background: color-mix(in srgb, var(--brand, #1f6feb) 78%, white);
   /* color-mix 未対応ブラウザのフォールバック */
