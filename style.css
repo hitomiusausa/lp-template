@@ -95,10 +95,10 @@ h1,h2{ margin: 0 0 16px; }
   text-align:center;
   color:#fff;
   text-shadow:0 2px 12px rgba(0,0,0,.35);
-  padding-inline: clamp(16px, 5vw, 64px);
+  padding-inline: clamp(24px, 7vw, 80px);
   /* ノッチ考慮 */
-  padding-left:  max(clamp(16px, 5vw, 64px), env(safe-area-inset-left));
-  padding-right: max(clamp(16px, 5vw, 64px), env(safe-area-inset-right));
+  padding-left:  max(clamp(24px, 7vw, 80px), env(safe-area-inset-left));
+  padding-right: max(clamp(24px, 7vw, 80px), env(safe-area-inset-right));
 }
 
 /* キャッチコピー / サブコピー */
