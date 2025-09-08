@@ -23,7 +23,7 @@
   --faq-maxh: 1000px;
   --title-gap: clamp(28px, 5vw, 64px);
      /* 追加：ラベルと線の“間” */
-  --facts-inset: clamp(10px, 2.4vw, 20px);
+  --facts-inset: clamp(16px, 2.4vw, 20px);
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
