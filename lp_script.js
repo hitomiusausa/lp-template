@@ -578,4 +578,3 @@ fetch(file, { cache: 'no-store' })
 
       })
     .catch(err => console.error('JSON読み込みエラー:', err));
-();
