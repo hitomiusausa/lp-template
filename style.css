@@ -260,7 +260,7 @@ h1,h2{ margin: 0 0 16px; }
   content:"";
   position:absolute;
   left:0; top:12px;           /* ← 上からの開始位置 */
-  width:4px; height:40px;     /* ← 長さはここで調整（例: 40px） */
+  width:6px; height:30px;     /* ← 長さはここで調整（例: 40px） */
   border-radius:4px;
   background: color-mix(in srgb, var(--brand) 65%, transparent);
   background: var(--brand);   /* フォールバック */
