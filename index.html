@@ -185,14 +185,15 @@
 <!-- ===== Footer ===== -->
 <footer class="lp-footer" role="contentinfo">
   <div class="lp-footer-inner lp-section">
-    <!-- 左カラム：ロゴ＋NAP＋営業時間 -->
+    <!-- 左列：NAP＋営業時間 -->
     <div class="footer-col footer-col-left">
       <div class="footer-brand">
-        <img id="footer_logo" src="/assets/images/logo.png" alt="ロゴ" width="72" height="72" loading="lazy">
         <div class="footer-brand-text">
           <p class="footer-name" id="footer_name"></p>
           <p class="footer-address" id="footer_address"></p>
-          <p class="footer-contact"><a id="footer_tel_link" href="#"><span id="footer_tel"></span></a></p>
+          <p class="footer-contact">
+            <a id="footer_tel_link" href="#"><span id="footer_tel"></span></a>
+          </p>
           <p class="footer-hours">
             <span id="footer_hours_weekday"></span>
             <span id="footer_hours_sep" aria-hidden="true" style="display:none;"> / </span>
@@ -202,10 +203,10 @@
       </div>
     </div>
 
-    <!-- Quick Links（内部導線） -->
-    <nav class="footer-col" aria-label="Footer">
+    <!-- 中列：Quick Links -->
+    <nav class="footer-col footer-links" aria-label="Quick links">
       <h3 class="footer-head">Quick Links</h3>
-      <ul class="footer-links">
+      <ul class="footer-links-list">
         <li><a href="#visa_section">サービス対象（ビザ）</a></li>
         <li><a href="#pricing_section">料金・相談プラン</a></li>
         <li><a href="#faq">よくある質問</a></li>
@@ -213,17 +214,27 @@
       </ul>
     </nav>
 
-    <!-- Legal / Misc -->
-    <div class="footer-col">
-      <h3 class="footer-head">Legal</h3>
-      <ul class="footer-links">
-        <li><a id="footer_privacy" href="#" target="_blank" rel="noopener">プライバシーポリシー</a></li>
-        <li><a id="footer_terms" href="#" target="_blank" rel="noopener">利用規約</a></li>
-      </ul>
-      <p class="footer-copy">© <span id="footer_year"></span> <span id="footer_name_copy"></span></p>
+    <!-- 右列：ロゴ → Legal → © -->
+    <div class="footer-col footer-legal">
+      <figure class="footer-logo-wrap">
+        <img id="footer_logo"
+             src="/assets/images/logo.png"
+             alt="ロゴ" width="96" height="96"
+             loading="lazy" decoding="async">
+      </figure>
+
+      <h3 class="footer-heading">Legal</h3>
+      <p class="legal-links">
+        <a id="footer_privacy" href="#" style="display:none">Privacy Policy</a>
+        <span class="sep" aria-hidden="true"> / </span>
+        <a id="footer_terms" href="#" style="display:none">Terms</a>
+      </p>
+
+      <p class="copyright">
+        © <span id="footer_year"></span> <span id="footer_name_copy"></span>
+      </p>
     </div>
   </div>
-
 </footer>
 
 </html>
