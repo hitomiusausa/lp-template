@@ -348,6 +348,8 @@ h1,h2{ margin: 0 0 16px; }
 @media (prefers-reduced-motion: reduce){
   .faq-a, .faq-q .faq-icon{ transition: none !important; }
 }
+.faq-q:focus-visible{ outline: 3px solid color-mix(in srgb, var(--brand) 60%, white); outline-offset: 2px; }
+
 
 /* ===== Owner card（“質素”を解消する最小パッチ） ===== */
 .owner-card{
@@ -656,5 +658,7 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .footer-links{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
 .footer-copy{ opacity:.9; margin-top:12px; font-size:.95em; }
 
+.site-footer a{ opacity:.96; }
+.site-footer a:hover{ opacity:1; text-decoration: underline; text-underline-offset: 2px; }
 
 
