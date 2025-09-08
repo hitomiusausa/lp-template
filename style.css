@@ -252,18 +252,18 @@ h1,h2{ margin: 0 0 16px; }
   border-color: var(--faq-rule-strong);
 }
 
-
 /* 回答カードの左にうっすらアクセントバー（ブランド色） */
 .faq.faq--dashed .faq-a.open{
   position: relative;
 }
 .faq.faq--dashed .faq-a.open::before{
   content:"";
-  position:absolute; inset:8px auto 8px 0;
-  width:6px; border-radius:1px;
+  position:absolute;
+  left:0; top:12px;           /* ← 上からの開始位置 */
+  width:4px; height:40px;     /* ← 長さはここで調整（例: 40px） */
+  border-radius:4px;
   background: color-mix(in srgb, var(--brand) 65%, transparent);
-  /* color-mix 未対応ブラウザ用フォールバック */
-  background: var(--brand);
+  background: var(--brand);   /* フォールバック */
   opacity:.55;
 }
 
