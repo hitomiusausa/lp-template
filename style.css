@@ -154,10 +154,10 @@ h1,h2{ margin: 0 0 16px; }
 
 /* FAQセクションだけ “線の前後” を広げる（上＝margin / 下＝padding） */
 #faq_section{ 
-  margin-top: clamp(24px, 4.5vw, 56px);        /* ← 線の前（上）を広げる */
+  margin-top: clamp(24px, 4.5vw, 64px);        /* ← 線の前（上）を広げる */
 }
 #faq_section.rule-bleed{
-  --rule-gap: clamp(32px, 6vw, 72px);          /* ← 線の後（下）を広げる */
+  --rule-gap: clamp(32px, 6vw, 88px);          /* ← 線の後（下）を広げる */
 }
 
 
