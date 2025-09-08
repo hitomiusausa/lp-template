@@ -873,4 +873,69 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 .site-footer a{ opacity:.96; }
 .site-footer a:hover{ opacity:1; text-decoration: underline; text-underline-offset: 2px; }
 
+/* ===== Footer layout & style ===== */
+.lp-footer{
+  background: var(--footer-bg, #0f172a);
+  color: var(--footer-ink, #e5e7eb);
+}
+.lp-footer a{
+  color: color-mix(in srgb, var(--brand, #60a5fa) 82%, white);
+  text-decoration: none;
+}
+.lp-footer a:hover{ text-decoration: underline; }
+
+.lp-footer-inner{
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: clamp(16px, 4vw, 48px);
+  align-items: start;
+}
+
+/* 左列 */
+.footer-col-left .footer-name{
+  margin: 0 0 6px;
+  font-weight: 700;
+  font-size: clamp(18px, 2vw, 22px);
+}
+.footer-col-left p{ margin: 4px 0; }
+
+/* 中列 */
+.footer-links .footer-head{
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+.footer-links-list{
+  list-style: none; margin: 0; padding: 0;
+}
+.footer-links-list li{ margin: 8px 0; }
+
+/* 右列：ロゴ → Legal → © の順で縦積み */
+.footer-col.footer-legal{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer-logo-wrap{ margin: 0 0 clamp(12px, 3vw, 28px); }
+.footer-logo-wrap img{
+  width: clamp(72px, 9vw, 110px);
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 6px 22px rgba(0,0,0,.22);
+  display: block;
+}
+.footer-heading{
+  margin: clamp(20px, 6vw, 64px) 0 8px; /* ← ロゴから見出しまでの“下げ幅” */
+  font-weight: 700;
+}
+.legal-links{ margin: 0 0 clamp(10px, 2vw, 16px); }
+.legal-links .sep{ opacity: .6; }
+copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
+
+/* モバイル */
+@media (max-width: 860px){
+  .lp-footer-inner{ grid-template-columns: 1fr; }
+  .footer-heading{ margin-top: clamp(16px, 5vw, 40px); }
+}
+
+
 
