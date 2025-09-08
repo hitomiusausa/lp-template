@@ -599,25 +599,22 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 }
 
 /* ===== サービス概要（左寄せのまま縦センター） ===== */
-
-/* リスト全体：中央に寄せつつカード状に並べる */
+/* 各項目（枠）— 左寄せのまま縦中央＆コンパクト */
 #visa_section .list-grid{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: clamp(12px, 2.6vw, 20px);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* ← 260→240でカード自体も一回り小さく */
+  gap: clamp(10px, 2vw, 16px);                                /* すき間も少し詰める */
   list-style: none;
   margin: clamp(12px, 2.4vw, 20px) auto 0;
   padding: 0;
   max-width: clamp(640px, 72vw, 1120px);
 }
-
-/* 各項目（枠）— 左寄せのまま縦中央＆コンパクト */
 #visa_section .list-grid > li{
   display: grid;
-  place-items: center start;                 /* 縦:center / 横:left */
+  place-items: center start;      /* 縦:center / 横:left */
   text-align: left;
-  min-height: clamp(88px, 11vw, 140px);      /* ← コンパクト幅（好みで調整） */
-  padding-block: clamp(8px, 2vw, 14px);
+  min-height: clamp(96px, 12vw, 160px);
+  padding-block: clamp(10px, 2.2vw, 16px);
   padding-inline: clamp(12px, 3vw, 18px);
   border: 1px solid var(--rule, rgba(2,6,23,.12));
   border-radius: 12px;
@@ -629,25 +626,37 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   box-shadow: 0 14px 28px -18px rgba(2,6,23,.16);
   transform: translateY(-1px);
 }
-
-/* デフォルト余白の相殺（上寄り見えの原因になりがち）＋タイポ調整 */
 #visa_section .list-grid > li > *{ margin: 0; }
-#visa_section .list-grid > li > h3{
-  margin-bottom: .2em;   /* 統一：0.2em */
-  line-height: 1.2;
+#visa_section .list-grid > li > h3{ margin-bottom: .2em; line-height: 1.2; }
+#visa_section .list-grid > li > p{  line-height: 1.45; }
+
+/* ===== コンパクト版（ULに .cards--compact を付けた時だけ適用） ===== */
+#visa_section .list-grid.cards--compact{
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* さらに小さめ */
+  gap: clamp(8px, 1.6vw, 14px);
 }
-#visa_section .list-grid > li > p{
-  line-height: 1.45;
+#visa_section .list-grid.cards--compact > li{
+  min-height: clamp(72px, 9vw, 112px);     /* ← 高さをギュッと */
+  padding-block: clamp(8px, 1.6vw, 12px);
+  padding-inline: clamp(10px, 2.2vw, 14px);
+  border-radius: 10px;                     /* 小さめ角丸で引き締め */
+  box-shadow: 0 8px 20px -18px rgba(2,6,23,.10); /* 影も控えめに */
+  font-size: clamp(14px, 1.7vw, 16px);     /* ほんの少しだけ字面も圧縮 */
 }
 
-/* 互換フォールバック（古いブラウザ向け） */
+/* 長い英語行の処理（折り返し＆ハイフン分割） */
+#visa_section .list-grid > li{
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* 古いブラウザフォールバック */
 @supports not (place-items: center start){
   #visa_section .list-grid > li{
-    display: flex;
-    align-items: center;        /* 縦中央 */
-    justify-content: flex-start;/* 左寄せ */
+    display:flex; align-items:center; justify-content:flex-start;
   }
 }
+
 
 /* スマホは自然落ちに（縦センターが違和感なら start に） */
 @media (max-width: 480px){
