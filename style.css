@@ -252,17 +252,6 @@ h1,h2{ margin: 0 0 16px; }
   border-color: var(--faq-rule-strong);
 }
 
-/* 開いたとき、QボタンとAカードの境界を一体化 
-.faq-q[aria-expanded="true"]{
-  border-color: var(--faq-rule-strong);
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-.faq.faq--dashed .faq-a.open{
-  border-top-color: transparent;      /* Qの下線と重ならないように */
-  margin-top: -1px;                   /* 線の継ぎ目を消す */
-}
-*/
 
 /* 回答カードの左にうっすらアクセントバー（ブランド色） */
 .faq.faq--dashed .faq-a.open{
