@@ -476,23 +476,63 @@
         if (url && /^https?:/i.test(url)) { a.href = url; a.style.display = 'inline'; }
         else { a.style.display = 'none'; }
       });
+// ===== Organization JSON-LD（営業時間つき・構造化強化）=====
+(() => {
+  // access_hours から平日/休日の時間帯を抽出（例: "平日 10:00〜19:00" / "休日 11:00〜17:00"）
+  const parseHours = (text) => {
+    if (!text) return null;
+    const t = text.replace(/\s+/g,'').replace(/[~～〜]/g,'〜');
+    const m = t.match(/(\d{1,2}):?(\d{2})?〜(\d{1,2}):?(\d{2})?/);
+    if (!m) return null;
+    const HH = n => String(n).padStart(2,'0');
+    const open  = `${HH(m[1])}:${HH(m[2]||'00')}`;
+    const close = `${HH(m[3])}:${HH(m[4]||'00')}`;
+    return { open, close };
+  };
 
-      // ===== Organization JSON-LD（簡易・既存キーで生成）=====
-      (() => {
-        const org = {
-          "@context": "https://schema.org",
-          "@type": "ProfessionalService",
-          "name": data.key_name || "",
-          "image": data.hero_image || "",
-          "telephone": (data.key_tel_display || "").replace(/[^\d+]/g,''),
-          "address": { "@type":"PostalAddress", "streetAddress": data.access_address || "" },
-          "areaServed": data.service_area || "Japan",
-          "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
-          "url": location.origin + location.pathname
-        };
-        const el = document.getElementById('org_jsonld');
-        if (el) el.textContent = JSON.stringify(org);
-      })();
+  const lines  = (data.access_hours || '').split('\n').map(s=>s.trim()).filter(Boolean);
+  const wdText = lines.find(l=>/平日|Weekdays/i.test(l)) || lines[0] || '';
+  const hdText = lines.find(l=>/休日|土日|祝|Weekend|Sat|Sun|Holiday/i.test(l)) || '';
+  const wd = parseHours(wdText);
+  const hd = parseHours(hdText);
+
+  const openingHoursSpecification = [];
+  if (wd){
+    openingHoursSpecification.push({
+      "@type":"OpeningHoursSpecification",
+      "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": wd.open, "closes": wd.close
+    });
+  }
+  if (hd){
+    openingHoursSpecification.push({
+      "@type":"OpeningHoursSpecification",
+      "dayOfWeek":["Saturday","Sunday"],
+      "opens": hd.open, "closes": hd.close
+    });
+  }
+
+  const abs = (url) => { try { return new URL(url, location.origin).href; } catch { return url; } };
+  const org = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": data.key_name || "",
+    "image": abs(data.hero_image || ""),
+    "logo":  abs(data.hero_logo || "/assets/images/logo.png"),
+    "telephone": (data.key_tel_display || "").replace(/[^\d+]/g,''),
+    "address": { "@type":"PostalAddress", "streetAddress": data.access_address || "" },
+    "areaServed": data.service_area || "Japan",
+    "availableLanguage": (data.key_language||"").split(/[\/／,，・、]\s*/).filter(Boolean),
+    "url": location.origin + location.pathname
+  };
+  if (openingHoursSpecification.length){
+    org.openingHoursSpecification = openingHoursSpecification;
+  }
+
+  const el = document.getElementById('org_jsonld');
+  if (el) el.textContent = JSON.stringify(org);
+})();
+      
 
     })
     .catch(err => console.error('JSON読み込みエラー:', err));
