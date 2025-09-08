@@ -22,6 +22,8 @@
   --faq-rule-strong: rgba(2, 6, 23, .28);
   --faq-maxh: 1000px;
   --title-gap: clamp(28px, 5vw, 64px);
+     /* 追加：ラベルと線の“間” */
+  --facts-inset: clamp(10px, 2.4vw, 20px);
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
@@ -570,9 +572,8 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 
 /* 各行の見た目（区切り線はそのまま上品に） */
 .facts li{
-  padding: var(--facts-gap-y) 0;
+  padding: var(--facts-gap-y) 0 var(--facts-gap-y) var(--facts-inset);
   border-bottom: 1px solid rgba(2,6,23,.10);
-  /* ラベル側（= spanより前の文字）をやや強調 */
   font-weight: 600;
   color: color-mix(in srgb, var(--brand, #1f6feb) 35%, #0b1220);
 }
