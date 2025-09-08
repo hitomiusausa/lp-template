@@ -20,6 +20,7 @@
   --faq-pad-y: clamp(10px, 2.4vw, 16px);
   --faq-rule: rgba(2, 6, 23, .18);
   --faq-rule-strong: rgba(2, 6, 23, .28);
+  --faq-maxh: 1000px;
 
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
