@@ -914,7 +914,19 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  gap: clamp(10px, 1.8vw, 18px);/* ← ロゴ⇄Legal⇄© の間隔をこれで統一 */
 }
+
+/* ロゴ周りの余白をゼロに */
+.footer-legal .footer-logo-wrap{ margin: 0; }
+.footer-legal .footer-logo-wrap img{ display:block; }
+
+/* 見出しの“下げ”を解除（margin:0） */
+.footer-legal .footer-heading{ margin: 0; }
+
+/* ついでにリンク行＆©も余白最小化 */
+.footer-legal .legal-links{ margin: 0; }
+.footer-legal .copyright{ margin: 0; }
 .footer-logo-wrap{ margin: 0 0 clamp(12px, 3vw, 28px); }
 .footer-logo-wrap img{
   width: clamp(72px, 9vw, 110px);
