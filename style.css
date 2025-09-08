@@ -266,6 +266,15 @@ h1,h2{ margin: 0 0 16px; }
   font-weight: 500;
 }
 
+.facts a.fact-tel {
+  text-decoration: none;
+  color: var(--ink, #222);
+  font-weight: 500;
+}
+.facts a.fact-tel:hover {
+  text-decoration: underline;
+}
+
 
 /* =========================
    Profile
