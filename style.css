@@ -448,19 +448,6 @@ h1,h2{ margin: 0 0 16px; }
   gap: 4px; /* ← ちょっと余白もあるとキレイ */
 }
 
-.lp-profile.owner-card .profile-body dt {
-  font-weight: bold;
-  text-decoration: none;
-  margin-right: 8px;
-  min-width: 120px; /* ← ラベルの幅を固定 */
-  white-space: nowrap; /* ← 改行させない */
-}
-
-.lp-profile.owner-card .profile-body dd {
-  margin: 0;
-  font-weight: 500;
-  flex: 1;
-}
 
 /* 運営者情報セクション用 */
 .lp-profile.owner-card {
@@ -499,7 +486,7 @@ h1,h2{ margin: 0 0 16px; }
 
 .lp-profile.owner-card .profile-body dt {
   font-weight: bold;
-  text-decoration: underline;
+  text-decoration: none;
   margin-right: 8px;
   min-width: 120px;
   white-space: nowrap;
@@ -510,7 +497,6 @@ h1,h2{ margin: 0 0 16px; }
   font-weight: 500;
   flex: 1;
 }
-
 
 
 /* スマホで1カラムに自然落ち */
