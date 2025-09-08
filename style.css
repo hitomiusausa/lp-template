@@ -260,7 +260,7 @@ h1,h2{ margin: 0 0 16px; }
 .faq.faq--dashed .faq-a.open::before{
   content:"";
   position:absolute; inset:8px auto 8px 0;
-  width:8px; border-radius:4px;
+  width:6px; border-radius:1px;
   background: color-mix(in srgb, var(--brand) 65%, transparent);
   /* color-mix 未対応ブラウザ用フォールバック */
   background: var(--brand);
