@@ -2,6 +2,8 @@
    Vars / Base
    ========================= */
 :root{
+  --content: 1120px;                   /* 本文の最大幅 */
+  --gutter: clamp(16px, 4vw, 40px);    /* 左右の余白（画面に応じて可変） */
   --brand:#1f6feb;
   --ink:#222;
   --bg:#f8fafc;
@@ -32,11 +34,15 @@ img{ max-width:100%; height:auto; display:block; }
 /* =========================
    Section Rhythm
    ========================= */
+/* すべての通常セクションに左右余白と最大幅を付与 */
 .lp-section{
-  padding: clamp(28px, 4.5vw, 56px) clamp(16px, 3.5vw, 24px);
-  max-width: 1000px;
-  margin: 0 auto;
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) 
+                  max(var(--gutter), env(safe-area-inset-right));
+  padding-block: clamp(28px, 6vw, 72px);
+  max-width: var(--content);
+  margin-inline: auto;
 }
+
 .lp-section + .lp-section{ margin-top: clamp(20px, 4vw, 48px); }
 h1,h2{ margin: 0 0 16px; }
 
