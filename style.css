@@ -275,6 +275,15 @@ h1,h2{ margin: 0 0 16px; }
   text-decoration: underline;
 }
 
+.facts a {
+  text-decoration: none;
+  color: var(--ink, #222);
+  font-weight: 500;
+}
+
+.facts a:hover {
+  text-decoration: underline;
+}
 
 /* =========================
    Profile
