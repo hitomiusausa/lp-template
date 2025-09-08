@@ -598,26 +598,58 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   .facts li > a{ display: inline; white-space: normal; }
 }
 
-/* ===== サービス概要セクション ===== */
-/* 枠（カード）要素に適用：左寄せのまま縦中央 */
-.service-card{
+/* ===== サービス概要（左寄せのまま縦センター） ===== */
+
+/* リスト全体：中央に寄せつつカード状に並べる */
+#visa_section .list-grid{
   display: grid;
-  place-items: center start;                   /* ← 縦: center / 横: left */
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(12px, 2.6vw, 20px);
+  list-style: none;
+  margin: clamp(12px, 2.4vw, 20px) auto 0;
+  padding: 0;
+  max-width: clamp(640px, 72vw, 1120px); /* 画面中央に寄せたい場合 */
+}
+
+/* 各項目（枠）— 左寄せのまま縦中央 */
+#visa_section .list-grid > li{
+  display: grid;
+  place-items: center start;                /* 縦:center / 横:left */
   text-align: left;
-  min-height: clamp(120px, 14vw, 180px);      /* 高さに余裕（好みで調整） */
+  min-height: clamp(120px, 14vw, 180px);    /* 高さは好みで */
   padding: clamp(14px, 3vw, 22px);
   border: 1px solid var(--rule, rgba(2,6,23,.12));
   border-radius: 12px;
   background: #fff;
+  box-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
 }
 
-/* 見出しや段落の“デフォルト上マージン”がズレの原因になりがちなのでリセット */
-.service-card > h3,
-.service-card > p{ margin: 0; }
-.service-card > h3{ margin-bottom: .35em; }
+/* デフォルト余白の相殺（上寄り見えの原因になりがち） */
+#visa_section .list-grid > li > h3,
+#visa_section .list-grid > li > p,
+#visa_section .list-grid > li > *{ margin: 0; }
+#visa_section .list-grid > li > h3{ margin-bottom: .35em; font-weight: 700; }
 
+/* 互換フォールバック（古いブラウザ向け） */
+@supports not (place-items: center start){
+  #visa_section .list-grid > li{
+    display: flex;
+    align-items: center;       /* 縦中央 */
+    justify-content: flex-start; /* 左寄せ */
+  }
+}
 
+/* ホバーでほんのり浮かす（操作感UP） */
+#visa_section .list-grid > li{
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+#visa_section .list-grid > li:hover{
+  box-shadow: 0 14px 28px -18px rgba(2,6,23,.16);
+  transform: translateY(-1px);
+}
 
+/* 高さをもう少し安定させたい時は一段上げる */
+#visa_section .list-grid > li{ min-height: clamp(140px, 16vw, 200px); }
 
 /* ===== footer tokens ===== */
 :root{
