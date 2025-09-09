@@ -1111,4 +1111,28 @@ nav.footer-links > ul{                          /* 実際に並べたいのは�
   line-height: 1.55;
 }
 
+/* === FAQ：プラス（.faq-icon）を右端に固定 === */
+.faq .faq-q{
+  display: flex;           /* 行レイアウトにする */
+  align-items: center;
+  width: 100%;
+  gap: .6em;
+  /* 既にホバーの背景や影の指定があってもOK。ここはレイアウトだけ */
+}
+
+.faq .faq-q > span[id^="faq_q"]{
+  flex: 1 1 auto;          /* 質問テキストは伸びる領域 */
+  min-width: 0;            /* 長文でも折り返せるように */
+}
+
+.faq .faq-q .faq-icon{
+  margin-left: auto;       /* ← これで右端へ */
+  flex: 0 0 auto;
+  font-weight: 700;
+  line-height: 1;
+  min-width: 1.2em;        /* “−”になっても幅が暴れない保険 */
+  text-align: center;
+  opacity: .8;
+}
+.faq .faq-q:hover .faq-icon{ opacity: 1; }
 
