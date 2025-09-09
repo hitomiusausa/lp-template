@@ -385,6 +385,55 @@
         if (noteEl) noteEl.textContent = (data.pricing_note || '').trim();
       })();
 
+      // ===== 訴求PR：data.promo_items から自動生成 =====
+// 形式A: "ラベル|値" を改行で複数
+// 形式B: "ラベル: 値" や "ラベル：値" でもOK（|が無い時のフォールバック）
+(() => {
+  const dl = document.getElementById('promo_list');
+  const sec = document.getElementById('promo_section');
+  if (!dl || !sec) return;
+
+  const raw = (data.promo_items || '').trim();
+  if (!raw){
+    // 何もなければセクションごと隠す
+    sec.setAttribute('hidden','');
+    return;
+  }
+
+  const frag = document.createDocumentFragment();
+
+  raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(line => {
+    let label = '', value = '';
+    if (line.includes('|')){
+      [label, value] = line.split('|', 2).map(x => x.trim());
+    } else if (line.includes('：') || line.includes(':')){
+      const idx = line.indexOf('：') >= 0 ? line.indexOf('：') : line.indexOf(':');
+      label = line.slice(0, idx).trim();
+      value = line.slice(idx+1).trim();
+    } else {
+      // ラベルだけ来た場合の保険
+      label = line; value = '';
+    }
+
+    const row = document.createElement('div');
+    row.className = 'promo-row';
+
+    const dt = document.createElement('dt');
+    dt.textContent = label || '-';
+
+    const dd = document.createElement('dd');
+    dd.textContent = value || '';
+
+    row.append(dt, dd);
+    frag.appendChild(row);
+  });
+
+  dl.innerHTML = '';
+  dl.appendChild(frag);
+  sec.removeAttribute('hidden');
+})();
+
+
       // ===== Access（営業時間は改行保持）=====
       setSrc ('access_map', data.access_map);
       setHTML('access_hours', (data.access_hours || '').replace(/\n/g,'<br>'));
