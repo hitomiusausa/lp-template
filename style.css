@@ -402,3 +402,10 @@ nav.footer-links{ display:block; }
   line-height: 1.25;
 }
 
+/* === CTA：上下パディングを同幅に固定 === */
+.lp-cta{
+  padding-top: clamp(16px, 4vw, 28px);
+  padding-bottom: clamp(16px, 4vw, 28px);
+  /* 既存の padding 指定より後ろ＆個別指定で確実に上書き */
+}
+
