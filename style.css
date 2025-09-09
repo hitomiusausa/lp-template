@@ -960,5 +960,35 @@ copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
   .footer-heading{ margin-top: clamp(16px, 5vw, 40px); }
 }
 
+/* 右列（Legal）— 子要素の幅を列幅に統一 */
+.footer-col.footer-legal{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;              /* ← ここを stretch に */
+  gap: clamp(10px, 1.6vw, 16px);     /* 間隔は gap で統一管理 */
+}
+
+/* 直下要素は幅100%＆余白リセットでそろえる */
+.footer-col.footer-legal > *{
+  width: 100%;
+  margin: 0;
+}
+
+/* ロゴの figure も行幅に広げつつ、画像は左寄せのまま */
+.footer-legal .footer-logo-wrap{
+  display: flex;     /* 行幅は100%・中のimgは自然幅 */
+  align-items: flex-start;
+}
+.footer-legal .footer-logo-wrap img{
+  display: block;
+  width: auto;       /* 画像の実寸を維持 */
+  height: auto;
+  max-width: 120px;  /* お好みで：ロゴの最大幅（調整OK） */
+}
+
+/* 文字行の微調整（見出し/リンク/©の余白を統一） */
+.footer-legal .footer-heading{ line-height: 1.25; }
+.footer-legal .legal-links{ display: flex; gap: .5em; }
+.footer-legal .copyright{ opacity: .85; }
 
 
