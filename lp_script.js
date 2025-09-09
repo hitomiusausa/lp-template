@@ -384,37 +384,62 @@
         const noteEl = document.getElementById('pricing_note');
         if (noteEl) noteEl.textContent = (data.pricing_note || '').trim();
       })();
-
-      // ===== 訴求PR：data.promo_items から自動生成 =====
-// 形式A: "ラベル|値" を改行で複数
-// 形式B: "ラベル: 値" や "ラベル：値" でもOK（|が無い時のフォールバック）
+      
+// ===== 訴求PR：data.promo_items（配列 / 改行テキスト / オブジェクト）両対応・安全版 =====
 (() => {
-  const dl = document.getElementById('promo_list');
+  const dl  = document.getElementById('promo_list');
   const sec = document.getElementById('promo_section');
   if (!dl || !sec) return;
 
-  const raw = (data.promo_items || '').trim();
-  if (!raw){
-    // 何もなければセクションごと隠す
-    sec.setAttribute('hidden','');
-    return;
-  }
+  const src = data.promo_items;
+  if (src == null || src === '') { sec.setAttribute('hidden',''); return; }
+
+  // 正規化：どんな形でも「'ラベル|値' の配列」にする
+  const toPairsArray = (input) => {
+    // A) 文字列（改行区切り）
+    if (typeof input === 'string') {
+      const lines = input.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+      return lines;
+    }
+    // B) 配列（文字列 or {label,value}）
+    if (Array.isArray(input)) {
+      return input.map(item => {
+        if (typeof item === 'string') return item.trim();
+        if (item && typeof item === 'object') {
+          const label = String(item.label ?? item.title ?? '').trim();
+          const value = String(item.value ?? item.text  ?? '').trim();
+          return (label || value) ? `${label}|${value}` : '';
+        }
+        return '';
+      }).filter(Boolean);
+    }
+    // C) オブジェクト（{ラベル: 値}）
+    if (input && typeof input === 'object') {
+      return Object.entries(input).map(([k, v]) => `${String(k).trim()}|${String(v ?? '').trim()}`);
+    }
+    // その他は空
+    return [];
+  };
+
+  const lines = toPairsArray(src);
+  if (lines.length === 0) { sec.setAttribute('hidden',''); return; }
 
   const frag = document.createDocumentFragment();
 
-  raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(line => {
+  lines.forEach(line => {
     let label = '', value = '';
-    if (line.includes('|')){
-      [label, value] = line.split('|', 2).map(x => x.trim());
-    } else if (line.includes('：') || line.includes(':')){
+    if (line.includes('|')) {
+      [label, value] = line.split('|', 2).map(x => (x ?? '').trim());
+    } else if (line.includes('：') || line.includes(':')) {
       const idx = line.indexOf('：') >= 0 ? line.indexOf('：') : line.indexOf(':');
       label = line.slice(0, idx).trim();
-      value = line.slice(idx+1).trim();
+      value = line.slice(idx + 1).trim();
     } else {
-      // ラベルだけ来た場合の保険
-      label = line; value = '';
+      label = line.trim();
+      value = '';
     }
 
+    // DOM生成（XSS防止のため textContent を使用）
     const row = document.createElement('div');
     row.className = 'promo-row';
 
