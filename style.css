@@ -909,24 +909,33 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 }
 .footer-links-list li{ margin: 8px 0; }
 
-/* 右列：ロゴ → Legal → © の順で縦積み */
+/* Footer 右列：ギャップを gap で統一し、直下要素の margin を無効化 */
 .footer-col.footer-legal{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: clamp(10px, 1.8vw, 18px);/* ← ロゴ⇄Legal⇄© の間隔をこれで統一 */
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap: clamp(10px, 1.6vw, 16px);        /* ← ここだけでロゴ⇄Legal⇄©の間隔を管理 */
 }
 
-/* ロゴ周りの余白をゼロに */
-.footer-legal .footer-logo-wrap{ margin: 0; }
+/* 直下の figure/h3/p などの既定マージンをゼロに */
+.footer-col.footer-legal > *{ margin:0 !important; }
+
+/* ロゴ周りは余白ゼロでOK */
+.footer-legal .footer-logo-wrap{ margin:0; }
 .footer-legal .footer-logo-wrap img{ display:block; }
 
-/* 見出しの“下げ”を解除（margin:0） */
-.footer-legal .footer-heading{ margin: 0; }
+/* Legal行・リンク行の整形 */
+.footer-legal .footer-heading{ line-height:1.25; }
+.footer-legal .legal-links{
+  display:flex;
+  gap:.5em;
+  align-items:center;
+  margin:0;                               /* 念のため */
+}
+.footer-legal .legal-links .sep{ opacity:.6; }
+.footer-legal .copyright{ margin:0; opacity:.85; }
 
-/* ついでにリンク行＆©も余白最小化 */
-.footer-legal .legal-links{ margin: 0; }
-.footer-legal .copyright{ margin: 0; }
+
 .footer-col.footer-legal{ gap: clamp(8px,1.2vw,14px); }
 
 .footer-logo-wrap{ margin: 0 0 clamp(12px, 3vw, 28px); }
