@@ -382,3 +382,23 @@ nav.footer-links{ display:block; }
   transform: translateY(0);
   box-shadow: 0 4px 12px rgba(0,0,0,.10);
 }
+
+/* ===== 「予約する」ラベルを “電話で問い合わせる” と同じ太さ/サイズに ===== */
+#cta1_res .btn-label,
+#cta2_res .btn-label,
+#ctaf_res .btn-label{
+  font-weight: 700;                     /* 太字 */
+  font-size: clamp(15px, 2.7vw, 18px);  /* 既存の .btn-label と同値 */
+  line-height: 1.25;
+  letter-spacing: .01em;
+}
+
+/* 念のため：.btn-label が無い構造でも文字を太字＆サイズUP（フォールバック） */
+#cta1_res:not(:has(.btn-label)),
+#cta2_res:not(:has(.btn-label)),
+#ctaf_res:not(:has(.btn-label)){
+  font-weight: 700;
+  font-size: clamp(15px, 2.7vw, 18px);
+  line-height: 1.25;
+}
+
