@@ -452,14 +452,28 @@
       // 年号
       setText('footer_year', String(new Date().getFullYear()));
 
-      // ないリンク（プラポリ/規約）は非表示
-      [['footer_privacy','privacy_url'], ['footer_terms','terms_url']].forEach(([id,key])=>{
-        const a = document.getElementById(id);
-        if (!a) return;
-        const url = data[key];
-        if (url && /^https?:/i.test(url)) { a.href = url; a.style.display = 'inline'; }
-        else { a.style.display = 'none'; }
-      });
+// ないリンク（プラポリ/規約）は非表示 ＋ セパレーター調整
+(() => {
+  const priv = document.getElementById('footer_privacy');
+  const terms = document.getElementById('footer_terms');
+  const sep = document.querySelector('.legal-links .sep');
+  const wrap = document.querySelector('.legal-links');
+
+  // 個別表示制御
+  const setLegalLink = (el, url) => {
+    if (!el) return false;
+    if (url && /^https?:/i.test(url)) { el.href = url; el.style.display = 'inline'; return true; }
+    el.style.display = 'none'; return false;
+  };
+
+  const hasPriv  = setLegalLink(priv,  data.privacy_url);
+  const hasTerms = setLegalLink(terms, data.terms_url);
+
+  // 区切り「/」は両方あるときだけ見せる
+  if (sep)   sep.style.display = (hasPriv && hasTerms) ? 'inline' : 'none';
+  // どちらも無ければ行ごと隠す
+  if (wrap)  wrap.style.display = (hasPriv || hasTerms) ? 'block'  : 'none';
+})();
 
       // ===== Organization JSON-LD =====
       (() => {
