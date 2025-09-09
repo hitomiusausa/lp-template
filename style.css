@@ -991,4 +991,15 @@ copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
 .footer-legal .legal-links{ display: flex; gap: .5em; }
 .footer-legal .copyright{ opacity: .85; }
 
+.footer-legal .copyright{
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.lp-footer{ --footer-ink: #f1f5f9; }
+
+@media (max-width: 680px){
+  .footer-legal .footer-logo-wrap img{ max-width: 96px; }
+}
+
 
