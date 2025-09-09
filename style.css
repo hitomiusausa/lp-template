@@ -768,7 +768,7 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
   box-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
   transition: box-shadow .2s ease, transform .2s ease;
 　font-size: clamp(17px, 2.0vw, 20px); /* 既存より+少し */
-  line-height: 1.5;
+  line-height: 1.55;
 }
 #visa_section .list-grid > li:hover{
   box-shadow: 0 14px 28px -18px rgba(2,6,23,.16);
@@ -785,12 +785,12 @@ a.btn, a.btn:visited, .btn *{ text-decoration:none; }
 }
 #visa_section .list-grid.cards--compact > li{
   min-height: clamp(68px, 9vw, 112px);     /* ← 高さをギュッと */
-  padding-block: clamp(8px, 1.6vw, 12px);
+  padding-block: clamp(10px, 2.2vw, 18px);
   padding-inline: clamp(10px, 2.2vw, 14px);
   border-radius: 10px;                     /* 小さめ角丸で引き締め */
   box-shadow: 0 8px 20px -18px rgba(2,6,23,.10); /* 影も控えめに */
-  font-size: clamp(17px, 2.0vw, 19px);     /* ほんの少しだけ字面も圧縮 */
-  line-height: 1.5;
+  font-size: clamp(17px, 2.0vw, 20px);     /* ほんの少しだけ字面も圧縮 */
+  line-height: 1.55;
 }
 
 /* 長い英語行の処理（折り返し＆ハイフン分割） */
