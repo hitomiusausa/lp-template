@@ -409,3 +409,8 @@ nav.footer-links{ display:block; }
   /* 既存の padding 指定より後ろ＆個別指定で確実に上書き */
 }
 
+/* 視覚補正：影ぶんだけ下を少しだけ足す（お好みで） */
+.lp-cta{
+  padding-bottom: calc(clamp(18px, 4.2vw, 30px) + 8px);
+}
+
