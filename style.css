@@ -414,3 +414,13 @@ nav.footer-links{ display:block; }
   padding-bottom: calc(clamp(18px, 4.2vw, 30px) + 8px);
 }
 
+/* === Pricing：外枠の角丸をなくす === */
+#pricing_section table{
+  border-radius: 0;      /* 角丸→なし */
+  overflow: visible;     /* 角丸マスクも解除（安全側） */
+}
+
+/* === Pricing：項目名（1列目）を太字に === */
+#pricing_section tbody td:first-child{
+  font-weight: 700;
+}
