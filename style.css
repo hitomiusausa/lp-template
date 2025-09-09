@@ -24,7 +24,12 @@
   --title-gap: clamp(28px, 5vw, 64px);
      /* 追加：ラベルと線の“間” */
   --facts-inset: clamp(16px, 2.4vw, 20px);
+   --card-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
+  --card-shadow-hover: 0 14px 30px -20px rgba(2,6,23,.22);
 
+  @media (prefers-reduced-motion: reduce){
+  .hover-soft, .lp-profile.owner-card, .faq .faq-q, .faq .faq-a { transition: none !important; transform: none !important; }
+}
   /* CTAサイズ（好みで調整OK） */
   --cta-btn-w: clamp(280px, 44vw, 520px);
   --cta-btn-min-h: clamp(68px, 9.5vw, 96px);
@@ -339,6 +344,19 @@ h1,h2{ margin: 0 0 16px; }
   flex: 1;
 }
 
+.lp-profile.owner-card{
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: var(--card-shadow);
+  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+}
+.lp-profile.owner-card:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--rule-strong);
+}
+
 
 @media (min-width:768px){ .lp-profile{ grid-template-columns:1fr 1.2fr; }}
 
@@ -436,6 +454,31 @@ h1,h2{ margin: 0 0 16px; }
 }
 .faq-q:focus-visible{ outline: 3px solid color-mix(in srgb, var(--brand) 60%, white); outline-offset: 2px; }
 
+/* ========= FAQ：質問行（.faq-q）に軽ホバー ========= */
+.faq .faq-q{
+  /* 質問ボタン（またはリンク）全体をほんのりカードっぽく */
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  padding: 6px 8px;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.faq .faq-q:hover{
+  background-color: rgba(2,6,23,.03);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -18px rgba(2,6,23,.18);
+}
+
+/* ========= FAQ：開いた回答ボックス（.faq-a.open）にも軽ホバー ========= */
+.faq.faq--dashed .faq-a{
+  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
+}
+.faq.faq--dashed .faq-a.open:hover{
+  box-shadow: var(--card-shadow);
+  border-color: var(--faq-rule-strong);
+  background: #fff; /* 既存のデザインをキープしつつ少し持ち上げる */
+  transform: translateY(-1px);
+}
 
 /* ===== Owner card（“質素”を解消する最小パッチ） ===== */
 .owner-card{
