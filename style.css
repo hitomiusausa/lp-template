@@ -154,6 +154,45 @@ img{ max-width:100%; height:auto; display:block; }
 .lp-profile.owner-card .profile-body dt{ font-weight:700; text-decoration:none; margin-right:8px; min-width:120px; white-space:nowrap; }
 .lp-profile.owner-card .profile-body dd{ margin:0; font-weight:500; flex:1; }
 
+/* ===== 運営者情報カード：画像が幅いっぱいにならないように調整 ===== */
+
+/* カード本体に内側の余白を足す（見た目を詰めすぎない） */
+.lp-profile.owner-card{
+  padding: clamp(12px, 2.4vw, 20px);
+  gap: clamp(14px, 3vw, 24px); /* 画像と本文の“間” */
+}
+
+/* 画像側は“固定幅のサムネ”として扱う（伸びない） */
+.lp-profile.owner-card .profile-image{
+  flex: 0 0 auto;              /* ← 本文みたいに広がらない */
+}
+
+.lp-profile.owner-card .profile-image img{
+  width: clamp(160px, 28vw, 240px); /* ← サムネ幅（最小160 / 最大240px） */
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+}
+
+/* 本文側は残り幅を使う */
+.lp-profile.owner-card .profile-body{
+  flex: 1 1 320px;  /* 目安の基準幅。横が狭ければ折り返し */
+  min-width: 240px;
+}
+
+/* スマホ時は画像を少しだけ小さめ＆中央寄せ */
+@media (max-width: 600px){
+  .lp-profile.owner-card .profile-image{
+    margin-inline: auto;
+  }
+  .lp-profile.owner-card .profile-image img{
+    width: clamp(150px, 46vw, 210px);
+  }
+}
+
+
 /* -----------------------------------------------------
    Access（地図＋テキスト）
    ----------------------------------------------------- */
@@ -301,41 +340,3 @@ nav.footer-links{ display:block; }
   #pricing_section table{ font-size: 14.5px; }
   #pricing_section thead th, #pricing_section tbody td{ padding:10px 12px; }
 }
-/* ===== 運営者情報カード：画像が幅いっぱいにならないように調整 ===== */
-
-/* カード本体に内側の余白を足す（見た目を詰めすぎない） */
-.lp-profile.owner-card{
-  padding: clamp(12px, 2.4vw, 20px);
-  gap: clamp(14px, 3vw, 24px); /* 画像と本文の“間” */
-}
-
-/* 画像側は“固定幅のサムネ”として扱う（伸びない） */
-.lp-profile.owner-card .profile-image{
-  flex: 0 0 auto;              /* ← 本文みたいに広がらない */
-}
-
-.lp-profile.owner-card .profile-image img{
-  width: clamp(160px, 28vw, 240px); /* ← サムネ幅（最小160 / 最大240px） */
-  max-width: 100%;
-  height: auto;
-  border-radius: 16px;
-  object-fit: cover;
-  box-shadow: 0 4px 16px rgba(0,0,0,.08);
-}
-
-/* 本文側は残り幅を使う */
-.lp-profile.owner-card .profile-body{
-  flex: 1 1 320px;  /* 目安の基準幅。横が狭ければ折り返し */
-  min-width: 240px;
-}
-
-/* スマホ時は画像を少しだけ小さめ＆中央寄せ */
-@media (max-width: 600px){
-  .lp-profile.owner-card .profile-image{
-    margin-inline: auto;
-  }
-  .lp-profile.owner-card .profile-image img{
-    width: clamp(150px, 46vw, 210px);
-  }
-}
-
