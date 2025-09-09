@@ -340,3 +340,44 @@ nav.footer-links{ display:block; }
   #pricing_section table{ font-size: 14.5px; }
   #pricing_section thead th, #pricing_section tbody td{ padding:10px 12px; }
 }
+
+/* ===== Reserve Button: 目立つエメラルド系に（HTML変更なし） ===== */
+:root{
+  --reserve:       #22c55e; /* emerald-500 */
+  --reserve-hover: #16a34a; /* emerald-600 */
+  --reserve-ring:  rgba(34,197,94,.22);
+}
+
+/* 対象：#cta1_res / #cta2_res / #ctaf_res （IDで確実に上書き） */
+.cta-actions :is(#cta1_res,#cta2_res,#ctaf_res){
+  background: linear-gradient(180deg,
+              color-mix(in srgb, var(--reserve) 92%, white),
+              var(--reserve));
+  color:#fff;
+  border:1px solid color-mix(in srgb, var(--reserve) 86%, black);
+  text-decoration:none;
+}
+
+/* ラベル/サブテキストも白に統一（ボタン内のspanを想定） */
+.cta-actions :is(#cta1_res,#cta2_res,#ctaf_res) .btn-label,
+.cta-actions :is(#cta1_res,#cta2_res,#ctaf_res) .btn-sub{
+  color:#fff;
+}
+
+/* Hover / Focus（浮かせてリングを表示） */
+.cta-actions :is(#cta1_res,#cta2_res,#ctaf_res):hover,
+.cta-actions :is(#cta1_res,#cta2_res,#ctaf_res):focus-visible{
+  background: linear-gradient(180deg,
+              var(--reserve-hover),
+              color-mix(in srgb, var(--reserve-hover) 88%, black));
+  border-color: var(--reserve-hover);
+  box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 3px var(--reserve-ring);
+  transform: translateY(-2px);
+}
+
+/* Active（押し込み感） */
+.cta-actions :is(#cta1_res,#cta2_res,#ctaf_res):active{
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0,0,0,.10);
+}
+
