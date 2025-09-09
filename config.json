@@ -3,7 +3,8 @@
   "main_message": "うさうさな毎日を！",
   "hero_image": "/assets/images/hero.jpg",
   "hero_logo": "/assets/images/logo.png",
-  "key_name": "SASAYAMA Administrative Scrivener Office",
+
+  "key_name": "ささやま行政書士事務所ホームページ",
   "key_location": "愛知県日進市",
   "key_language": "日本語／英語",
   "key_founded": "1999年",
@@ -11,10 +12,11 @@
   "key_tel_display": "080-333-333",
   "key_tel_link": "tel:080333333",
   "key_reservation_url": "https://www.yahoo.co.jp/",
-  "key_name": "ささやま行政書士事務所ホームページ",
   "main_url": "https://taremimiusagis.com",
+
   "services_image": "/assets/images/services.jpg",
   "services_list": "在住手続き・VISA延長申請・翻訳など",
+
   "owner_image": "/assets/images/profile.jpg",
   "owner_name": "ささやま うさぎ",
   "owner_license": "行政書士",
@@ -50,8 +52,12 @@
   "seo_description": "外国人向けのビザ申請・更新・翻訳をサポート。オンライン相談可。",
   "canonical_url": "https://lp.taremimiusagis.com/",
   "og_image": "/assets/images/hero.jpg",
-  "twitter_card": "summary_large_image"
+  "twitter_card": "summary_large_image",
 
-"promo_items": "初回返信スピード|24時間以内にご連絡\\nオンライン完結|全国どこでもZoomで申請完了\\n多言語対応|日本語・英語・中国語"
+  "promo_items": [
+  "初回返信スピード|24時間以内にご連絡",
+  "オンライン完結|全国どこでもZoomで申請完了",
+  "多言語対応|日本語・英語・中国語"
+]
 
 }
