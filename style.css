@@ -981,9 +981,14 @@ copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
 }
 .footer-legal .footer-logo-wrap img{
   display: block;
-  width: auto;       /* 画像の実寸を維持 */
+  width: 90px;       /* 画像の実寸を維持 */
   height: auto;
-  max-width: 120px;  /* お好みで：ロゴの最大幅（調整OK） */
+  max-width: 00px;  /* お好みで：ロゴの最大幅（調整OK） */
+}
+@media (min-width: 1024px){
+  .footer-legal .footer-logo-wrap img{
+    width: 72px;        /* ← ここだけ触ればPCサイズを調整できる！ */
+  }
 }
 
 /* 文字行の微調整（見出し/リンク/©の余白を統一） */
