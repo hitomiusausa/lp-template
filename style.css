@@ -1052,5 +1052,43 @@ copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
 @media (max-width: 680px){
   .footer-legal .footer-logo-wrap img{ max-width: 96px; }
 }
+/* ==== Owner card（運営者情報）に軽ホバーを確実適用 ==== */
+/* レイアウト指定のあとで上書きし、影＆持ち上げを有効化 */
+.lp-profile.owner-card{
+  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+}
+.lp-profile.owner-card:hover{
+  transform: translateY(-2px);
+  /* 変数が壊れてても効くようにフォールバック併記 */
+  box-shadow: var(--card-shadow-hover, 0 14px 30px -20px rgba(2,6,23,.22));
+  border-color: var(--rule-strong, rgba(2,6,23,.22));
+}
+
+/* ==== FAQ：質問行にも同じ“軽ホバー”を適用 ==== */
+.faq .faq-q{
+  display: block;                 /* 当たり判定を広く */
+  width: 100%;
+  border-radius: 10px;
+  transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  will-change: transform;         /* 体感を軽く */
+  cursor: pointer;
+}
+/* dtの余白上に乗っても効くように当たり判定を広げる */
+.faq dt:hover .faq-q,
+.faq .faq-q:hover{
+  background-color: rgba(2,6,23,.03);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -18px rgba(2,6,23,.18);
+}
+
+/* ==== FAQ：開いた回答カード（.faq-a.open）も軽ホバー ==== */
+.faq.faq--dashed .faq-a{
+  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
+}
+.faq.faq--dashed .faq-a.open:hover{
+  transform: translateY(-1px);
+  box-shadow: var(--card-shadow, 0 10px 24px -18px rgba(2,6,23,.12));
+  border-color: var(--faq-rule-strong, rgba(2,6,23,.28));
+}
 
 
