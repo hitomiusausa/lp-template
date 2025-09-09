@@ -424,3 +424,54 @@ nav.footer-links{ display:block; }
 #pricing_section tbody td:first-child{
   font-weight: 700;
 }
+
+/* ===== Promo（訴求PR）— 基本情報っぽいけど少し違う見た目 ===== */
+:root{
+  --promo-w: clamp(640px, 72vw, 960px);
+  --promo-gap-y: clamp(10px, 1.8vw, 14px);
+  --promo-inset: clamp(16px, 2.4vw, 22px);
+}
+
+.promo-list{
+  max-width: var(--promo-w);
+  margin: clamp(12px, 2.4vw, 20px) auto 0;
+  padding: 0;
+}
+
+.promo-list .promo-row{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  padding: var(--promo-gap-y) 0 var(--promo-gap-y) var(--promo-inset);
+  border-bottom: 1px solid var(--rule-strong);   /* ← 各項目の下線 */
+}
+
+/* ラベル太字＋幅ゆったり */
+.promo-list dt{
+  margin: 0;
+  font-weight: 700;                              /* ← 太字 */
+  flex: 0 0 clamp(140px, 22vw, 200px);           /* ← ラベル幅 */
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--brand, #1f6feb) 35%, #0b1220);
+}
+
+/* 値は残り幅フルで */
+.promo-list dd{
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 200px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+/* 文字リンクの見た目（下線と喧嘩しない控えめスタイル） */
+.promo-list a{ color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+
+/* オプション：点線がよければ .promo-list--dashed をDLに付けるだけ */
+.promo-list.promo-list--dashed .promo-row{ border-bottom: 1px dashed var(--rule-strong); }
+
+/* SPで窮屈なら折り返し優先 */
+@media (max-width: 520px){
+  .promo-list dt{ flex-basis: 120px; }
+}
