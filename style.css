@@ -1136,3 +1136,28 @@ nav.footer-links > ul{                          /* 実際に並べたいのは�
 }
 .faq .faq-q:hover .faq-icon{ opacity: 1; }
 
+/* === FAQ：プラス記号を右端へ固定（最終上書き） === */
+dl.faq .faq-q{
+  display: flex !important;           /* 後ろの display:block を無効化 */
+  align-items: center;
+  justify-content: space-between;
+  gap: .6em;
+  width: 100%;
+  padding: 6px 8px;                   /* 既存の軽ホバー指定と揃える */
+  border-radius: 10px;                 /* 既存見た目を維持 */
+}
+
+dl.faq .faq-q > span[id^="faq_q"]{
+  flex: 1 1 auto;
+  min-width: 0;                        /* 長文でも折り返しやすく */
+}
+
+dl.faq .faq-q .faq-icon{
+  margin-left: auto;                   /* ← 右端へ押し出し */
+  flex: 0 0 auto;
+  width: 1.25em;                       /* 幅ぶれ防止（±の切替でも安定） */
+  text-align: center;
+  line-height: 1;
+  font-weight: 700;
+}
+
