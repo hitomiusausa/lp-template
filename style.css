@@ -1091,4 +1091,24 @@ copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
   border-color: var(--faq-rule-strong, rgba(2,6,23,.28));
 }
 
+/* === Footer: 右列のギャップと幅を最終確定（競合を上から黙らせる） === */
+.footer-col.footer-legal{
+  align-items: stretch;                         /* 列幅いっぱいに統一 */
+  gap: clamp(10px, 1.6vw, 16px);               /* ← ここだけで間隔を管理 */
+}
+.footer-col.footer-legal > *{ width:100%; margin:0; }
+
+/* === Footer: Quick Links のクラスかぶりを無害化（navはblock / ulをgrid） === */
+nav.footer-links{ display:block; }              /* 旧 .footer-links の display:grid を上書き */
+nav.footer-links > ul{                          /* 実際に並べたいのは中のUL */
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:8px;
+}
+
+/* === Services: もし全角スペース混入でミニファイ時に落ちる環境があれば保険で再指定 === */
+#visa_section .list-grid > li{
+  font-size: clamp(17px, 2vw, 20px);           /* 同じ値をASCII空白で再宣言（後勝ち） */
+  line-height: 1.55;
+}
+
 
