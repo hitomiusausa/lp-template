@@ -1,1163 +1,259 @@
-/* =========================
-   Vars / Base
-   ========================= */
+/* =====================================================
+   LP Styles — Cleaned & Commented (keep current look)
+   ※ うさっこ向け：大事な所だけ触ればOKな構成に整理
+   ===================================================== */
+
+/* -----------------------------------------------------
+   Vars / Tokens（全ページで使う共通トークン）
+   ----------------------------------------------------- */
 :root{
-  --content: 1120px;                   /* 本文の最大幅 */
-  --gutter: clamp(24px, 6vw, 64px);    /* 左右の余白（画面に応じて可変） */
-   --rule: rgba(2, 6, 23, .12);             /* 線（薄め） */
-  --rule-strong: rgba(2, 6, 23, .22);      /* 線（やや濃い） */
-  --rule-gap: clamp(24px, 5vw, 48px);      /* 線と本文の間隔 */
-  --brand:#1f6feb;
-  --ink:#222;
-  --bg:#f8fafc;
-  --brand-hover:#1c64e0;   /* ホバー時 */
-  --brand-active:#1858c7;  /* クリック時 */
-  --radius-cta: 16px;                 /* 角の丸み（ちょい丸） */
-  --hover-shadow: 0 10px 24px rgba(0,0,0,.14);
-  --hover-ring: 0 0 0 3px rgba(31,111,235,.12); /* うっすらリング */
+  /* Layout */
+  --content: 1120px;                      /* 本文の最大幅 */
+  --gutter: clamp(24px, 6vw, 64px);       /* 左右の余白（可変） */
+  --title-gap: clamp(28px, 5vw, 64px);    /* セクション見出し下の余白 */
+  --rule: rgba(2, 6, 23, .12);            /* 区切り線（薄） */
+  --rule-strong: rgba(2, 6, 23, .22);     /* 区切り線（濃） */
+  --rule-gap: clamp(24px, 5vw, 48px);     /* 区切り線と本文の間隔 */
+
+  /* Brand / Colors */
+  --brand: #1f6feb;
+  --brand-hover: #1c64e0;                 /* hover */
+  --brand-active: #1858c7;                /* active */
+  --ink: #222;                            /* 文字色 */
+  --bg: #f8fafc;                          /* 薄い背景 */
+
+  /* Cards / Effects */
+  --card-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
+  --card-shadow-hover: 0 14px 30px -20px rgba(2,6,23,.22);
+
+  /* CTA Buttons */
+  --radius-cta: 16px;
+  --cta-btn-w: clamp(280px, 44vw, 520px);
+  --cta-btn-min-h: clamp(68px, 9.5vw, 96px);
+
+  /* FAQ（アコーディオン）*/
   --faq-radius: 12px;
   --faq-pad-x: clamp(12px, 3vw, 20px);
   --faq-pad-y: clamp(10px, 2.4vw, 16px);
   --faq-rule: rgba(2, 6, 23, .18);
   --faq-rule-strong: rgba(2, 6, 23, .28);
-  --faq-maxh: 1000px;
-  --title-gap: clamp(28px, 5vw, 64px);
-     /* 追加：ラベルと線の“間” */
-  --facts-inset: clamp(16px, 2.4vw, 20px);
-   --card-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
-  --card-shadow-hover: 0 14px 30px -20px rgba(2,6,23,.22);
+  --faq-maxh: 1000px;                     /* 開いた時の最大高さ */
 
-  /* CTAサイズ（好みで調整OK） */
-  --cta-btn-w: clamp(280px, 44vw, 520px);
-  --cta-btn-min-h: clamp(68px, 9.5vw, 96px);
+  /* Basic Facts */
+  --facts-w: clamp(640px, 72vw, 880px);   /* ブロック最大幅 */
+  --facts-gap-y: clamp(10px, 2vw, 14px);  /* 行の縦間隔 */
+  --facts-inset: clamp(16px, 2.4vw, 20px);/* ラベルの左インセット */
+
+  /* Footer */
+  --footer-bg: #0f172a;                   /* ネイビー寄りの濃色 */
+  --footer-ink: #e5e7eb;                  /* 文字色（ほぼ白） */
+  --footer-muted:#94a3b8;                 /* 補助文字 */
+  --footer-border: rgba(255,255,255,.08);
 }
 
-  @media (prefers-reduced-motion: reduce){
-  .hover-soft, .lp-profile.owner-card, .faq .faq-q, .faq .faq-a { transition: none !important; transform: none !important; }
+/* 動きを控えめにしたい環境への配慮（アニメ無効） */
+@media (prefers-reduced-motion: reduce){
+  .hover-soft, .lp-profile.owner-card, .faq .faq-q, .faq .faq-a {
+    transition: none !important;
+    transform: none !important;
+  }
 }
 
-html,body{ 
-scroll-behavior:smooth;
-overflow-x: hidden;
- }
+/* -----------------------------------------------------
+   Base（ベースの見た目）
+   ----------------------------------------------------- */
+html, body{ scroll-behavior:smooth; overflow-x:hidden; }
 body{
-  margin:0;
-  color:var(--ink);
-  background:#fff;
+  margin:0; color:var(--ink); background:#fff;
   font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
 }
 img{ max-width:100%; height:auto; display:block; }
 
-/* =========================
-   Section Rhythm
-   ========================= */
-/* すべての通常セクションに左右余白と最大幅を付与 */
+/* -----------------------------------------------------
+   Section Rhythm（セクションの基本リズム）
+   ----------------------------------------------------- */
 .lp-section{
-  padding-inline: max(var(--gutter), env(safe-area-inset-left)) 
-                  max(var(--gutter), env(safe-area-inset-right));
+  padding-inline: max(var(--gutter), env(safe-area-inset-left)) max(var(--gutter), env(safe-area-inset-right));
   padding-block: clamp(28px, 6vw, 72px);
   max-width: var(--content);
   margin-inline: auto;
 }
-
 .lp-section + .lp-section{ margin-top: clamp(20px, 4vw, 48px); }
-h1,h2{ margin: 0 0 16px; }
 
-
-/* =========================
-   インセット ライン
-   ========================= */
-
-/* インセットの“普通の1px線　連続するセクションの上に薄い線を引く（本文幅に合わせてインセット）
-.lp-section + .lp-section{
-  border-top: 1px solid var(--rule);
-  padding-top: calc(var(--rule-gap) + 1px);
-}
- */
-
- /* フルブリード（左右端まで“スッ”と走る線）フル幅の区切り線：必要なセクションに .rule-bleed を付与して使う */
-.lp-section{ position: relative; }
-.lp-section.rule-bleed{
-  padding-top: var(--rule-gap);
-}
+/* フルブリード線（左右端まで走る薄い1px線） */
+.lp-section{ position:relative; }
+.lp-section.rule-bleed{ padding-top: var(--rule-gap); }
 .lp-section.rule-bleed::before{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  translate: -50% 0;           /* 中央基準で 100vw */
-  width: 100vw;
-  height: 1px;
-  background: linear-gradient(to right,
-    transparent 0,
-    var(--rule) 12%,
-    var(--rule-strong) 50%,
-    var(--rule) 88%,
-    transparent 100%);
-  pointer-events: none;
+  content:""; position:absolute; top:0; left:50%; translate:-50% 0;
+  width:100vw; height:1px; pointer-events:none;
+  background:linear-gradient(to right, transparent 0, var(--rule) 12%, var(--rule-strong) 50%, var(--rule) 88%, transparent 100%);
 }
-
-/* このセクションだけ “短く＆薄く” */
-.lp-section.rule-bleed.rule--narrow{
-  --rule-gap: clamp(20px, 3.5vw, 36px); /* 線の上の余白を少し控えめ（任意） */
-}
+/* 線を短め＆薄めにしたい時（例：FAQ） */
+.lp-section.rule-bleed.rule--narrow{ --rule-gap: clamp(20px, 3.5vw, 36px); }
 .lp-section.rule-bleed.rule--narrow::before{
-  /* 中央基準のまま横幅だけ短くする */
-  width: clamp(320px, 72%, 960px);  /* ← 64% / 80% / 880px などに調整OK */
-  background: linear-gradient(to right,
-    transparent 0,
-    rgba(2, 6, 23, .12) 18%,
-    rgba(2, 6, 23, .16) 50%,   /* ← もう少し薄くしたければ .14〜.15 に */
-    rgba(2, 6, 23, .12) 82%,
-    transparent 100%);
+  width: clamp(320px, 72%, 960px);
+  background:linear-gradient(to right, transparent 0, rgba(2,6,23,.12) 18%, rgba(2,6,23,.16) 50%, rgba(2,6,23,.12) 82%, transparent 100%);
 }
 
-/* =========================
-   h2 インセット ライン
-   ========================= */
-/* 共通：センター寄せ＋擬似要素の基礎 */
+/* 見出し：センター＋ダイヤ下線 */
 .lp-section > h2.sec-title{
-  position: relative;
-  display: block;       /* 擬似要素のセンタリング用 */
-  margin: 0 auto var(--title-gap);  /* ← ここを変数に */
-  text-align: center;
-  letter-spacing: .02em;
+  position:relative; display:block; margin:0 auto var(--title-gap); text-align:center; letter-spacing:.02em;
 }
-
-/* A) ダイヤ＋ライン（キリッと上品） */
 .lp-section > h2.sec--diamond::after{
-  content:"";
-  position:absolute; left:50%; transform:translateX(-50%);
-  bottom:-14px; width: clamp(120px,12vw,220px); height:2px;
-  background: linear-gradient(90deg,
-    transparent 0 8%,
-    var(--rule-strong) 8% 92%,
-    transparent 92% 100%);
-  border-radius:999px;
+  content:""; position:absolute; left:50%; transform:translateX(-50%); bottom:-14px;
+  width:clamp(120px,12vw,220px); height:2px; border-radius:999px;
+  background:linear-gradient(90deg, transparent 0 8%, var(--rule-strong) 8% 92%, transparent 92% 100%);
 }
-/* ← これが“ダイヤ本体” */
 .lp-section > h2.sec--diamond::before{
-  content:"";
-  position:absolute; left:50%; transform:translateX(-50%) rotate(45deg);
-  bottom:-18px;                          /* ダイヤの垂直位置（±で微調整） */
-  width:10px; height:10px;
+  content:""; position:absolute; left:50%; transform:translateX(-50%) rotate(45deg); bottom:-18px;
+  width:10px; height:10px; border-radius:2px; box-shadow:0 2px 6px rgba(0,0,0,.12);
   background: color-mix(in srgb, var(--brand, #1f6feb) 78%, white);
-  /* color-mix 未対応ブラウザのフォールバック */
-  background: var(--brand, #1f6feb);
-  border-radius:2px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.12);
+  background: var(--brand, #1f6feb); /* color-mix 非対応ブラウザのフォールバック */
 }
 
-/* 濃色背景セクション（例：CTA）の見出しは少し明るめに */
-.lp-section.lp-cta > h2.sec--diamond::after{
-  background: linear-gradient(90deg,
-    transparent 0 8%,
-    rgba(255,255,255,.35) 8% 92%,
-    transparent 92% 100%);
+/* -----------------------------------------------------
+   Hero（今風フル幅）
+   ----------------------------------------------------- */
+.lp-section.lp-hero{ padding:0; max-width:none; margin:0; }
+.lp-hero .lp-hero-image{ position:relative; width:100%; height:clamp(320px,60vh,720px); overflow:hidden; aspect-ratio:1920/1000; }
+.lp-hero .lp-hero-image img{ width:100%; height:100%; object-fit:cover; display:block; border-radius:0; object-position:center 40%; }
+.lp-hero .lp-hero-image::before{ content:''; position:absolute; inset:0; background:linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.1)); z-index:1; }
+.lp-hero .lp-hero-overlay{ position:absolute; inset:0; z-index:2; display:grid; place-content:center; text-align:center; color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.35); padding-inline: clamp(24px, 7vw, 80px); padding-left:max(clamp(24px, 7vw, 80px), env(safe-area-inset-left)); padding-right:max(clamp(24px, 7vw, 80px), env(safe-area-inset-right)); }
+.lp-hero .lp-hero-overlay h1{ margin:.2em 0; font-size:clamp(28px,6vw,48px); }
+.lp-hero .lp-hero-overlay p{ margin:0; font-size:clamp(16px,3vw,20px); }
+.lp-hero-logo{ display:grid; place-content:center; margin-top:16px; }
+.lp-hero-logo img{ width:clamp(120px,18vw,220px); height:auto; }
+
+/* -----------------------------------------------------
+   Basic Facts（基本情報：中央寄せ＋ラベル/値の2カラム風）
+   ----------------------------------------------------- */
+.facts{ list-style:none; padding:0; margin: clamp(12px, 2.4vw, 20px) auto 0; max-width: var(--facts-w); }
+.facts li{
+  display:flex; align-items:baseline; flex-wrap:wrap; gap:12px;
+  padding: var(--facts-gap-y) 0 var(--facts-gap-y) var(--facts-inset);
+  border-bottom:1px solid rgba(2,6,23,.10);
+  font-weight:600; color: color-mix(in srgb, var(--brand, #1f6feb) 35%, #0b1220);
 }
-.lp-section.lp-cta > h2.sec--diamond::before{
-  background: rgba(255,255,255,.9);
-}
+.facts li .fact-label{ font-weight:700; flex:0 0 130px; white-space:nowrap; }
+.facts li span:not(.fact-label), .facts li a{ flex:1; font-weight:500; color:var(--ink, #222); }
+.facts a{ text-decoration:none; color:var(--ink, #222); }
+.facts a:hover{ text-decoration:underline; }
 
-/* FAQセクションだけ “線の前後” を広げる（上＝margin / 下＝padding） */
-#faq_section{ 
-  margin-top: clamp(24px, 4.5vw, 64px);        /* ← 線の前（上）を広げる */
-}
-#faq_section.rule-bleed{
-  --rule-gap: clamp(32px, 6vw, 88px);          /* ← 線の後（下）を広げる */
-}
-
-
-/* =========================
-   Hero（今風フル幅バージョン）
-   ========================= */
-
-/* ヒーローはコンテナ制限を解除してフル幅 */
-.lp-section.lp-hero{
-  padding: 0;
-  max-width: none;
-  margin: 0;
-}
-
-.lp-hero .lp-hero-image{
-  position: relative;
-  width: 100%;
-  height: clamp(320px, 60vh, 720px);
-  overflow: hidden;
-  aspect-ratio: 1920 / 1000;/* 余白チラつき軽減 */
-} 
-
-
-/* 画像は親いっぱいにフィット（100vwは使わない） */
-.lp-hero .lp-hero-image img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 0;
-  object-position: center 40%;  /* 被写体がやや上 */
-}
-
-
-/* 任意のオーバーレイ */
-.lp-hero .lp-hero-image::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background: linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.1));
-  z-index:1;
-}
-
-.lp-hero .lp-hero-overlay{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  display:grid;
-  place-content:center;
-  text-align:center;
-  color:#fff;
-  text-shadow:0 2px 12px rgba(0,0,0,.35);
-  padding-inline: clamp(24px, 7vw, 80px);
-  /* ノッチ考慮 */
-  padding-left:  max(clamp(24px, 7vw, 80px), env(safe-area-inset-left));
-  padding-right: max(clamp(24px, 7vw, 80px), env(safe-area-inset-right));
-}
-
-/* キャッチコピー / サブコピー */
-.lp-hero .lp-hero-overlay h1{
-  margin: .2em 0;
-  font-size: clamp(28px, 6vw, 48px);
-}
-.lp-hero .lp-hero-overlay p{
-  margin: 0;
-  font-size: clamp(16px, 3vw, 20px);
-}
-
-/* ロゴ */
-.lp-hero-logo{
-  display:grid;
-  place-content:center;
-  margin-top:16px;
-}
-.lp-hero-logo img{
-  width: clamp(120px, 18vw, 220px);
-  height: auto;
-}
-
-
-/* =========================
-   Key Facts 基本情報
-   ========================= */
-.facts{ list-style:none; padding:0; margin:0; }
-.facts li{ padding:8px 0; border-bottom:1px solid #eee; }
-
-.facts li {
-  display: flex; /* ← これが超重要！ */
-  align-items: baseline;
-  gap: 12px; /* ← ラベルと値の間に余白 */
-  flex-wrap: wrap; /* スマホで折り返しOK */
-}
-
-/* ラベルと値の幅を揃えるために class を使うと◎ */
-.facts li .fact-label {
-  font-weight: bold;
-  flex: 0 0 130px;
-  white-space: nowrap;
-}
-
-.facts li span:not(.fact-label),
-.facts li a {
-  flex: 1;
-  font-weight: 500;
-}
-
-.facts a.fact-tel {
-  text-decoration: none;
-  color: var(--ink, #222);
-  font-weight: 500;
-}
-.facts a.fact-tel:hover {
-  text-decoration: underline;
-}
-
-.facts a {
-  text-decoration: none;
-  color: var(--ink, #222);
-  font-weight: 500;
-}
-
-.facts a:hover {
-  text-decoration: underline;
-}
-
-/* =========================
-   Profile
-   ========================= */
+/* -----------------------------------------------------
+   Profile（運営者情報カード）
+   ----------------------------------------------------- */
 .lp-profile{ display:grid; gap:20px; }
-.profile-image img{
-  width:clamp(140px,28vw,260px);
-  height:auto; object-fit:cover; border-radius:16px;
-}
-.operator-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(16px, 4vw, 32px);
-  align-items: center;
-  justify-content: center; /* ← 中央寄せに寄せるポイント */
-  max-width: 960px;
-  margin-inline: auto;
-}
+.profile-image img{ width:clamp(140px,28vw,260px); height:auto; object-fit:cover; border-radius:16px; }
 
-.operator-image img {
-  width: clamp(180px, 30vw, 260px);
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-}
+/* カード化＋軽ホバー */
+.lp-profile.owner-card{ border:1px solid var(--rule); border-radius:12px; background:#fff; box-shadow:var(--card-shadow); transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease; display:flex; flex-wrap:wrap; gap: clamp(16px, 5vw, 32px); align-items:center; justify-content:center; max-width:960px; margin-inline:auto; }
+.lp-profile.owner-card:hover{ transform:translateY(-2px); box-shadow:var(--card-shadow-hover); border-color:var(--rule-strong); }
+.lp-profile.owner-card .profile-image img{ width:clamp(180px,30vw,260px); border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.1); }
+.lp-profile.owner-card .profile-body{ display:flex; flex-direction:column; gap:10px; font-size:clamp(15px,1.5vw,17px); flex:1; min-width:240px; }
+.lp-profile.owner-card .profile-body div{ display:flex; flex-wrap:wrap; align-items:baseline; border-bottom:1px solid rgba(0,0,0,.1); padding:6px 0; gap:4px; }
+.lp-profile.owner-card .profile-body dt{ font-weight:700; text-decoration:none; margin-right:8px; min-width:120px; white-space:nowrap; }
+.lp-profile.owner-card .profile-body dd{ margin:0; font-weight:500; flex:1; }
 
-.operator-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: clamp(15px, 1.5vw, 17px);
-  color: var(--ink, #111);
-  flex: 1;
-  min-width: 240px;
-}
-
-.operator-details div {
-  display: flex;
-  flex-wrap: wrap;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  padding: 4px 0;
-}
-
-.operator-details dt {
-  font-weight: 700;
-  text-decoration: underline;
-  margin-right: 6px;
-  min-width: 130px;
-}
-
-.operator-details dd {
-  margin: 0;
-  font-weight: 500;
-  flex: 1;
-}
-
-.lp-profile.owner-card{
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: var(--card-shadow);
-  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
-}
-.lp-profile.owner-card:hover{
-  transform: translateY(-2px);
-  box-shadow: var(--card-shadow-hover);
-  border-color: var(--rule-strong);
-}
-
-
-@media (min-width:768px){ .lp-profile{ grid-template-columns:1fr 1.2fr; }}
-
-/* =========================
-   Access
-   ========================= */
+/* -----------------------------------------------------
+   Access（地図＋テキスト）
+   ----------------------------------------------------- */
 .lp-access-wrapper{ display:grid; gap:20px; }
-@media (min-width:768px){ .lp-access-wrapper{ grid-template-columns:1.3fr 1fr; }}
+@media (min-width:768px){ .lp-access-wrapper{ grid-template-columns:1.3fr 1fr; } }
 
-/* =========================
-   FAQ (Accordion) — dashed card ver.
-   ========================= */
-
-/* 追加トークン（既存 :root があれば追記でOK） */
-:root{
-  --faq-radius: 12px;
-  --faq-pad-x: clamp(12px, 3vw, 20px);
-  --faq-pad-y: clamp(10px, 2.4vw, 16px);
-  --faq-rule: rgba(2, 6, 23, .18);
-  --faq-rule-strong: rgba(2, 6, 23, .28);
-}
-
-/* ベース */
+/* -----------------------------------------------------
+   FAQ（アコーディオン：点線カード＋軽ホバー）
+   ----------------------------------------------------- */
 .faq{ margin:0; padding:0; }
 .faq dt{ margin:12px 0 0; }
-.faq dd{ margin:8px 0 16px; }                 /* パディングは .faq-a 側で管理 */
-.faq dd[hidden] + dt{ margin-top:16px; }      /* 閉じてても間隔を維持 */
+.faq dd{ margin:8px 0 16px; }
+.faq dd[hidden] + dt{ margin-top:16px; }
 
-/* 質問ボタン */
-.faq-q{
-  width:100%;
-  display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:12px 16px; border:1px solid #e5e7eb; border-radius:10px;
-  background:#fff; cursor:pointer; text-align:left;
-  font:inherit; font-weight:700;
-}
-.faq-q:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
-.faq-icon{ width:1.25em; text-align:center; font-weight:700; }
-
-/* 回答（アコーディオン本体） */
-.faq-a[hidden]{ display:none; }
-.faq-a{
-  overflow:hidden;
-  max-height:0;
-  padding:0 var(--faq-pad-x);                 /* 閉時は上下0、横だけキープ */
-  margin:0;
-  border-radius:var(--faq-radius);
-  background:transparent;
-  border:1px dashed transparent;              /* 点線はデフォ透明 */
-  box-shadow:none;
-  transition:
-    max-height .25s ease,
-    padding .25s ease,
-    background .25s ease,
-    border-color .25s ease,
-    box-shadow .25s ease;
-}
-.faq-a.open{
-  max-height: var(--faq-maxh, 600px);         /* 必要なら --faq-maxh で延長 */
-  padding: var(--faq-pad-y) var(--faq-pad-x);
-}
-
-/* ▼ 点線カード枠（dl に .faq--dashed を付けたときだけ発動） */
-.faq.faq--dashed .faq-a.open{
-  border-color: var(--faq-rule);
-  background:#fff;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04);
-}
-.faq.faq--dashed .faq-a.open:hover{
-  border-color: var(--faq-rule-strong);
-}
-
-/* 回答カードの左にうっすらアクセントバー（ブランド色） */
-.faq.faq--dashed .faq-a.open{
-  position: relative;
-}
-.faq.faq--dashed .faq-a.open::before{
-  content:"";
-  position:absolute;
-  left:0; top:12px;           /* ← 上からの開始位置 */
-  width:6px; height:30px;     /* ← 長さはここで調整（例: 40px） */
-  border-radius:4px;
-  background: color-mix(in srgb, var(--brand) 65%, transparent);
-  background: var(--brand);   /* フォールバック */
-  opacity:.55;
-}
-
-/* アイコンのちょいアニメ（+/- 切替と相性良し） */
-.faq-q .faq-icon{ transition: transform .2s ease, opacity .2s ease; }
-.faq-q[aria-expanded="true"] .faq-icon{ transform: rotate(0.001turn); opacity:.9; }
-
-/* モーション弱め設定の人にはアニメ無効化 */
-@media (prefers-reduced-motion: reduce){
-  .faq-a, .faq-q .faq-icon{ transition: none !important; }
-}
-.faq-q:focus-visible{ outline: 3px solid color-mix(in srgb, var(--brand) 60%, white); outline-offset: 2px; }
-
-/* ========= FAQ：質問行（.faq-q）に軽ホバー ========= */
+/* 質問ボタン：テキストは左、+/-アイコンは右端 */
 .faq .faq-q{
-  /* 質問ボタン（またはリンク）全体をほんのりカードっぽく */
-  display: block;
-  width: 100%;
-  border-radius: 10px;
-  padding: 6px 8px;
+  display:flex; align-items:center; gap:.6em; width:100%;
+  padding:12px 16px; border:1px solid #e5e7eb; border-radius:10px; background:#fff;
+  cursor:pointer; text-align:left; font:inherit; font-weight:700;
   transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
-.faq .faq-q:hover{
-  background-color: rgba(2,6,23,.03);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px -18px rgba(2,6,23,.18);
-}
+.faq .faq-q > span[id^="faq_q"]{ flex:1 1 auto; min-width:0; }
+.faq .faq-q .faq-icon{ margin-left:auto; flex:0 0 auto; width:1.25em; text-align:center; font-weight:700; line-height:1; }
+.faq .faq-q:hover{ background-color:rgba(2,6,23,.03); transform:translateY(-1px); box-shadow:0 8px 20px -18px rgba(2,6,23,.18); }
 
-/* ========= FAQ：開いた回答ボックス（.faq-a.open）にも軽ホバー ========= */
-.faq.faq--dashed .faq-a{
-  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
+/* 回答（開閉アニメ） */
+.faq-a[hidden]{ display:none; }
+.faq-a{
+  overflow:hidden; max-height:0; padding:0 var(--faq-pad-x); margin:0; border-radius:var(--faq-radius);
+  background:transparent; border:1px dashed transparent; box-shadow:none;
+  transition:max-height .25s ease, padding .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease, transform .25s ease;
 }
-.faq.faq--dashed .faq-a.open:hover{
-  box-shadow: var(--card-shadow);
-  border-color: var(--faq-rule-strong);
-  background: #fff; /* 既存のデザインをキープしつつ少し持ち上げる */
-  transform: translateY(-1px);
-}
+.faq-a.open{ max-height: var(--faq-maxh, 600px); padding: var(--faq-pad-y) var(--faq-pad-x); }
 
-/* ===== Owner card（“質素”を解消する最小パッチ） ===== */
-.owner-card{
-  position: relative;
-  background: #fff;
-  border: 1px solid var(--rule, rgba(2,6,23,.12));
-  border-radius: 16px;
-  padding: clamp(16px, 3.5vw, 28px);
-  box-shadow: 0 10px 28px -18px rgba(2,6,23,.18);
-}
+/* 点線カード枠＋左アクセント（dlに .faq--dashed を付けた時） */
+.faq.faq--dashed .faq-a.open{ border-color:var(--faq-rule); background:#fff; box-shadow:0 1px 0 rgba(0,0,0,.04); position:relative; }
+.faq.faq--dashed .faq-a.open:hover{ border-color:var(--faq-rule-strong); box-shadow:var(--card-shadow); transform:translateY(-1px); }
+.faq.faq--dashed .faq-a.open::before{ content:""; position:absolute; left:0; top:12px; width:4px; height:40px; border-radius:4px; background:var(--brand); opacity:.55; }
 
-/* 上辺に短いブランドバー（上品＆今っぽい） */
-.owner-card::before{
-  content:"";
-  position: absolute;
-  left: clamp(16px, 3vw, 24px);
-  top: 0;
-  width: clamp(60px, 10vw, 120px);
-  height: 4px;
-  background: var(--brand, #1f6feb);
-  border-radius: 999px;
-  transform: translateY(-1px);
-  opacity: .85;
-}
-
-/* レイアウト強化（画像＋本文の2カラム） */
-.owner-section .lp-profile{
-  display: grid;
-  grid-template-columns: minmax(120px, 200px) 1fr;
-  gap: clamp(16px, 3vw, 28px);
-  align-items: start;
-}
-.owner-section .profile-image img{
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
-}
-.owner-section .profile-body p{
-  margin: 0 0 8px 0;
-}
-
-.lp-profile.owner-card .profile-body div {
-  display: flex; /* ← これが超重要！ */
-  flex-wrap: wrap;
-  align-items: baseline;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  padding: 6px 0;
-  gap: 4px; /* ← ちょっと余白もあるとキレイ */
-}
-
-
-/* 運営者情報セクション用 */
-.lp-profile.owner-card {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(16px, 5vw, 32px);
-  align-items: center;
-  justify-content: center;
-  max-width: 960px;
-  margin-inline: auto;
-}
-
-.lp-profile.owner-card .profile-image img {
-  width: clamp(180px, 30vw, 260px);
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.lp-profile.owner-card .profile-body {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: clamp(15px, 1.5vw, 17px);
-  flex: 1;
-  min-width: 240px;
-}
-
-.lp-profile.owner-card .profile-body div {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 6px 0;
-  gap: 4px;
-}
-
-.lp-profile.owner-card .profile-body dt {
-  font-weight: bold;
-  text-decoration: none;
-  margin-right: 8px;
-  min-width: 120px;
-  white-space: nowrap;
-}
-
-.lp-profile.owner-card .profile-body dd {
-  margin: 0;
-  font-weight: 500;
-  flex: 1;
-}
-
-
-/* スマホで1カラムに自然落ち */
-@media (max-width: 640px){
-  .owner-section .lp-profile{
-    grid-template-columns: 1fr;
-  }
-}
-
-
-/* =========================
-   CTA Blocks (final clean)
-   ========================= */
-.lp-cta{
-  background:var(--bg);
-  padding:clamp(12px,3vw,20px);
-  text-align:center;
-  border-radius:12px;
-  margin:16px auto;
-}
+/* -----------------------------------------------------
+   CTA Blocks
+   ----------------------------------------------------- */
+.lp-cta{ background:var(--bg); padding:clamp(12px,3vw,20px); text-align:center; border-radius:12px; margin:16px auto; }
 .cta-message{ font-size:clamp(16px,2.8vw,22px); font-weight:600; margin:0 0 12px; }
-
-.cta-actions{
-  display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center;
-}
-
-/* --- CTA buttons: force equal width & height --- */
-.cta-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px 20px;
-  justify-content:center;
-  align-items:stretch;                 /* ← 高さも揃える */
-}
-
-/* 同幅固定・縮まない・ボックス幅にパディング含める */
-.cta-actions .btn{
-  box-sizing:border-box;
-  flex: 0 0 var(--cta-btn-w);          /* shrink:0 / basis=固定幅 */
-  width: var(--cta-btn-w);
-  min-height: var(--cta-btn-min-h);    /* 高さも同じに */
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* スマホは両方100%幅で完全一致 */
-@media (max-width:480px){
-  .cta-actions .btn{
-    flex: 1 1 100%;
-    width: 100%;
-  }
-}
-
-
-/* 下線ナシ（a内のテキストも） */
-a.btn, a.btn:visited, .btn *{ text-decoration:none; }
-
-/* 色 */
+.cta-actions{ display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center; align-items:stretch; }
+.cta-actions .btn{ box-sizing:border-box; flex:0 0 var(--cta-btn-w); width:var(--cta-btn-w); min-height:var(--cta-btn-min-h); display:inline-flex; align-items:center; justify-content:center; border-radius: var(--radius-cta); transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease; }
+@media (max-width:480px){ .cta-actions .btn{ flex:1 1 100%; width:100%; } }
 .btn-primary{ background:var(--brand); color:#fff; border-color:var(--brand); }
 .btn-outline{ background:#fff; color:var(--ink); border-color:#e5e7eb; }
-
-/* ホバー */
-.cta-actions .btn:hover{ transform:translateY(-1px); box-shadow:0 6px 16px rgba(0,0,0,.12); }
-.btn-primary:hover,
-.btn-primary:focus-visible{ background:var(--brand-hover); border-color:var(--brand-hover); filter:none; }
-.btn-primary:active{
-  background:var(--brand-active); border-color:var(--brand-active);
-  transform:translateY(0); box-shadow:0 4px 12px rgba(0,0,0,.10);
-}
-.btn-outline:hover{ background:#f3f4f6; }
-
-/* 2行表示（電話） */
+.cta-actions .btn:hover, .cta-actions .btn:focus-visible{ transform:translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 3px rgba(31,111,235,.12); }
+.btn-primary:hover, .btn-primary:focus-visible{ background:var(--brand-hover); border-color:var(--brand-hover); }
+.btn-primary:active{ background:var(--brand-active); border-color:var(--brand-active); transform:translateY(0); box-shadow:0 4px 12px rgba(0,0,0,.10); }
+.btn-outline:hover, .btn-outline:focus-visible{ background:#f0f6ff; border-color:var(--brand-hover); color:var(--brand); }
 .btn-label, .btn-sub{ display:block; line-height:1.25; }
 .btn-label{ font-weight:700; font-size:clamp(15px,2.7vw,18px); }
 .btn-sub{ font-weight:600; font-size:clamp(13px,2.4vw,16px); opacity:.9; margin-top:2px; }
 .btn-phone{ flex-direction:column; align-items:center; gap:4px; line-height:1.25; }
 
-/* 角の丸みを少しアップ（電話/予約 共通） */
-.cta-actions .btn{
-  border-radius: var(--radius-cta);
-}
+/* -----------------------------------------------------
+   Services（サービス概要カード：軽ホバー＋フォント大きめ）
+   ----------------------------------------------------- */
+#visa_section .list-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:clamp(10px,2vw,16px); list-style:none; margin:clamp(12px,2.4vw,20px) auto 0; padding:0; max-width:clamp(640px,72vw,1120px); }
+#visa_section .list-grid > li{ display:grid; place-items:center start; text-align:left; min-height:clamp(96px,12vw,160px); padding-block:clamp(10px,2.2vw,16px); padding-inline:clamp(12px,3vw,18px); border:1px solid var(--rule); border-radius:12px; background:#fff; box-shadow:0 10px 24px -18px rgba(2,6,23,.12); transition: box-shadow .2s ease, transform .2s ease; font-size: clamp(17px, 2vw, 20px); line-height:1.55; word-break:break-word; hyphens:auto; }
+#visa_section .list-grid > li:hover{ box-shadow:0 14px 28px -18px rgba(2,6,23,.16); transform:translateY(-1px); }
+#visa_section .list-grid > li > *{ margin:0; }
+#visa_section .list-grid > li > h3{ margin-bottom:.2em; line-height:1.2; }
+#visa_section .list-grid > li > p{ line-height:1.45; }
+#visa_section .list-grid.cards--compact{ grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:clamp(8px,1.6vw,14px); }
+#visa_section .list-grid.cards--compact > li{ min-height:clamp(68px,9vw,112px); padding-block:clamp(10px,2.2vw,18px); padding-inline:clamp(10px,2.2vw,14px); border-radius:10px; box-shadow:0 8px 20px -18px rgba(2,6,23,.10); font-size:clamp(17px, 2vw, 20px); line-height:1.55; }
+@supports not (place-items:center start){ #visa_section .list-grid > li{ display:flex; align-items:center; justify-content:flex-start; } }
+@media (max-width:480px){ #visa_section .list-grid > li{ min-height:auto; } }
 
-/* ホバーをちょい強め＆フォーカスと統一 */
-.cta-actions .btn{
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease;
-}
-.cta-actions .btn:hover,
-.cta-actions .btn:focus-visible{
-  transform: translateY(-2px);                               /* ふわっと */
-  box-shadow: var(--hover-shadow), var(--hover-ring);         /* 影＋リング */
-}
-
-/* 電話（primary）：色変化を明確に */
-.btn-primary:hover,
-.btn-primary:focus-visible{
-  background: var(--brand-hover);
-  border-color: var(--brand-hover);
-  filter: none;
-}
-
-/* 予約（outline）：枠・文字色もブランド寄りに */
-.btn-outline:hover,
-.btn-outline:focus-visible{
-  background: #f0f6ff;                 /* うっすら青背景 */
-  border-color: var(--brand-hover);
-  color: var(--brand);
-}
-
-/* クリック中は沈ませる（共通） */
-.cta-actions .btn:active{
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(0,0,0,.10);
-}
-
-/* 動き控えめ派の環境にも優しく */
-@media (prefers-reduced-motion: reduce){
-  .cta-actions .btn{ transition: background-color .18s ease, border-color .18s ease, filter .18s ease; }
-  .cta-actions .btn:hover,
-  .cta-actions .btn:focus-visible{ transform:none; }
-}
-
-/* リストを2〜3列で気持ちよく */
-.list-grid{
-  list-style:none; padding:0; margin:0;
-  display:grid; gap:10px 16px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-.list-grid li{
-  padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px; background:#fff;
-}
-
-/* 料金テーブル */
-.table-wrap{ overflow:auto; }
-.price-table{
-  width:100%; border-collapse: collapse; background:#fff; border:1px solid #e5e7eb; border-radius:10px; overflow:hidden;
-}
-.price-table th, .price-table td{ padding:12px 14px; border-bottom:1px solid #eee; vertical-align:top; }
-.price-table thead th{ background:#f8fafc; text-align:left; font-weight:700; }
-.price-table tbody tr:last-child td{ border-bottom:none; }
-.muted{ color:#6b7280; font-size:.95em; margin-top:8px; }
-
-
-/* =========================
-   Section Headings (center)
-   ========================= */
-.lp-section > h2{
-  text-align: center;
-  margin: 0 auto clamp(16px, 3vw, 28px);
-  letter-spacing: .02em;
-}
-
-/* オプション：細いアクセントラインを見出し下に */
-.lp-section > h2::after{
-  content:"";
-  display:block;
-  width: clamp(48px, 6vw, 96px);
-  height: 2px;
-  margin: clamp(8px, 1.6vw, 14px) auto 0;
-  background: var(--rule-strong, rgba(2,6,23,.22));
-  border-radius: 999px;
-  opacity:.9;
-}
-
-/* 濃色背景のセクション（例：CTAなど）ではライン色だけ明るく */
-.lp-section.lp-cta > h2::after{
-  background: rgba(255,255,255,.35);
-}
-/* ===== Basic Facts: 中央寄せ＋項目名を強調 ===== */
-:root{
-  --facts-w: clamp(640px, 72vw, 880px);   /* 基本情報ブロックの最大幅 */
-  --facts-gap-y: clamp(10px, 2vw, 14px);  /* 行の縦間隔 */
-}
-
-/* ブロック全体を中央に寄せる */
-.facts{
-  list-style: none;
-  padding: 0;
-  margin: clamp(12px, 2.4vw, 20px) auto 0;
-  max-width: var(--facts-w);
-}
-
-/* 各行の見た目（区切り線はそのまま上品に） */
-.facts li{
-  padding: var(--facts-gap-y) 0 var(--facts-gap-y) var(--facts-inset);
-  border-bottom: 1px solid rgba(2,6,23,.10);
-  font-weight: 600;
-  color: color-mix(in srgb, var(--brand, #1f6feb) 35%, #0b1220);
-}
-
-/* 値（<span>）とリンクは読みやすい通常ウェイト＆色に戻す */
-.facts li > span,
-.facts li > a{
-  font-weight: 500;
-  color: var(--ink, #222);
-}
-
-/* 電話行のカッコ付きリンクが浮く場合の微調整（任意） */
-.facts li a{
-  text-underline-offset: 2px;
-}
-
-/* スマホでの詰まりを軽減（値だけ改行OK） */
-@media (max-width: 480px){
-  .facts li > span,
-  .facts li > a{ display: inline; white-space: normal; }
-}
-
-/* ===== サービス概要（左寄せのまま縦センター） ===== */
-/* 各項目（枠）— 左寄せのまま縦中央＆コンパクト */
-#visa_section .list-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* ← 260→240でカード自体も一回り小さく */
-  gap: clamp(10px, 2vw, 16px);                                /* すき間も少し詰める */
-  list-style: none;
-  margin: clamp(12px, 2.4vw, 20px) auto 0;
-  padding: 0;
-  max-width: clamp(640px, 72vw, 1120px);
-}
-#visa_section .list-grid > li{
-  display: grid;
-  place-items: center start;      /* 縦:center / 横:left */
-  text-align: left;
-  min-height: clamp(96px, 12vw, 160px);
-  padding-block: clamp(10px, 2.2vw, 16px);
-  padding-inline: clamp(12px, 3vw, 18px);
-  border: 1px solid var(--rule, rgba(2,6,23,.12));
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
-  transition: box-shadow .2s ease, transform .2s ease;
-　font-size: clamp(17px, 2.0vw, 20px); /* 既存より+少し */
-  line-height: 1.55;
-}
-#visa_section .list-grid > li:hover{
-  box-shadow: 0 14px 28px -18px rgba(2,6,23,.16);
-  transform: translateY(-1px);
-}
-#visa_section .list-grid > li > *{ margin: 0; }
-#visa_section .list-grid > li > h3{ margin-bottom: .2em; line-height: 1.2; }
-#visa_section .list-grid > li > p{  line-height: 1.45; }
-
-/* ===== コンパクト版（ULに .cards--compact を付けた時だけ適用） ===== */
-#visa_section .list-grid.cards--compact{
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* さらに小さめ */
-  gap: clamp(8px, 1.6vw, 14px);
-}
-#visa_section .list-grid.cards--compact > li{
-  min-height: clamp(68px, 9vw, 112px);     /* ← 高さをギュッと */
-  padding-block: clamp(10px, 2.2vw, 18px);
-  padding-inline: clamp(10px, 2.2vw, 14px);
-  border-radius: 10px;                     /* 小さめ角丸で引き締め */
-  box-shadow: 0 8px 20px -18px rgba(2,6,23,.10); /* 影も控えめに */
-  font-size: clamp(17px, 2.0vw, 20px);     /* ほんの少しだけ字面も圧縮 */
-  line-height: 1.55;
-}
-
-/* 長い英語行の処理（折り返し＆ハイフン分割） */
-#visa_section .list-grid > li{
-  word-break: break-word;
-  hyphens: auto;
-}
-
-/* 古いブラウザフォールバック */
-@supports not (place-items: center start){
-  #visa_section .list-grid > li{
-    display:flex; align-items:center; justify-content:flex-start;
-  }
-}
-
-
-/* スマホは自然落ちに（縦センターが違和感なら start に） */
-@media (max-width: 480px){
-  #visa_section .list-grid > li{
-    min-height: auto;           /* コンテンツ量に合わせる */
-    /* place-items: start start; */ /* 必要なら解除 */
-  }
-}
-
-/* ===== footer tokens ===== */
-:root{
-  --footer-bg: #111827;      /* deep slate/navy（真っ黒より柔らかい） */
-  --footer-ink: #e5e7eb;     /* テキスト（ほぼ白） */
-  --footer-muted:#94a3b8;    /* 補助文字 */
-  --footer-border: rgba(255,255,255,.08);
-}
-
-/* フッター配色 */
-.site-footer{
-  background: var(--footer-bg);
-  color: var(--footer-ink);
-  border-top: 1px solid var(--footer-border);
-}
-.site-footer a{
-  color: var(--footer-ink);
-  text-decoration: none;
-  opacity: .95;
-}
-.site-footer a:hover{ opacity: 1; }
-.site-footer small, 
-.site-footer .muted{ color: var(--footer-muted); }
-
-/* フッター内の左右余白も本文に合わせる */
-.site-footer .footer-inner{
-  max-width: var(--content);
-  margin-inline: auto;
-  padding-inline: max(var(--gutter), env(safe-area-inset-left)) 
-                  max(var(--gutter), env(safe-area-inset-right));
-  padding-block: clamp(20px, 4.5vw, 40px);
-}
-
-
-/* フッター */
-.lp-footer{ background:#0f172a; color:#e5e7eb; }
-.lp-footer a{ color:#93c5fd; text-decoration:none; }
+/* -----------------------------------------------------
+   Footer（3カラム：右列=ロゴ→Legal→©）
+   ----------------------------------------------------- */
+.lp-footer{ background:var(--footer-bg); color:var(--footer-ink); }
+.lp-footer a{ color: color-mix(in srgb, var(--brand, #60a5fa) 82%, white); text-decoration:none; }
 .lp-footer a:hover{ text-decoration:underline; }
-.lp-footer-inner{ display:grid; gap:24px; }
-@media (min-width:768px){
-  .lp-footer-inner{ grid-template-columns: 1.2fr 1fr 1fr; }
-}
-/* 左カラムの見栄え */
-.footer-brand{ display:flex; gap:12px; align-items:flex-start; }
-.footer-brand-text p{ margin:.2em 0; }
-.footer-name{ font-weight:700; }
-.footer-address, .footer-hours{ color:#cbd5e1; font-size:.95em; }
-.footer-contact a{ color:#e5e7eb; }
-.footer-contact a:hover{ text-decoration:underline; }
+.lp-footer-inner{ display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:clamp(16px,4vw,48px); align-items:start; }
+@media (max-width:860px){ .lp-footer-inner{ grid-template-columns:1fr; } }
 
-.footer-brand{ display:flex; gap:12px; align-items:center; }
-.footer-name{ font-weight:700; margin:0; }
-.footer-license span{ display:inline-block; margin-right:8px; opacity:.9; font-size:.95em; }
-.footer-nap{ margin:.5em 0 0; line-height:1.6; }
+/* 左列（NAP＋営業時間） */
+.footer-col-left .footer-name{ margin:0 0 6px; font-weight:700; font-size:clamp(18px,2vw,22px); }
+.footer-col-left p{ margin:4px 0; }
 
-.footer-head{ font-size:1rem; margin:0 0 8px; font-weight:700; }
-.footer-links{ list-style:none; padding:0; margin:0; display:grid; gap:8px; }
-.footer-copy{ opacity:.9; margin-top:12px; font-size:.95em; }
+/* 中列（内部リンク） */
+nav.footer-links{ display:block; }
+.footer-links-list{ list-style:none; margin:0; padding:0; }
+.footer-links-list li{ margin:8px 0; }
+.footer-links .footer-head{ margin:0 0 8px; font-weight:700; }
 
-.site-footer a{ opacity:.96; }
-.site-footer a:hover{ opacity:1; text-decoration: underline; text-underline-offset: 2px; }
-
-/* ===== Footer layout & style ===== */
-.lp-footer{
-  background: var(--footer-bg, #0f172a);
-  color: var(--footer-ink, #e5e7eb);
-}
-.lp-footer a{
-  color: color-mix(in srgb, var(--brand, #60a5fa) 82%, white);
-  text-decoration: none;
-}
-.lp-footer a:hover{ text-decoration: underline; }
-
-.lp-footer-inner{
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: clamp(16px, 4vw, 48px);
-  align-items: start;
-}
-
-/* 左列 */
-.footer-col-left .footer-name{
-  margin: 0 0 6px;
-  font-weight: 700;
-  font-size: clamp(18px, 2vw, 22px);
-}
-.footer-col-left p{ margin: 4px 0; }
-
-/* 中列 */
-.footer-links .footer-head{
-  margin: 0 0 8px;
-  font-weight: 700;
-}
-.footer-links-list{
-  list-style: none; margin: 0; padding: 0;
-}
-.footer-links-list li{ margin: 8px 0; }
-
-/* Footer 右列：ギャップを gap で統一し、直下要素の margin を無効化 */
-.footer-col.footer-legal{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  gap: clamp(10px, 1.6vw, 16px);        /* ← ここだけでロゴ⇄Legal⇄©の間隔を管理 */
-}
-
-/* 直下の figure/h3/p などの既定マージンをゼロに */
-.footer-col.footer-legal > *{ margin:0 !important; }
-
-/* ロゴ周りは余白ゼロでOK */
-.footer-legal .footer-logo-wrap{ margin:0; }
-.footer-legal .footer-logo-wrap img{ display:block; }
-
-/* Legal行・リンク行の整形 */
-.footer-legal .footer-heading{ line-height:1.25; }
-.footer-legal .legal-links{
-  display:flex;
-  gap:.5em;
-  align-items:center;
-  margin:0;                               /* 念のため */
-}
-.footer-legal .legal-links .sep{ opacity:.6; }
-.footer-legal .copyright{ margin:0; opacity:.85; }
-
-
-.footer-col.footer-legal{ gap: clamp(8px,1.2vw,14px); }
-
-.footer-logo-wrap{ margin: 0 0 clamp(12px, 3vw, 28px); }
-.footer-logo-wrap img{
-  width: clamp(72px, 9vw, 110px);
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 6px 22px rgba(0,0,0,.22);
-  display: block;
-}
-.footer-heading{
-  margin: clamp(20px, 6vw, 64px) 0 8px; /* ← ロゴから見出しまでの“下げ幅” */
-  font-weight: 700;
-}
-.legal-links{ margin: 0 0 clamp(10px, 2vw, 16px); }
-.legal-links .sep{ opacity: .6; }
-copyright, .copyright{ margin: clamp(8px, 2vw, 14px) 0 0; opacity: .85; }
-
-/* モバイル */
-@media (max-width: 860px){
-  .lp-footer-inner{ grid-template-columns: 1fr; }
-  .footer-heading{ margin-top: clamp(16px, 5vw, 40px); }
-}
-
-/* 右列（Legal）— 子要素の幅を列幅に統一 */
-.footer-col.footer-legal{
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;              /* ← ここを stretch に */
-  gap: clamp(10px, 1.6vw, 16px);     /* 間隔は gap で統一管理 */
-}
-
-/* 直下要素は幅100%＆余白リセットでそろえる */
-.footer-col.footer-legal > *{
-  width: 100%;
-  margin: 0;
-}
-
-/* ロゴの figure も行幅に広げつつ、画像は左寄せのまま */
-.footer-legal .footer-logo-wrap{
-  display: flex;     /* 行幅は100%・中のimgは自然幅 */
-  align-items: flex-start;
-}
-.footer-legal .footer-logo-wrap img{
-  display: block;
-  width: 72px;       /* 画像の実寸を維持 */
-  height: auto;
-  max-width: 72px;  /* お好みで：ロゴの最大幅（調整OK） */
-}
-@media (min-width: 1024px){
-  .footer-legal .footer-logo-wrap img{
-    width: 72px;        /* ← ここだけ触ればPCサイズを調整できる！ */
-  }
-}
-
-/* 文字行の微調整（見出し/リンク/©の余白を統一） */
-.footer-legal .footer-heading{ line-height: 1.25; }
-.footer-legal .legal-links{ display: flex; gap: .5em; }
-.footer-legal .copyright{ opacity: .85; }
-
-.footer-legal .copyright{
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-}
-
-.lp-footer{ --footer-ink: #f1f5f9; }
-
-@media (max-width: 680px){
-  .footer-legal .footer-logo-wrap img{ max-width: 96px; }
-}
-/* ==== Owner card（運営者情報）に軽ホバーを確実適用 ==== */
-/* レイアウト指定のあとで上書きし、影＆持ち上げを有効化 */
-.lp-profile.owner-card{
-  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
-}
-.lp-profile.owner-card:hover{
-  transform: translateY(-2px);
-  /* 変数が壊れてても効くようにフォールバック併記 */
-  box-shadow: var(--card-shadow-hover, 0 14px 30px -20px rgba(2,6,23,.22));
-  border-color: var(--rule-strong, rgba(2,6,23,.22));
-}
-
-/* ==== FAQ：質問行にも同じ“軽ホバー”を適用 ==== */
-.faq .faq-q{
-  display: block;                 /* 当たり判定を広く */
-  width: 100%;
-  border-radius: 10px;
-  transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease;
-  will-change: transform;         /* 体感を軽く */
-  cursor: pointer;
-}
-/* dtの余白上に乗っても効くように当たり判定を広げる */
-.faq dt:hover .faq-q,
-.faq .faq-q:hover{
-  background-color: rgba(2,6,23,.03);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px -18px rgba(2,6,23,.18);
-}
-
-/* ==== FAQ：開いた回答カード（.faq-a.open）も軽ホバー ==== */
-.faq.faq--dashed .faq-a{
-  transition: box-shadow .2s ease, border-color .2s ease, background-color .2s ease, transform .2s ease;
-}
-.faq.faq--dashed .faq-a.open:hover{
-  transform: translateY(-1px);
-  box-shadow: var(--card-shadow, 0 10px 24px -18px rgba(2,6,23,.12));
-  border-color: var(--faq-rule-strong, rgba(2,6,23,.28));
-}
-
-/* === Footer: 右列のギャップと幅を最終確定（競合を上から黙らせる） === */
-.footer-col.footer-legal{
-  align-items: stretch;                         /* 列幅いっぱいに統一 */
-  gap: clamp(10px, 1.6vw, 16px);               /* ← ここだけで間隔を管理 */
-}
+/* 右列（ロゴ→Legal→©： gap で等間隔、子要素は列幅いっぱい） */
+.footer-col.footer-legal{ display:flex; flex-direction:column; align-items:stretch; gap:clamp(10px,1.6vw,16px); }
 .footer-col.footer-legal > *{ width:100%; margin:0; }
-
-/* === Footer: Quick Links のクラスかぶりを無害化（navはblock / ulをgrid） === */
-nav.footer-links{ display:block; }              /* 旧 .footer-links の display:grid を上書き */
-nav.footer-links > ul{                          /* 実際に並べたいのは中のUL */
-  list-style:none; margin:0; padding:0;
-  display:grid; gap:8px;
-}
-
-/* === Services: もし全角スペース混入でミニファイ時に落ちる環境があれば保険で再指定 === */
-#visa_section .list-grid > li{
-  font-size: clamp(17px, 2vw, 20px);           /* 同じ値をASCII空白で再宣言（後勝ち） */
-  line-height: 1.55;
-}
-
-/* === FAQ：プラス（.faq-icon）を右端に固定 === */
-.faq .faq-q{
-  display: flex;           /* 行レイアウトにする */
-  align-items: center;
-  width: 100%;
-  gap: .6em;
-  /* 既にホバーの背景や影の指定があってもOK。ここはレイアウトだけ */
-}
-
-.faq .faq-q > span[id^="faq_q"]{
-  flex: 1 1 auto;          /* 質問テキストは伸びる領域 */
-  min-width: 0;            /* 長文でも折り返せるように */
-}
-
-.faq .faq-q .faq-icon{
-  margin-left: auto;       /* ← これで右端へ */
-  flex: 0 0 auto;
-  font-weight: 700;
-  line-height: 1;
-  min-width: 1.2em;        /* “−”になっても幅が暴れない保険 */
-  text-align: center;
-  opacity: .8;
-}
-.faq .faq-q:hover .faq-icon{ opacity: 1; }
-
-/* === FAQ：プラス記号を右端へ固定（最終上書き） === */
-dl.faq .faq-q{
-  display: flex !important;           /* 後ろの display:block を無効化 */
-  align-items: center;
-  justify-content: space-between;
-  gap: .6em;
-  width: 100%;
-  padding: 6px 8px;                   /* 既存の軽ホバー指定と揃える */
-  border-radius: 10px;                 /* 既存見た目を維持 */
-}
-
-dl.faq .faq-q > span[id^="faq_q"]{
-  flex: 1 1 auto;
-  min-width: 0;                        /* 長文でも折り返しやすく */
-}
-
-dl.faq .faq-q .faq-icon{
-  margin-left: auto;                   /* ← 右端へ押し出し */
-  flex: 0 0 auto;
-  width: 1.25em;                       /* 幅ぶれ防止（±の切替でも安定） */
-  text-align: center;
-  line-height: 1;
-  font-weight: 700;
-}
-
+.footer-legal .footer-logo-wrap{ display:flex; align-items:flex-start; }
+/* ロゴサイズ：モバイルやや大きめ、PCは小さめに引き締め */
+.footer-legal .footer-logo-wrap img{ display:block; width:96px; height:auto; max-width:96px; border-radius:10px; box-shadow:0 6px 22px rgba(0,0,0,.22); }
+@media (min-width:1024px){ .footer-legal .footer-logo-wrap img{ width:72px; max-width:72px; } }
+@media (max-width:680px){ .footer-legal .footer-logo-wrap img{ max-width:96px; } }
+.footer-legal .footer-heading{ line-height:1.25; font-weight:700; }
+.footer-legal .legal-links{ display:flex; gap:.5em; align-items:center; }
+.footer-legal .legal-links .sep{ opacity:.6; }
+.footer-legal .copyright{ opacity:.85; word-break:keep-all; overflow-wrap:anywhere; }
