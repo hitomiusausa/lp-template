@@ -543,6 +543,12 @@
         if (openingHoursSpecification.length){
           org.openingHoursSpecification = openingHoursSpecification;
         }
+        
+const sep = document.querySelector('.legal-links .sep');
+const hasPriv = footer_privacy?.style.display !== 'none';
+const hasTerms = footer_terms?.style.display !== 'none';
+if (sep) sep.style.display = (hasPriv && hasTerms) ? 'inline' : 'none';
+
 
         const el = document.getElementById('org_jsonld');
         if (el) el.textContent = JSON.stringify(org);
