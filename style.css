@@ -508,10 +508,10 @@ nav.footer-links{ display:block; }
   background: var(--rule);
 }
 
-/* 最終行の線は非表示（余分な線を消す） */
+/* 最終行の線は非表示（余分な線を消す）
 #promo_section.reasons .reasons-list dd:last-child::after{
   content: none;
-}
+} */
 
 /* SPは縦積み＋間隔調整 */
 @media (max-width: 640px){
