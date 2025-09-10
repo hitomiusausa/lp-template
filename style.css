@@ -435,111 +435,80 @@ nav.footer-links{ display:block; }
 }
 
 /* -----------------------------------------------------
-   Reasons（ここが選ばれる理由：見出しドン＋説明寄り添い）
-   ※ HTML側：#promo_section に .reasons を付与
+   Reasons（ここが選ばれる理由：LPの雰囲気に合わせた“落ち着き版”）
    ----------------------------------------------------- */
-
-/* 全体レイアウト：dt と dd を横並び（PC）→ 縦積み（SP） */
 #promo_section.reasons .reasons-list{
   display:grid;
-  /* 左:見出し(可変) 右:概要 */
-  grid-template-columns: minmax(180px, 0.45fr) 1fr;
-  column-gap: clamp(14px, 2.4vw, 24px);
-  row-gap: clamp(10px, 1.6vw, 16px);
-  align-items: end;                  /* “寄り添い”感：行末で揃える */
+  grid-template-columns: minmax(200px, 0.42fr) 1fr;   /* 左見出し / 右説明 */
+  column-gap: clamp(16px, 3vw, 32px);
+  row-gap: clamp(12px, 2vw, 18px);
+  align-items: baseline;                               /* 寄り添い感 */
   max-width: var(--content);
   margin: 0 auto;
 }
 @media (max-width: 640px){
   #promo_section.reasons .reasons-list{
-    grid-template-columns: 1fr;      /* SPは縦並び */
+    grid-template-columns: 1fr;                        /* SPは縦積み */
     row-gap: 10px;
   }
 }
 
-/* 見出し（dt）：大きく・力強く・キュッと */
-#promo_section.reasons .reasons-list dt{
+/* calm バリエーション（見出しの仕立て）*/
+#promo_section.reasons.reasons--calm .reasons-list dt{
   grid-column: 1;
   margin: 0;
   font-weight: 800;
-  font-size: clamp(20px, 2.6vw, 30px);
+  font-size: clamp(19px, 2.3vw, 28px);                /* 大きめだけど行儀良く */
   line-height: 1.15;
   letter-spacing: .01em;
-  color: color-mix(in srgb, var(--brand, #1f6feb) 40%, #0b1220);
+  color: color-mix(in srgb, var(--brand, #1f6feb) 34%, #0b1220);
   position: relative;
-  padding-bottom: 8px;               /* 下線スペース */
-  border-bottom: 2px solid color-mix(in srgb, var(--brand, #1f6feb) 70%, #000 0%);
-  overflow-wrap: anywhere;           /* 長い英字にも強い */
+  padding-left: 12px;                                  /* アクセント余白 */
+  padding-bottom: 8px;                                 /* 下線スペース */
+  border-bottom: 1px solid var(--rule-strong);         /* 繊細な下線 */
 }
 
-/* 二重下線（セクションに .reasons--doubleline があるとき有効） */
-#promo_section.reasons.reasons--doubleline .reasons-list dt::after{
-  content:"";
-  display:block;
-  height:2px;
-  margin-top: 5px;
-  background: linear-gradient(90deg,
-              color-mix(in srgb, var(--brand, #1f6feb) 70%, #fff 0%) 0 88%,
-              transparent 88% 100%);
-  border-radius: 999px;
-}
-
-/* 斜めアクセント（先頭の小さなスラッシュバー） */
-#promo_section.reasons.reasons--slash .reasons-list dt::before{
+/* 小さな縦バー（ブランド色の控えめアクセント）*/
+#promo_section.reasons.reasons--calm .reasons-list dt::before{
   content:"";
   position:absolute;
-  left:-10px; bottom: calc(100% - 6px);
-  width: 8px; height: 22px;
+  left: 0; top: .2em;
+  width: 4px; height: 18px;
   background: var(--brand, #1f6feb);
-  transform: skewX(-12deg);
   border-radius: 3px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.15);
-}
-@media (max-width: 640px){
-  #promo_section.reasons.reasons--slash .reasons-list dt::before{
-    left:-6px; height:18px;
-  }
+  box-shadow: 0 1px 6px rgba(0,0,0,.12);
 }
 
-/* 斜体＋ほんのり斜め（任意：.reasons--italic を足すと効く） */
-#promo_section.reasons.reasons--italic .reasons-list dt{
-  font-style: italic;
-  transform: skewX(-8deg);
-  transform-origin: left bottom;
-}
-
-/* 概要テキスト（dd）：見出しに“寄り添って”近い距離感で */
+/* 説明文：見出しに寄り添って近め、読みやすいサイズ */
 #promo_section.reasons .reasons-list dd{
   grid-column: 2;
-  margin: 0 0 clamp(8px, 1.4vw, 14px);
+  margin: 2px 0 clamp(10px, 1.6vw, 14px);
   font-weight: 500;
-  font-size: clamp(15px, 1.9vw, 17px);
+  font-size: clamp(15px, 1.8vw, 18px);
   line-height: 1.7;
   color: var(--ink, #222);
-  /* 見出しとの距離をほんの少し詰める（PC時のみ） */
-  margin-top: -2px;
 }
 @media (max-width: 640px){
   #promo_section.reasons .reasons-list dd{
-    grid-column: 1;         /* SPは見出しの下に来る */
-    margin-top: 2px;        /* 近すぎ防止で少し戻す */
+    grid-column: 1;                                    /* SP: 見出しの下へ */
+    margin-top: 4px;
   }
 }
 
-/* 行の区切り（薄い罫線を左右いっぱいに） */
-#promo_section.reasons .reasons-list dt,
-#promo_section.reasons .reasons-list dd{
-  position:relative;
-}
+/* 行の区切り：LPの rule-bleed と同系の薄いラインを横いっぱい */
 #promo_section.reasons .reasons-list dd::after{
   content:"";
   position:absolute;
-  left: -100vw; right: -100vw; bottom: -8px;
-  height: 1px; pointer-events:none;
+  left:-100vw; right:-100vw; bottom:-8px;
+  height:1px; pointer-events:none;
   background: linear-gradient(90deg, transparent 0 12%,
               var(--rule, rgba(2,6,23,.12)) 12% 88%,
               transparent 88% 100%);
 }
+#promo_section.reasons .reasons-list dt,
+#promo_section.reasons .reasons-list dd{ position:relative; }
 @media (max-width: 640px){
-  #promo_section.reasons .reasons-list dd::after{ bottom: -6px; }
+  #promo_section.reasons .reasons-list dd::after{ bottom:-6px; }
 }
+
+
