@@ -457,7 +457,7 @@ nav.footer-links{ display:block; }
   grid-column: 1;
   margin: 0;
   font-weight: 800;
-  font-size: clamp(16px, 2.0vw,26px);
+  font-size: clamp(18px, 1.9vw,24px);
   line-height: 1.15;
   letter-spacing: .01em;
   color: color-mix(in srgb, var(--brand, #1f6feb) 34%, #0b1220);
@@ -492,7 +492,7 @@ nav.footer-links{ display:block; }
   margin: 2px 0 0;
   padding: 0 0 12px 0;             /* dt と同じ下余白にして線位置を統一 */
   font-weight: 500;
-  font-size: clamp(16px, 1.9vw, 18px);
+  font-size: clamp(15px, 1.7vw, 17px);
   line-height: 1.7;
   color: var(--ink, #222);
   position: relative;
