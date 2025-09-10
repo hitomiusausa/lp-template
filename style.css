@@ -22,6 +22,10 @@
   --ink: #222;                            /* 文字色 */
   --bg: #f8fafc;                          /* 薄い背景 */
 
+  --text-sm: clamp(14.5px, 1.6vw, 15.5px);
+  --text-md: clamp(16px, 1.8vw, 18px);
+  --text-lg: clamp(17px, 2vw, 20px);
+
   /* Cards / Effects */
   --card-shadow: 0 10px 24px -18px rgba(2,6,23,.12);
   --card-shadow-hover: 0 14px 30px -20px rgba(2,6,23,.22);
@@ -154,7 +158,7 @@ img{ max-width:100%; height:auto; display:block; }
 .lp-profile.owner-card{ border:1px solid var(--rule); border-radius:12px; background:#fff; box-shadow:var(--card-shadow); transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease; display:flex; flex-wrap:wrap; gap: clamp(16px, 5vw, 32px); align-items:center; justify-content:center; max-width:960px; margin-inline:auto; }
 .lp-profile.owner-card:hover{ transform:translateY(-2px); box-shadow:var(--card-shadow-hover); border-color:var(--rule-strong); }
 .lp-profile.owner-card .profile-image img{ width:clamp(180px,30vw,260px); border-radius:16px; box-shadow:0 4px 16px rgba(0,0,0,.1); }
-.lp-profile.owner-card .profile-body{ display:flex; flex-direction:column; gap:10px; font-size:clamp(16px,1.8vw,18px); flex:1; min-width:240px; }
+.lp-profile.owner-card .profile-body{ display:flex; flex-direction:column; gap:10px; font-size: var(--text-md); }
 .lp-profile.owner-card .profile-body div{ display:flex; flex-wrap:wrap; align-items:baseline; border-bottom:1px solid rgba(0,0,0,.1); padding:6px 0; gap:4px; }
 .lp-profile.owner-card .profile-body dt{ font-weight:800; text-decoration:none; margin-right:8px; min-width:120px; white-space:nowrap; }
 .lp-profile.owner-card .profile-body dd{ margin:0; font-weight:500; flex:1; }
