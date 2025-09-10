@@ -399,21 +399,18 @@ nav.footer-links{ display:block; }
 }
 
 /* ===== 「予約する」ボタンだけ色を変える（IDで強制上書き） ===== */
-/* === 「予約する」ボタン：基本色をエメラルドでしっかり設定 === */
 #cta1_res,
 #cta2_res,
 #ctaf_res {
-  background: var(--reserve); /* ← まずベース色をしっかり指定 */
-  color: #fff;
-  border: 1px solid color-mix(in srgb, var(--reserve) 86%, black);
-  text-decoration: none;
-
-  /* グラデはあくまで「おしゃれ」用途。最初に背景を固定する */
+  background-color: var(--reserve); /* ← ベースの色 */
   background-image: linear-gradient(180deg,
     var(--reserve),
     color-mix(in srgb, var(--reserve) 92%, white)
   );
   background-blend-mode: multiply;
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--reserve) 86%, black);
+  text-decoration: none;
 }
 
 /* === ホバー時：より濃く・押せる感 === */
@@ -423,16 +420,17 @@ nav.footer-links{ display:block; }
 #cta1_res:focus-visible,
 #cta2_res:focus-visible,
 #ctaf_res:focus-visible {
-  background: var(--reserve-hover);
-  color: #fff;
-  border-color: var(--reserve-hover);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px var(--reserve-ring);
-
+  background-color: var(--reserve-hover); /* ← これ！ */
   background-image: linear-gradient(180deg,
     var(--reserve-hover),
     color-mix(in srgb, var(--reserve-hover) 92%, white)
   );
+  background-blend-mode: multiply;
+  color: #fff;
+  border-color: var(--reserve-hover);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px var(--reserve-ring);
 }
+
 
 /* === アクティブ押下時：沈んだ感に変更 === */
 #cta1_res:active,
