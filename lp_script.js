@@ -303,49 +303,98 @@
       }
 
       // ============ A) 対応エリア（Key Factsへの追加） ============
-      setText('service_area', data.service_area || '全国（オンライン対応）');
-      setText('remote_available', data.remote_available || 'オンライン相談・海外在住OK');
+  // ✅ データが無ければ行ごと隠す（ハードコード排除）
+(() => {
+  const sa = document.getElementById('service_area');
+  if (sa){
+    const t = (data.service_area || '').trim();
+    if (t) sa.textContent = t;
+    else sa.closest('li')?.style.setProperty('display','none');
+  }
+  const ra = document.getElementById('remote_available');
+  if (ra){
+    const t = (data.remote_available || '').trim();
+    if (t) ra.textContent = t;
+    else ra.closest('li')?.style.setProperty('display','none');
+  }
+})();
 
-      // ============ B) ビザ種別（改行→li） ============
-      (() => {
-        const ul = document.getElementById('visa_types_list');
-        if (!ul) return;
-        const raw = (data.visa_types || '').trim();
-        if (!raw) { ul.closest('section')?.setAttribute('hidden',''); return; }
-        ul.innerHTML = '';
-        raw.split('\n').map(s => s.trim()).filter(Boolean).forEach(item => {
-          const li = document.createElement('li'); li.textContent = item; ul.appendChild(li);
-        });
-      })();
+// ============ B) ビザ種別（配列 or 改行テキスト 両対応・空ならセクション非表示） ============
+(() => {
+  const ul = document.getElementById('visa_types_list');
+  if (!ul) return;
 
-      // --- 料金のゆれ吸収＆整形 ---
-      const normalizePrice = (s) => {
-        if (!s) return '';
-        let t = String(s).trim()
-          .replace(/[０-９]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0xFEE0))
-          .replace(/[￥]/g, '¥')
-          .replace(/[，、]/g, ',')
-          .replace(/[．。]/g, '.')
-          .replace(/\s+/g, '')
-          .replace(/円/g, '')
-          .replace(/[~〜]/g, '〜')
-          .replace(/[ー–—―－]/g, '-');
-        if (/^(無料|応相談|ASK|ask|Free|free)$/.test(t)) return s;
-        const fmt = (numStr) => {
-          const n = Number(numStr.replace(/[^\d]/g, ''));
-          if (Number.isNaN(n)) return '';
-          return '¥' + n.toLocaleString('ja-JP');
-        };
-        if (/[〜-]/.test(t)) {
-          const [left, right] = t.split(/[〜-]/, 2);
-          const L = fmt(left); const R = fmt(right);
-          if (L && R) return `${L}〜${R}`;
-          if (L && /〜/.test(t)) return `${L}〜`;
-          return L || s;
-        }
-        const one = fmt(t);
-        return one || s;
-      };
+  const src = data.visa_types;
+
+  // 配列ならそのまま、文字列なら改行で分割
+  const items = Array.isArray(src)
+    ? src.map(s => String(s || '').trim()).filter(Boolean)
+    : String(src || '').split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+
+  if (items.length === 0) {
+    ul.closest('section')?.setAttribute('hidden', '');
+    return;
+  }
+
+  ul.innerHTML = '';
+  const frag = document.createDocumentFragment();
+  items.forEach(text => {
+    const li = document.createElement('li');
+    li.textContent = text;
+    frag.appendChild(li);
+  });
+  ul.appendChild(frag);
+})();
+
+
+ // ✅ pricing_items：配列({plan,price,note} or "a|b|c") / "\n" 文字列 両対応
+(() => {
+  const tbody = document.getElementById('pricing_rows');
+  const sec   = document.getElementById('pricing_section');
+  if (!tbody || !sec) return;
+
+  const src = data.pricing_items;
+  const rows = Array.isArray(src) ? src : String(src || '')
+    .split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+
+  if (rows.length === 0){ sec.setAttribute('hidden',''); return; }
+
+  const toTriple = (r) => {
+    if (typeof r === 'string'){
+      const [a='', b='', c=''] = r.split('|').map(x => (x || '').trim());
+      return [a, b, c];
+    }
+    if (r && typeof r === 'object'){
+      return [String(r.plan||'').trim(), String(r.price||'').trim(), String(r.note||'').trim()];
+    }
+    return ['','',''];
+  };
+
+  const frag = document.createDocumentFragment();
+  rows.forEach(r => {
+    const [plan, price, note] = toTriple(r);
+    const tr  = document.createElement('tr');
+    const td1 = document.createElement('td');
+    const td2 = document.createElement('td');
+    const td3 = document.createElement('td');
+    td1.textContent = plan || '-';
+    td2.textContent = price ? normalizePrice(price) : '-';
+    td3.textContent = note || '';
+    tr.append(td1, td2, td3);
+    frag.appendChild(tr);
+  });
+  tbody.innerHTML = '';
+  tbody.appendChild(frag);
+  sec.removeAttribute('hidden');
+
+  const noteEl = document.getElementById('pricing_note');
+  if (noteEl){
+    const t = (data.pricing_note || '').trim();
+    if (t) noteEl.textContent = t;
+    else noteEl.style.display = 'none';
+  }
+})();
+
 
       // ============ C) 料金テーブル（1行= "プラン|料金|補足" 改行区切り） ============
       (() => {
@@ -384,6 +433,8 @@
         const noteEl = document.getElementById('pricing_note');
         if (noteEl) noteEl.textContent = (data.pricing_note || '').trim();
       })();
+
+
       
 // ===== 訴求PR：data.promo_items（配列 / 改行テキスト / オブジェクト）両対応・安全版 =====
 (() => {
