@@ -511,4 +511,16 @@ nav.footer-links{ display:block; }
   #promo_section.reasons .reasons-list dd::after{ bottom:-6px; }
 }
 
+/* Reasons を中央の細め幅に寄せる（Factsと同じリズム） */
+#promo_section.reasons.reasons--narrow .reasons-list{
+  max-width: var(--facts-w);   /* clamp(640px,72vw,880px) */
+  margin-inline: auto;         /* 中央寄せ */
+}
+
+/* 罫線の“横ブリード”を止めてコンテナ内に収める（好みでON） */
+#promo_section.reasons.reasons--narrow .reasons-list dd::after{
+  left: 0;
+  right: 0;
+}
+
 
