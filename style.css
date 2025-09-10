@@ -428,6 +428,51 @@ nav.footer-links{ display:block; }
 .footer-legal .legal-links .sep{ opacity:.6; }
 .footer-legal .copyright{ opacity:.85; word-break:keep-all; overflow-wrap:anywhere; }
 
+/* 右欄：ロゴ左 / Legal＋©右 の2カラムにする */
+.footer-col.footer-legal{
+  /* 既存の flex を上書き */
+  display: grid;
+  grid-template-columns: auto 1fr;                 /* 左：ロゴ / 右：テキスト */
+  column-gap: clamp(12px, 2vw, 20px);
+  row-gap: clamp(6px, 1.2vw, 12px);
+  align-items: start;
+}
+
+/* 既存の「> * { width:100% }」を打ち消してグリッド内で自然幅に */
+.footer-col.footer-legal > *{
+  width: auto;
+}
+
+/* ロゴを左列で縦に貫通（上から下まで） */
+.footer-legal .footer-logo-wrap{
+  grid-column: 1;
+  grid-row: 1 / 4;  /* heading / links / copyright をまたぐ */
+  margin: 0;        /* 既存の余白を念のためリセット */
+  align-self: start;
+}
+
+/* 右列に見出し・リンク・著作権を縦積み */
+.footer-legal .footer-heading{ grid-column: 2; grid-row: 1; margin: 0; }
+.footer-legal .legal-links {  grid-column: 2; grid-row: 2; }
+.footer-legal .copyright{     grid-column: 2; grid-row: 3; }
+
+/* モバイルは従来どおり“縦積み”に戻す */
+@media (max-width: 680px){
+  .footer-col.footer-legal{
+    grid-template-columns: 1fr;
+  }
+  .footer-legal .footer-logo-wrap{
+    grid-column: 1;
+    grid-row: auto;        /* 通常の並び（ロゴ→Legal→©） */
+  }
+  .footer-legal .footer-heading,
+  .footer-legal .legal-links,
+  .footer-legal .copyright{
+    grid-column: 1;
+  }
+}
+
+
 /* ===== Pricing Table（料金・相談プラン）枠と罫線を復活 ===== */
 #pricing_section .pricing-wrap{ max-width: var(--content); margin-inline:auto; }
 
