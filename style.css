@@ -504,7 +504,7 @@ nav.footer-links{ display:block; }
 /* 斜体＋ほんのり斜め（任意：.reasons--italic を足すと効く） */
 #promo_section.reasons.reasons--italic .reasons-list dt{
   font-style: italic;
-  transform: skewX(-4deg);
+  transform: skewX(-8deg);
   transform-origin: left bottom;
 }
 
