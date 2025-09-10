@@ -53,8 +53,13 @@
     
   "privacy_url": "https://example.com/privacy",
   "terms_url": "https://example.com/terms"
-    
+
+  "tracking_enabled": false,
+  "tracking_endpoint": "",     // 例: Apps ScriptやRequestBinのURL（なければ空）
+  "tracking_token": "",        // 任意の共有鍵（空でOK）
+  "ref_param": "ref"           // 予約URLに付けるパラメータ名（不要なら空 or 省略）    
   },
+  
   "required": [
     "hero_image",
     "hero_logo",
