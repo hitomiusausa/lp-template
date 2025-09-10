@@ -335,6 +335,15 @@ nav.footer-links{ display:block; }
   white-space: nowrap;
 }
 
+/* 料金・相談プランの備考（長文対策：改行 + 文字小さめ） */
+#pricing_section #pricing_note{
+  white-space: pre-line;                 /* \n をそのまま改行として表示 */
+  font-size: clamp(13px, 1.6vw, 14.5px); /* ちょい小さめに */
+  line-height: 1.75;                     /* 読みやすい行間 */
+  opacity: .9;                           /* 色は少しだけ薄く */
+  margin-top: 12px;                      /* 表との間隔を確保 */
+}
+
 /* モバイル微調整 */
 @media (max-width: 640px){
   #pricing_section table{ font-size: 14.5px; }
