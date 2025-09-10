@@ -247,133 +247,56 @@ img{ max-width:100%; height:auto; display:block; }
 
 
 /* -----------------------------------------------------
-   CTA Blocks：構造と見た目
+   「予約する」ボタン（ID指定）スタイル調整：常に白文字＆背景グラデーションあり
    ----------------------------------------------------- */
-.lp-cta {
-  background: var(--bg);
-  padding: clamp(16px, 4vw, 28px) clamp(12px,3vw,20px) calc(clamp(18px, 4.2vw, 30px) + 8px);
-  text-align: center;
-  border-radius: 12px;
-  margin: 16px auto;
-}
-
-.cta-message {
-  font-size: clamp(16px, 2.8vw, 22px);
-  font-weight: 600;
-  margin: 0 0 12px;
-}
-
-.cta-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px 20px;
-  justify-content: center;
-  align-items: stretch;
-}
-
-.cta-actions .btn {
-  box-sizing: border-box;
-  flex: 0 0 var(--cta-btn-w);
-  width: var(--cta-btn-w);
-  min-height: var(--cta-btn-min-h);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-cta);
-  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease;
-}
-
-@media (max-width: 480px) {
-  .cta-actions .btn {
-    flex: 1 1 100%;
-    width: 100%;
-  }
-}
-
-/* -----------------------------------------------------
-   ボタンの色＆ホバー
-   ----------------------------------------------------- */
-.btn-primary {
-  background: var(--brand);
-  color: #fff;
-  border-color: var(--brand);
-}
-
-.btn-outline {
-  background: #fff;
-  color: var(--ink);
-  border-color: #e5e7eb;
-}
-
-.cta-actions .btn:hover,
-.cta-actions .btn:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px rgba(31,111,235,.12);
-}
-
-.btn-primary:hover,
-.btn-primary:focus-visible {
-  background: var(--brand-hover);
-  border-color: var(--brand-hover);
-}
-
-.btn-primary:active {
-  background: var(--brand-active);
-  border-color: var(--brand-active);
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
-}
-
-.btn-outline:hover,
-.btn-outline:focus-visible {
-  background: #f0f6ff;
-  border-color: var(--brand-hover);
-  color: var(--brand);
-}
-
-/* -----------------------------------------------------
-   ボタン内テキスト：構造有無にかかわらず統一
-   ----------------------------------------------------- */
-.btn-label,
-.btn-sub {
-  display: block;
-  line-height: 1.25;
-}
-
-.btn-label {
-  font-weight: 700;
-  font-size: clamp(15px, 2.7vw, 18px);
-  letter-spacing: 0.01em;
-  color: inherit;
-}
-
-.btn-sub {
-  font-weight: 600;
-  font-size: clamp(13px, 2.4vw, 16px);
-  opacity: 0.9;
-  margin-top: 2px;
-  line-height: 1.2;
-  color: inherit;
-}
-
-.btn-phone {
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  line-height: 1.25;
-}
-
-/* -----------------------------------------------------
-   フォールバック対応：.btn-label無しでも揃う
-   ----------------------------------------------------- */
-.btn,
 #cta1_res,
 #cta2_res,
 #ctaf_res {
-  font-weight: 700;
-  font-size: clamp(15px, 2.7vw, 18px);
-  line-height: 1.25;
-  letter-spacing: 0.01em;
+  background: var(--reserve);
+  background-image: linear-gradient(180deg,
+    var(--reserve),
+    color-mix(in srgb, var(--reserve) 92%, white)
+  );
+  background-blend-mode: multiply;
+  color: #fff !important;
+  border: 1px solid color-mix(in srgb, var(--reserve) 86%, black);
+  text-decoration: none;
+}
+
+#cta1_res .btn-label,
+#cta2_res .btn-label,
+#ctaf_res .btn-label,
+#cta1_res .btn-sub,
+#cta2_res .btn-sub,
+#ctaf_res .btn-sub {
+  color: #fff !important;
+}
+
+/* ホバーしても文字は白のまま */
+#cta1_res:hover,
+#cta2_res:hover,
+#ctaf_res:hover,
+#cta1_res:focus-visible,
+#cta2_res:focus-visible,
+#ctaf_res:focus-visible {
+  background: var(--reserve-hover);
+  background-image: linear-gradient(180deg,
+    var(--reserve-hover),
+    color-mix(in srgb, var(--reserve-hover) 92%, white)
+  );
+  background-blend-mode: multiply;
+  color: #fff !important;
+  border-color: var(--reserve-hover);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px var(--reserve-ring);
+}
+
+/* アクティブ時も白文字キープ */
+#cta1_res:active,
+#cta2_res:active,
+#ctaf_res:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+  color: #fff !important;
 }
 
 
