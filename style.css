@@ -245,30 +245,106 @@ img{ max-width:100%; height:auto; display:block; }
 .faq.faq--dashed .faq-a.open:hover{ border-color:var(--faq-rule-strong); box-shadow:var(--card-shadow); transform:translateY(-1px); }
 .faq.faq--dashed .faq-a.open::before{ content:""; position:absolute; left:0; top:12px; width:4px; height:40px; border-radius:4px; background:var(--brand); opacity:.55; }
 
+
 /* -----------------------------------------------------
-   CTA Blocks
+   CTA Blocks：構造と見た目
    ----------------------------------------------------- */
-.lp-cta{ background:var(--bg); padding:clamp(12px,3vw,20px); text-align:center; border-radius:12px; margin:16px auto; }
-.cta-message{ font-size:clamp(16px,2.8vw,22px); font-weight:600; margin:0 0 12px; }
-.cta-actions{ display:flex; flex-wrap:wrap; gap:16px 20px; justify-content:center; align-items:stretch; }
-.cta-actions .btn{ box-sizing:border-box; flex:0 0 var(--cta-btn-w); width:var(--cta-btn-w); min-height:var(--cta-btn-min-h); display:inline-flex; align-items:center; justify-content:center; border-radius: var(--radius-cta); transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease; }
-@media (max-width:480px){ .cta-actions .btn{ flex:1 1 100%; width:100%; } }
-.btn-primary{ background:var(--brand); color:#fff; border-color:var(--brand); }
-.btn-outline{ background:#fff; color:var(--ink); border-color:#e5e7eb; }
-.cta-actions .btn:hover, .cta-actions .btn:focus-visible{ transform:translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 3px rgba(31,111,235,.12); }
-.btn-primary:hover, .btn-primary:focus-visible{ background:var(--brand-hover); border-color:var(--brand-hover); }
-.btn-primary:active{ background:var(--brand-active); border-color:var(--brand-active); transform:translateY(0); box-shadow:0 4px 12px rgba(0,0,0,.10); }
-.btn-outline:hover, .btn-outline:focus-visible{ background:#f0f6ff; border-color:var(--brand-hover); color:var(--brand); }
-.btn-label, .btn-sub{ display:block; line-height:1.25; }
-/* ========================================
-   ボタンラベル：共通スタイル統一
-   ======================================== */
+.lp-cta {
+  background: var(--bg);
+  padding: clamp(16px, 4vw, 28px) clamp(12px,3vw,20px) calc(clamp(18px, 4.2vw, 30px) + 8px);
+  text-align: center;
+  border-radius: 12px;
+  margin: 16px auto;
+}
+
+.cta-message {
+  font-size: clamp(16px, 2.8vw, 22px);
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.cta-actions .btn {
+  box-sizing: border-box;
+  flex: 0 0 var(--cta-btn-w);
+  width: var(--cta-btn-w);
+  min-height: var(--cta-btn-min-h);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-cta);
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease;
+}
+
+@media (max-width: 480px) {
+  .cta-actions .btn {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}
+
+/* -----------------------------------------------------
+   ボタンの色＆ホバー
+   ----------------------------------------------------- */
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+  border-color: var(--brand);
+}
+
+.btn-outline {
+  background: #fff;
+  color: var(--ink);
+  border-color: #e5e7eb;
+}
+
+.cta-actions .btn:hover,
+.cta-actions .btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px rgba(31,111,235,.12);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--brand-hover);
+  border-color: var(--brand-hover);
+}
+
+.btn-primary:active {
+  background: var(--brand-active);
+  border-color: var(--brand-active);
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  background: #f0f6ff;
+  border-color: var(--brand-hover);
+  color: var(--brand);
+}
+
+/* -----------------------------------------------------
+   ボタン内テキスト：構造有無にかかわらず統一
+   ----------------------------------------------------- */
+.btn-label,
+.btn-sub {
+  display: block;
+  line-height: 1.25;
+}
+
 .btn-label {
   font-weight: 700;
   font-size: clamp(15px, 2.7vw, 18px);
-  line-height: 1.25;
   letter-spacing: 0.01em;
-  color: inherit; /* 通常は親に従う */
+  color: inherit;
 }
 
 .btn-sub {
@@ -280,12 +356,16 @@ img{ max-width:100%; height:auto; display:block; }
   color: inherit;
 }
 
-.btn-phone{ flex-direction:column; align-items:center; gap:4px; line-height:1.25; }
+.btn-phone {
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.25;
+}
 
-
-/* ========================================
-   ボタン本体に対してもフォールバック（構造が違っても統一）
-   ======================================== */
+/* -----------------------------------------------------
+   フォールバック対応：.btn-label無しでも揃う
+   ----------------------------------------------------- */
 .btn,
 #cta1_res,
 #cta2_res,
@@ -295,6 +375,7 @@ img{ max-width:100%; height:auto; display:block; }
   line-height: 1.25;
   letter-spacing: 0.01em;
 }
+
 
 /* -----------------------------------------------------
    Services（サービス概要カード：軽ホバー＋フォント大きめ）
