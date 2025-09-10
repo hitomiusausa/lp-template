@@ -44,6 +44,11 @@
   --facts-gap-y: clamp(10px, 2vw, 14px);  /* 行の縦間隔 */
   --facts-inset: clamp(16px, 2.4vw, 20px);/* ラベルの左インセット */
 
+  /* 既存の変数たちの下あたりに追記 */
+  --reserve:       #22c55e;          /* 予約ボタンの基準色（エメラルド） */
+  --reserve-hover: #16a34a;          /* ホバー色 */
+  --reserve-ring:  rgba(34,197,94,.22); /* フォーカスリング */
+
   /* Footer */
   --footer-bg: #0f172a;                   /* ネイビー寄りの濃色 */
   --footer-ink: #e5e7eb;                  /* 文字色（ほぼ白） */
