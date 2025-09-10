@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://lp.taremimiusagis.com/</loc></url>
+  <url>
+    <loc>https://lp.taremimiusagis.com/</loc>
+    <lastmod>2025-09-10</lastmod> <!-- きょうの日付（YYYY-MM-DD）に更新 -->
+  </url>
 </urlset>
