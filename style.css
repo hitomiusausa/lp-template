@@ -199,6 +199,19 @@ img{ max-width:100%; height:auto; display:block; }
 .lp-access-wrapper{ display:grid; gap:20px; }
 @media (min-width:768px){ .lp-access-wrapper{ grid-template-columns:1.3fr 1fr; } }
 
+.access-body p {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0.5em;
+}
+
+.access-body .bullet {
+  display: inline-block;
+  color: #444;
+  margin-right: 0.4em;
+}
+
+
 /* -----------------------------------------------------
    FAQ（アコーディオン：点線カード＋軽ホバー）
    ----------------------------------------------------- */
