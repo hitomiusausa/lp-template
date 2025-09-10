@@ -485,12 +485,14 @@ nav.footer-links{ display:block; }
 
 
 /* Hover / Focus（浮かせる＋リング） */
-#cta1_res:hover, #cta2_res:hover, #ctaf_res:hover,
-#cta1_res:focus-visible, #cta2_res:focus-visible, #ctaf_res:focus-visible{
-  background-color: var(--reserve-hover);
+#cta1_res, #cta2_res, #ctaf_res {
+  background-color: var(--reserve);
   background-image: linear-gradient(180deg,
-                      var(--reserve-hover),
-                      color-mix(in srgb, var(--reserve-hover) 88%, black));
+    var(--reserve),
+    color-mix(in srgb, var(--reserve) 92%, white)
+  );
+}
+
   border-color: var(--reserve-hover);
   box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 3px var(--reserve-ring);
   transform: translateY(-2px);
