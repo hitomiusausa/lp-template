@@ -433,52 +433,94 @@ nav.footer-links{ display:block; }
 #pricing_section tbody td:first-child{
   font-weight: 700;
 }
+/* =====================================================
+   Reasons（ここが選ばれる理由）
+   ===================================================== */
 
-/* -----------------------------------------------------
-   Reasons（ここが選ばれる理由：LPの雰囲気に合わせた“落ち着き版”）
-   ----------------------------------------------------- */
-/* ===== Reasons 行下線の揃え：dtもddも同じYで描く ===== */
+/* コンテナとグリッド */
 #promo_section.reasons .reasons-list{
-  /* 行下線の位置（要調整ならここだけ触ればOK） */
-  --rowline-offset: -8px;   /* 要は「要素の下から何px下に線を置くか」 */
+  display: grid;
+  grid-template-columns: minmax(220px, 0.42fr) 1fr;   /* 左：見出し / 右：説明 */
+  column-gap: clamp(16px, 3vw, 32px);
+  row-gap: clamp(12px, 2vw, 18px);
+  align-items: baseline;                               /* “寄り添い”感 */
 }
 
-/* 見出し（左カラム） */
-#promo_section.reasons.reasons--calm .reasons-list dt{
-  /* 以前の border-bottom を無効化して位置ズレを防ぐ */
-  border-bottom: none;
-  padding-bottom: 10px;      /* 下線の余白はここで調整 */
-  position: relative;
+/* 中央の細め幅に寄せる */
+#promo_section.reasons.reasons--narrow .reasons-list{
+  max-width: var(--facts-w);
+  margin-inline: auto;
 }
+
+/* 左見出し（dt） */
+#promo_section.reasons.reasons--calm .reasons-list dt{
+  grid-column: 1;
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(20px, 2.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: .01em;
+  color: color-mix(in srgb, var(--brand, #1f6feb) 34%, #0b1220);
+  position: relative;
+  padding: 0 0 12px 12px;            /* 下線分の余白 + 左アクセント用インセット */
+}
+
+/* 小さな縦バー（控えめアクセント） */
+#promo_section.reasons.reasons--calm .reasons-list dt::before{
+  content:"";
+  position:absolute;
+  left: 0; top: .15em;
+  width: 4px; height: 18px;
+  background: var(--brand, #1f6feb);
+  border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.12);
+}
+
+/* 見出しの下線（疑似要素で描き、Y位置をddと完全一致） */
 #promo_section.reasons.reasons--calm .reasons-list dt::after{
   content:"";
   position:absolute;
   left: 0; right: 0;
-  bottom: var(--rowline-offset);
+  bottom: 0;                       /* padding-bottom と合わせてピタッ */
   height: 1px;
-  background: var(--rule-strong);   /* LPの区切り線トーン */
+  background: var(--rule-strong);
 }
 
-/* 説明（右カラム） */
+/* 右説明（dd） */
 #promo_section.reasons .reasons-list dd{
-  margin: 2px 0 clamp(10px, 1.6vw, 14px);
-  padding-bottom: 10px;            /* dt と同じにしておく */
+  grid-column: 2;
+  margin: 2px 0 0;
+  padding: 0 0 12px 0;             /* dt と同じ下余白にして線位置を統一 */
+  font-weight: 500;
+  font-size: clamp(16px, 1.9vw, 18px);
+  line-height: 1.7;
+  color: var(--ink, #222);
   position: relative;
 }
+
+/* 説明側の下線（色は少し薄め） */
 #promo_section.reasons .reasons-list dd::after{
   content:"";
   position:absolute;
-  left: 0; right: 0;               /* reasons--narrow の時は left/right:0 でOK */
-  bottom: var(--rowline-offset);
+  left: 0; right: 0;               /* --narrow なのでコンテナ内に収める */
+  bottom: 0;
   height: 1px;
   background: var(--rule);
 }
 
-/* もし “横いっぱい（左右端まで）” に伸ばしたい時はこれをON
-#promo_section.reasons .reasons-list dd::after{
-  left: -100vw;
-  right: -100vw;
+/* 最終行の線は非表示（余分な線を消す） */
+#promo_section.reasons .reasons-list dd:last-child::after{
+  content: none;
 }
-*/
 
-
+/* SPは縦積み＋間隔調整 */
+@media (max-width: 640px){
+  #promo_section.reasons .reasons-list{
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+  }
+  #promo_section.reasons .reasons-list dd{
+    grid-column: 1;
+    margin-top: 4px;
+  }
+}
