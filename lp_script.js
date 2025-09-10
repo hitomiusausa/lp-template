@@ -544,6 +544,15 @@
         if (el) el.textContent = JSON.stringify(org);
       })();
 
+
+// 半角コロン → 全角： 変換（基本情報のラベル & 運営者情報の項目名）
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.facts .fact-label, .profile-body dt').forEach(el => {
+    el.textContent = el.textContent.replace(/:$/, '：');
+  });
+});
+
+      
       /* ===== CTA Lite Hooks — デフォルト無効（configで有効化） ===== */
       (() => {
         const CTAS = [
@@ -596,13 +605,6 @@
 
     })
   
-// 半角コロン → 全角： 変換（基本情報のラベル & 運営者情報の項目名）
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.facts .fact-label, .profile-body dt').forEach(el => {
-    el.textContent = el.textContent.replace(/:$/, '：');
-  });
-});
-
     
     .catch(err => console.error('JSON読み込みエラー:', err));
 })();
