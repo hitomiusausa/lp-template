@@ -628,6 +628,74 @@ if (sep) sep.style.display = (hasPriv && hasTerms) ? 'inline' : 'none';
         if (el) el.textContent = JSON.stringify(org);
       })();
 
+/* ===== CTA Lite Hooks — オフが初期値。将来いつでもオンにできる ===== */
+(() => {
+  // 計測対象（IDは既存レイアウト準拠）
+  const CTAS = [
+    { id:'cta1_tel',  type:'phone',   location:'mid1'  },
+    { id:'cta2_tel',  type:'phone',   location:'mid2'  },
+    { id:'ctaf_tel',  type:'phone',   location:'final' },
+    { id:'footer_tel_link', type:'phone', location:'footer' },
+    { id:'cta1_res',  type:'reserve', location:'mid1'  },
+    { id:'cta2_res',  type:'reserve', location:'mid2'  },
+    { id:'ctaf_res',  type:'reserve', location:'final' }
+  ];
+
+  const sid = sessionStorage.getItem('sid') || (Date.now().toString(36)+Math.random().toString(36).slice(2,8));
+  sessionStorage.setItem('sid', sid);
+
+  const maskTel = (href) => href && href.startsWith('tel:')
+    ? 'tel:' + href.replace(/^tel:/,'').replace(/\d(?=\d{4})/g,'•')
+    : (href || '');
+
+  function emit(payload){
+    // 1) ページ内カスタムイベント（リスナー未設定なら何もしない）
+    window.dispatchEvent(new CustomEvent('cta:click', { detail: payload }));
+
+    // 2) 任意のHTTPエンドポイント（設定されていなければ送らない）
+    if (data.tracking_enabled && data.tracking_endpoint){
+      try{
+        const body = { ...payload, token: data.tracking_token || undefined };
+        const blob = new Blob([JSON.stringify(body)], { type:'application/json' });
+        if (navigator.sendBeacon) navigator.sendBeacon(data.tracking_endpoint, blob);
+        else fetch(data.tracking_endpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body), keepalive:true });
+      }catch(_){}
+    }
+  }
+
+  function wire(cfg){
+    const el = document.getElementById(cfg.id);
+    if (!el) return;
+
+    el.addEventListener('click', () => {
+      // 予約リンクに ref パラメータを付与（設定がある時だけ）
+      if (cfg.type === 'reserve' && data.ref_param && el.href){
+        try{
+          const u = new URL(el.href, location.href);
+          u.searchParams.set(data.ref_param, `lp-${cfg.location}`);
+          el.href = u.toString();
+        }catch(_){}
+      }
+
+      const label = el.querySelector?.('.btn-label')?.textContent?.trim()
+                 || el.textContent.trim();
+      const href  = el.getAttribute('href') || '';
+
+      emit({
+        type: cfg.type,
+        location: cfg.location,
+        label,
+        href: cfg.type === 'phone' ? maskTel(href) : href,
+        page: location.pathname,
+        ts: Date.now(),
+        sid
+      });
+    }, { passive:true });
+  }
+
+  CTAS.forEach(wire);
+})();      
+
     })
     .catch(err => console.error('JSON読み込みエラー:', err));
 })();
