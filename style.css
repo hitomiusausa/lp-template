@@ -211,6 +211,78 @@ img{ max-width:100%; height:auto; display:block; }
   margin-right: 0.4em;
 }
 
+/* -----------------------------------------------------
+   CTA Blocks：構造と見た目（基礎スタイル復活）
+   ----------------------------------------------------- */
+.lp-cta {
+  background: var(--bg);
+  padding: clamp(16px, 4vw, 28px) clamp(12px,3vw,20px) calc(clamp(18px, 4.2vw, 30px) + 8px);
+  text-align: center;
+  border-radius: 12px;
+  margin: 16px auto;
+}
+.cta-message {
+  font-size: clamp(16px, 2.8vw, 22px);
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+.cta-actions .btn{
+  box-sizing: border-box;
+  flex: 0 0 var(--cta-btn-w);
+  width: var(--cta-btn-w);
+  min-height: var(--cta-btn-min-h);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-cta);
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, filter .18s ease;
+}
+@media (max-width:480px){
+  .cta-actions .btn{ flex:1 1 100%; width:100%; }
+}
+
+/* 色バリエーション */
+.btn-primary{ background: var(--brand); color:#fff; border-color: var(--brand); }
+.btn-outline{ background:#fff; color: var(--ink); border-color:#e5e7eb; }
+
+/* 共通ホバー */
+.cta-actions .btn:hover,
+.cta-actions .btn:focus-visible{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 3px rgba(31,111,235,.12);
+}
+.btn-primary:hover,
+.btn-primary:focus-visible{ background: var(--brand-hover); border-color: var(--brand-hover); }
+.btn-primary:active{
+  background: var(--brand-active); border-color: var(--brand-active);
+  transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,.10);
+}
+.btn-outline:hover,
+.btn-outline:focus-visible{ background:#f0f6ff; border-color: var(--brand-hover); color: var(--brand); }
+
+/* ボタン内の文字 */
+.btn-label, .btn-sub{ display:block; line-height:1.25; }
+.btn-label{
+  font-weight:700;
+  font-size: clamp(15px, 2.7vw, 18px);
+  letter-spacing:.01em;
+}
+.btn-sub{
+  font-weight:600;
+  font-size: clamp(13px, 2.4vw, 16px);
+  opacity:.9; margin-top:2px; line-height:1.2;
+}
+.btn-phone{ flex-direction:column; align-items:center; gap:4px; line-height:1.25; }
+
 
 /* -----------------------------------------------------
    FAQ（アコーディオン：点線カード＋軽ホバー）
