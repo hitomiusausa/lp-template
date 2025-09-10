@@ -483,6 +483,34 @@ nav.footer-links{ display:block; }
     grid-column: 1;
   }
 }
+/* 右欄（footer-legal）にある tel: リンクの先頭へ電話アイコンを追加 */
+.footer-col.footer-legal a[href^="tel:"]{
+  position: relative;
+  padding-left: 1.4em;         /* アイコンぶん余白 */
+  text-decoration: none;
+}
+
+/* アイコン本体（currentColorで色が馴染む） */
+.footer-col.footer-legal a[href^="tel:"]::before{
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  width: 1.05em; height: 1.05em;
+  transform: translateY(-50%);
+  background: currentColor;
+  opacity: .95;
+
+  /* マスクでSVGを着色（Safari対策で -webkit- も） */
+  -webkit-mask: url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">\
+<path fill="black" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C12.95 21 3 11.05 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.24 1.01l-2.2 2.2z"/>\
+</svg>') no-repeat center / contain;
+  mask: url('data:image/svg+xml;utf8,\
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">\
+<path fill="black" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C12.95 21 3 11.05 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.24 1.01l-2.2 2.2z"/>\
+</svg>') no-repeat center / contain;
+}
+
 
 
 /* ===== Pricing Table（料金・相談プラン）枠と罫線を復活 ===== */
