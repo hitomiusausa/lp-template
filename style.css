@@ -227,7 +227,7 @@ img{ max-width:100%; height:auto; display:block; }
   background: var(--bg);
   padding: clamp(16px, 4vw, 28px) clamp(12px,3vw,20px) calc(clamp(18px, 4.2vw, 30px) + 8px);
   text-align: center;
-  border-radius: 12px;
+  border-radius: 0px;
   margin: 16px auto;
 }
 .cta-message {
