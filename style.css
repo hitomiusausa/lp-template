@@ -247,21 +247,23 @@ img{ max-width:100%; height:auto; display:block; }
 
 
 /* -----------------------------------------------------
-   「予約する」ボタン（ID指定）スタイル調整：常に白文字＆背景グラデーションあり
+   「予約する」ボタン（ID指定）：.btnを活かしつつ色だけ変更
    ----------------------------------------------------- */
-#cta1_res,
-#cta2_res,
-#ctaf_res {
-  background-color: var(--reserve); /* ← 明示的に color を指定！ */
+#cta1_res.btn,
+#cta2_res.btn,
+#ctaf_res.btn {
+  background-color: var(--reserve);
   background-image: linear-gradient(180deg,
     var(--reserve),
     color-mix(in srgb, var(--reserve) 92%, white)
   );
+  background-blend-mode: multiply;
   color: #fff !important;
   border: 1px solid color-mix(in srgb, var(--reserve) 86%, black);
   text-decoration: none;
 }
 
+/* ラベルとサブテキストも白 */
 #cta1_res .btn-label,
 #cta2_res .btn-label,
 #ctaf_res .btn-label,
@@ -271,14 +273,14 @@ img{ max-width:100%; height:auto; display:block; }
   color: #fff !important;
 }
 
-/* ホバーしても文字は白のまま */
-#cta1_res:hover,
-#cta2_res:hover,
-#ctaf_res:hover,
-#cta1_res:focus-visible,
-#cta2_res:focus-visible,
-#ctaf_res:focus-visible {
-  background: var(--reserve-hover);
+/* ホバー時 */
+#cta1_res.btn:hover,
+#cta2_res.btn:hover,
+#ctaf_res.btn:hover,
+#cta1_res.btn:focus-visible,
+#cta2_res.btn:focus-visible,
+#ctaf_res.btn:focus-visible {
+  background-color: var(--reserve-hover);
   background-image: linear-gradient(180deg,
     var(--reserve-hover),
     color-mix(in srgb, var(--reserve-hover) 92%, white)
@@ -289,10 +291,10 @@ img{ max-width:100%; height:auto; display:block; }
   box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px var(--reserve-ring);
 }
 
-/* アクティブ時も白文字キープ */
-#cta1_res:active,
-#cta2_res:active,
-#ctaf_res:active {
+/* アクティブ時 */
+#cta1_res.btn:active,
+#cta2_res.btn:active,
+#ctaf_res.btn:active {
   transform: translateY(0);
   box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
   color: #fff !important;
