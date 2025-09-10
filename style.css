@@ -434,53 +434,112 @@ nav.footer-links{ display:block; }
   font-weight: 700;
 }
 
-/* ===== Promo（訴求PR）— 基本情報っぽいけど少し違う見た目 ===== */
-:root{
-  --promo-w: clamp(640px, 72vw, 960px);
-  --promo-gap-y: clamp(10px, 1.8vw, 14px);
-  --promo-inset: clamp(16px, 2.4vw, 22px);
+/* -----------------------------------------------------
+   Reasons（ここが選ばれる理由：見出しドン＋説明寄り添い）
+   ※ HTML側：#promo_section に .reasons を付与
+   ----------------------------------------------------- */
+
+/* 全体レイアウト：dt と dd を横並び（PC）→ 縦積み（SP） */
+#promo_section.reasons .reasons-list{
+  display:grid;
+  /* 左:見出し(可変) 右:概要 */
+  grid-template-columns: minmax(180px, 0.45fr) 1fr;
+  column-gap: clamp(14px, 2.4vw, 24px);
+  row-gap: clamp(10px, 1.6vw, 16px);
+  align-items: end;                  /* “寄り添い”感：行末で揃える */
+  max-width: var(--content);
+  margin: 0 auto;
+}
+@media (max-width: 640px){
+  #promo_section.reasons .reasons-list{
+    grid-template-columns: 1fr;      /* SPは縦並び */
+    row-gap: 10px;
+  }
 }
 
-.promo-list{
-  max-width: var(--promo-w);
-  margin: clamp(12px, 2.4vw, 20px) auto 0;
-  padding: 0;
-}
-
-.promo-list .promo-row{
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 12px;
-  padding: var(--promo-gap-y) 0 var(--promo-gap-y) var(--promo-inset);
-  border-bottom: 1px solid var(--rule-strong);   /* ← 各項目の下線 */
-}
-
-/* ラベル太字＋幅ゆったり */
-.promo-list dt{
+/* 見出し（dt）：大きく・力強く・キュッと */
+#promo_section.reasons .reasons-list dt{
+  grid-column: 1;
   margin: 0;
-  font-weight: 700;                              /* ← 太字 */
-  flex: 0 0 clamp(140px, 22vw, 200px);           /* ← ラベル幅 */
-  white-space: nowrap;
-  color: color-mix(in srgb, var(--brand, #1f6feb) 35%, #0b1220);
+  font-weight: 800;
+  font-size: clamp(20px, 2.6vw, 30px);
+  line-height: 1.15;
+  letter-spacing: .01em;
+  color: color-mix(in srgb, var(--brand, #1f6feb) 40%, #0b1220);
+  position: relative;
+  padding-bottom: 8px;               /* 下線スペース */
+  border-bottom: 2px solid color-mix(in srgb, var(--brand, #1f6feb) 70%, #000 0%);
+  overflow-wrap: anywhere;           /* 長い英字にも強い */
 }
 
-/* 値は残り幅フルで */
-.promo-list dd{
-  margin: 0;
-  flex: 1 1 auto;
-  min-width: 200px;
+/* 二重下線（セクションに .reasons--doubleline があるとき有効） */
+#promo_section.reasons.reasons--doubleline .reasons-list dt::after{
+  content:"";
+  display:block;
+  height:2px;
+  margin-top: 5px;
+  background: linear-gradient(90deg,
+              color-mix(in srgb, var(--brand, #1f6feb) 70%, #fff 0%) 0 88%,
+              transparent 88% 100%);
+  border-radius: 999px;
+}
+
+/* 斜めアクセント（先頭の小さなスラッシュバー） */
+#promo_section.reasons.reasons--slash .reasons-list dt::before{
+  content:"";
+  position:absolute;
+  left:-10px; bottom: calc(100% - 6px);
+  width: 8px; height: 22px;
+  background: var(--brand, #1f6feb);
+  transform: skewX(-12deg);
+  border-radius: 3px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+@media (max-width: 640px){
+  #promo_section.reasons.reasons--slash .reasons-list dt::before{
+    left:-6px; height:18px;
+  }
+}
+
+/* 斜体＋ほんのり斜め（任意：.reasons--italic を足すと効く） */
+#promo_section.reasons.reasons--italic .reasons-list dt{
+  font-style: italic;
+  transform: skewX(-4deg);
+  transform-origin: left bottom;
+}
+
+/* 概要テキスト（dd）：見出しに“寄り添って”近い距離感で */
+#promo_section.reasons .reasons-list dd{
+  grid-column: 2;
+  margin: 0 0 clamp(8px, 1.4vw, 14px);
   font-weight: 500;
-  color: var(--ink);
+  font-size: clamp(15px, 1.9vw, 17px);
+  line-height: 1.7;
+  color: var(--ink, #222);
+  /* 見出しとの距離をほんの少し詰める（PC時のみ） */
+  margin-top: -2px;
+}
+@media (max-width: 640px){
+  #promo_section.reasons .reasons-list dd{
+    grid-column: 1;         /* SPは見出しの下に来る */
+    margin-top: 2px;        /* 近すぎ防止で少し戻す */
+  }
 }
 
-/* 文字リンクの見た目（下線と喧嘩しない控えめスタイル） */
-.promo-list a{ color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
-
-/* オプション：点線がよければ .promo-list--dashed をDLに付けるだけ */
-.promo-list.promo-list--dashed .promo-row{ border-bottom: 1px dashed var(--rule-strong); }
-
-/* SPで窮屈なら折り返し優先 */
-@media (max-width: 520px){
-  .promo-list dt{ flex-basis: 120px; }
+/* 行の区切り（薄い罫線を左右いっぱいに） */
+#promo_section.reasons .reasons-list dt,
+#promo_section.reasons .reasons-list dd{
+  position:relative;
+}
+#promo_section.reasons .reasons-list dd::after{
+  content:"";
+  position:absolute;
+  left: -100vw; right: -100vw; bottom: -8px;
+  height: 1px; pointer-events:none;
+  background: linear-gradient(90deg, transparent 0 12%,
+              var(--rule, rgba(2,6,23,.12)) 12% 88%,
+              transparent 88% 100%);
+}
+@media (max-width: 640px){
+  #promo_section.reasons .reasons-list dd::after{ bottom: -6px; }
 }
