@@ -252,12 +252,11 @@ img{ max-width:100%; height:auto; display:block; }
 #cta1_res,
 #cta2_res,
 #ctaf_res {
-  background: var(--reserve);
+  background-color: var(--reserve); /* ← 明示的に color を指定！ */
   background-image: linear-gradient(180deg,
     var(--reserve),
     color-mix(in srgb, var(--reserve) 92%, white)
   );
-  background-blend-mode: multiply;
   color: #fff !important;
   border: 1px solid color-mix(in srgb, var(--reserve) 86%, black);
   text-decoration: none;
