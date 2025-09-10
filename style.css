@@ -477,33 +477,48 @@ nav.footer-links{ display:block; }
 }
 
 /* ===== 「予約する」ボタンだけ色を変える（IDで強制上書き） ===== */
-:root{
-  --reserve:       #22c55e; /* 目立つエメラルド */
-  --reserve-hover: #16a34a;
-  --reserve-ring:  rgba(34,197,94,.22);
-}
+/* === 「予約する」ボタン：基本色をエメラルドでしっかり設定 === */
+#cta1_res,
+#cta2_res,
+#ctaf_res {
+  background: var(--reserve); /* ← まずベース色をしっかり指定 */
+  color: #fff;
+  border: 1px solid color-mix(in srgb, var(--reserve) 86%, black);
+  text-decoration: none;
 
-
-/* Hover / Focus（浮かせる＋リング） */
-#cta1_res, #cta2_res, #ctaf_res {
-  background-color: var(--reserve);
+  /* グラデはあくまで「おしゃれ」用途。最初に背景を固定する */
   background-image: linear-gradient(180deg,
     var(--reserve),
     color-mix(in srgb, var(--reserve) 92%, white)
   );
+  background-blend-mode: multiply;
 }
 
+/* === ホバー時：より濃く・押せる感 === */
+#cta1_res:hover,
+#cta2_res:hover,
+#ctaf_res:hover,
+#cta1_res:focus-visible,
+#cta2_res:focus-visible,
+#ctaf_res:focus-visible {
+  background: var(--reserve-hover);
+  color: #fff;
   border-color: var(--reserve-hover);
-  box-shadow: 0 10px 24px rgba(0,0,0,.14), 0 0 0 3px var(--reserve-ring);
-  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .14), 0 0 0 3px var(--reserve-ring);
+
+  background-image: linear-gradient(180deg,
+    var(--reserve-hover),
+    color-mix(in srgb, var(--reserve-hover) 92%, white)
+  );
 }
 
-/* Active（押し込み感） */
-#cta1_res:active, #cta2_res:active, #ctaf_res:active{
+/* === アクティブ押下時：沈んだ感に変更 === */
+#cta1_res:active,
+#cta2_res:active,
+#ctaf_res:active {
   transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(0,0,0,.10);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
 }
-
 
 
 /* === CTA：上下パディングを同幅に固定 === */
