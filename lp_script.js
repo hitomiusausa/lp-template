@@ -452,6 +452,18 @@
                           && telTx && telTx.textContent.trim() !== '';
         if (!showTel && telA) telA.closest('.footer-contact')?.style.setProperty('display','none');
       })();
+      
+// 既存の左欄設定が終わった後に…
+const aRight = document.getElementById('footer_tel_right_link');
+const sRight = document.getElementById('footer_tel_right');
+
+// 左欄やconfigから値を使い回し（あなたの変数名に合わせて置換OK）
+const telDisplay = (window.cfg?.key_tel_display || document.getElementById('footer_tel')?.textContent || "").trim();
+const telHref = (window.cfg?.key_tel || telDisplay || "").replace(/[^\d+]/g, "");
+if (aRight && sRight) {
+  sRight.textContent = telDisplay;
+  if (telHref) aRight.href = `tel:${telHref}`;
+}
 
       // Footer Legal：リンク存在に応じてセパレーター制御
       (() => {
