@@ -532,13 +532,11 @@ nav.footer-links{ display:block; }
 
 /* マスク未対応ブラウザの超簡易フォールバック（任意） */
 @supports not (mask: url("")) {
-  .footer-col.footer-legal a[href^="tel:"]::before{
-    content: "📞"; background: none; -webkit-mask:none; mask:none;
-    transform: translateY(-55%); /* 見た目微調整 */
-  }
-}
-
-
+   .footer-col-left a[href^="tel:"]::before{
+    content:"📞"; background:none; -webkit-mask:none; mask:none;
+   transform: translateY(-55%);
+ }
+ }
 
 /* ===== Pricing Table（料金・相談プラン）枠と罫線を復活 ===== */
 #pricing_section .pricing-wrap{ max-width: var(--content); margin-inline:auto; }
